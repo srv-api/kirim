@@ -4,9 +4,9 @@
 
 <h2 class="mb-4">Edit User</h2>
 
-<a href="{{ route('users.index') }}" class="btn btn-secondary mb-3">Kembali ke Users</a>
+<a href="{{ route('admin.users.index') }}" class="btn btn-secondary mb-3">Kembali ke Users</a>
 
-<form action="{{ route('users.update', $user->id) }}" method="POST">
+<form action="{{ route('admin.users.update', $user->id) }}" method="POST">
     @csrf
     @method('PUT')
 
@@ -44,7 +44,7 @@
     </div>
 
     <button type="submit" class="btn btn-primary">Update</button>
-    <a href="{{ route('users.index') }}" class="btn btn-secondary">Cancel</a>
+    <a href="{{ route('admin.users.index') }}" class="btn btn-secondary">Cancel</a>
 </form>
 
 @endsection

@@ -8,60 +8,97 @@ use Spatie\Permission\Models\Permission;
 
 class RoleController extends Controller
 {
-
     public function index()
     {
         $roles = Role::with('permissions')->get();
-        return view('roles.index',compact('roles'));
+
+        return view('roles.index', compact('roles'));
     }
 
     public function create()
     {
         $permissions = Permission::all();
-        return view('roles.create',compact('permissions'));
+
+        return view('roles.create', compact('permissions'));
     }
 
     public function store(Request $request)
     {
-
-        $role = Role::create([
-            'name'=>$request->name
+        $request->validate([
+            'name' => 'required|string|max:255|unique:roles,name',
+            'permissions' => 'nullable|array',
+            'permissions.*' => 'exists:permissions,id',
         ]);
 
-        $role->syncPermissions($request->permissions);
+        $role = Role::create([
+            'name' => $request->name,
+            'guard_name' => 'web',
+        ]);
 
-        return redirect()->route('roles.index');
+        if ($request->has('permissions')) {
+            $permissions = Permission::whereIn(
+                'id',
+                $request->permissions
+            )->get();
 
+            $role->syncPermissions($permissions);
+        }
+
+        return redirect()
+            ->route('admin.roles.index')
+            ->with('success', 'Role berhasil dibuat.');
     }
 
     public function edit($id)
     {
-        $role = Role::findById($id);
+        $role = Role::findById($id, 'web');
+
         $permissions = Permission::all();
 
-        return view('roles.edit',compact('role','permissions'));
+        return view('roles.edit', compact(
+            'role',
+            'permissions'
+        ));
     }
 
-    public function update(Request $request,$id)
+    public function update(Request $request, $id)
     {
+        $role = Role::findById($id, 'web');
 
-        $role = Role::findById($id);
-
-        $role->update([
-            'name'=>$request->name
+        $request->validate([
+            'name' => 'required|string|max:255|unique:roles,name,' . $role->id,
+            'permissions' => 'nullable|array',
+            'permissions.*' => 'exists:permissions,id',
         ]);
 
-        $role->syncPermissions($request->permissions);
+        $role->update([
+            'name' => $request->name,
+        ]);
 
-        return redirect()->route('roles.index');
+        if ($request->has('permissions')) {
+            $permissions = Permission::whereIn(
+                'id',
+                $request->permissions
+            )->get();
 
+            $role->syncPermissions($permissions);
+        } else {
+            $role->syncPermissions([]);
+        }
+
+        return redirect()
+            ->route('admin.roles.index')
+            ->with('success', 'Role berhasil diperbarui.');
     }
 
     public function destroy($id)
     {
-        Role::findById($id)->delete();
+        $role = Role::findById($id, 'web');
 
-        return redirect()->route('roles.index');
+        $role->delete();
+
+        return redirect()
+            ->route('admin.roles.index')
+            ->with('success', 'Role berhasil dihapus.');
     }
-
 }

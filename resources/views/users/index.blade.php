@@ -5,8 +5,7 @@
 <h2 class="mb-4">User Management</h2>
 
 <div class="mb-3 d-flex justify-content-between">
-    <a href="{{ route('users.create') }}" class="btn btn-primary">Tambah User</a>
-    <a href="{{ route('users.sync-from-device') }}" class="btn btn-secondary">Sync from Device</a>
+    <a href="{{ route('admin.users.create') }}" class="btn btn-primary">Tambah User</a>
 </div>
 
 <table class="table table-striped table-bordered">
@@ -31,8 +30,8 @@
                 @endforeach
             </td>
             <td>
-                <a href="{{ route('users.edit', $user->id) }}" class="btn btn-sm btn-warning">Edit</a>
-                <form action="{{ route('users.destroy', $user->id) }}" method="POST" style="display:inline;">
+                <a href="{{ route('admin.users.edit', $user->id) }}" class="btn btn-sm btn-warning">Edit</a>
+                <form action="{{ route('admin.users.destroy', $user->id) }}" method="POST" style="display:inline;">
                     @csrf
                     @method('DELETE')
                     <button class="btn btn-sm btn-danger" onclick="return confirm('Yakin ingin hapus?')">Delete</button>

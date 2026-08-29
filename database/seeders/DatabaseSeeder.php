@@ -17,10 +17,7 @@ class DatabaseSeeder extends Seeder
         // User::factory(10)->create();
 
         $this->call([
-            ShiftTemplateSeeder::class,
             RolePermissionSeeder::class,
-            DepartmentSeeder::class, // wajib ada ini
-            JobLevelSeeder::class, // wajib ada ini
             RolePermissionSeeder::class, // wajib ada ini
             RoleSeeder::class, // wajib ada ini
             UserSeeder::class, // wajib ada ini

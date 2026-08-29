@@ -10,12 +10,19 @@ class UserSeeder extends Seeder
 {
     public function run(): void
     {
+        $user = User::updateOrCreate(
+            [
+                'email' => 'admin@gmail.com',
+            ],
+            [
+                'name' => 'Admin',
+                'whatsapp' => '081234567890',
+                'password' => Hash::make('123456'),
+            ]
+        );
 
-        User::create([
-            'name' => 'Admin',
-            'email' => 'admin@gmail.com',
-            'password' => Hash::make('123456')
+        $user->syncRoles([
+            'owner',
         ]);
-
     }
 }

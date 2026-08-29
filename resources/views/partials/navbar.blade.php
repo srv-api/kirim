@@ -6,7 +6,7 @@
 ☰
 </button>
 
-<strong>My Dashboard</strong>
+<strong>Owner Panel</strong>
 
 </div>
 

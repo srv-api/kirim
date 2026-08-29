@@ -1,65 +1,137 @@
 <div class="sidebar">
 
-<h4>Admin Panel</h4>
+    <ul class="sidebar-menu">
 
-<ul class="sidebar-menu">
+        {{-- =====================================================
+             DASHBOARD
+        ====================================================== --}}
 
-<li class="{{ request()->is('admin') ? 'active' : '' }}">
-<a href="{{ route('admin.dashboard') }}">
-<span class="me-2">🏠</span> Dashboard
-</a>
-</li>
+        <li class="menu-title">
+            Dashboard
+        </li>
 
-<li class="{{ request()->is('roles*') ? 'active' : '' }}">
-<a href="{{ route('roles.index') }}">
-<span class="me-2">🔑</span> Roles
-</a>
-</li>
+        <li class="{{ request()->is('owner/panel/dashboard') ? 'active' : '' }}">
 
-<li class="{{ request()->is('users*') ? 'active' : '' }}">
-<a href="{{ url('/users') }}">
-<span class="me-2">👤</span> Users
-</a>
-</li>
+            <a href="{{ route('owner.dashboard') }}">
 
-<li class="{{ request()->is('employees*') ? 'active' : '' }}">
-<a href="{{ url('/employees') }}">
-<span class="me-2">👥</span> Employees
-</a>
-</li>
+                <span class="menu-icon">🏠</span>
 
-<li class="{{ request()->is('departments*') ? 'active' : '' }}">
-<a href="{{ url('/departments') }}">
-<span class="me-2">🏢</span> Departments
-</a>
-</li>
+                <span>Dashboard</span>
 
-<li class="{{ request()->is('shift-template*') ? 'active' : '' }}">
-<a href="{{ url('/shift-template') }}">
-<span class="me-2">⏰</span> Shift Template
-</a>
-</li>
+            </a>
 
-<li class="{{ request()->is('shift-assignments*') ? 'active' : '' }}">
-<a href="{{ url('/shift-assignments') }}">
-<span class="me-2">📅</span> Shift Assignments
-</a>
-</li>
+        </li>
 
-<li class="{{ request()->is('timeoff*') ? 'active' : '' }}">
-<a href="{{ url('/timeoff') }}">
-<span class="me-2">📅</span> Timeoff
-</a>
-</li>
 
-@can('zkteco.view')
-<li class="{{ request()->is('zkteco*') ? 'active' : '' }}">
-<a href="{{ route('zkteco.dashboard') }}">
-<span class="me-2">🖥️</span> ZKTeco
-</a>
-</li>
-@endcan
+        {{-- =====================================================
+             ASSESSMENT
+        ====================================================== --}}
 
-</ul>
+        <li class="menu-title">
+            Assessment
+        </li>
+
+        <li>
+
+            <a href="{{ route('owner.assessments.index') }}">
+
+                <span class="menu-icon">📝</span>
+
+                <span>Assessment</span>
+
+            </a>
+
+        </li>
+
+
+               <li class="{{ request()->routeIs('owner.questions.*') ? 'active' : '' }}">
+
+            <a href="{{ route('owner.questions.index') }}">
+
+                <span class="menu-icon">📚</span>
+
+                <span>Soal</span>
+
+            </a>
+
+        </li>
+
+
+        {{-- =====================================================
+             PESERTA
+        ====================================================== --}}
+
+        <li class="menu-title">
+            Peserta
+        </li>
+
+        <li class="{{ request()->routeIs('owner.participants.*') ? 'active' : '' }}">
+
+    <a href="{{ route('owner.participants.index') }}">
+
+
+                <span class="menu-icon">👥</span>
+
+                <span>Peserta</span>
+
+            </a>
+
+        </li>
+
+        {{-- =====================================================
+             HASIL
+        ====================================================== --}}
+
+        <li class="menu-title">
+            Hasil
+        </li>
+
+<li class="{{ request()->routeIs('owner.results.*') ? 'active' : '' }}">
+
+    <a href="{{ route('owner.results.index') }}">
+
+                <span class="menu-icon">📊</span>
+
+                <span>Hasil Assessment</span>
+
+            </a>
+
+        </li>
+
+  <li class="{{ request()->routeIs('owner.ranking.*') ? 'active' : '' }}">
+
+    <a href="{{ route('owner.ranking.index') }}">
+
+                <span class="menu-icon">🏆</span>
+
+                <span>Ranking</span>
+
+            </a>
+
+        </li>
+
+
+        {{-- =====================================================
+             PENGATURAN
+        ====================================================== --}}
+
+        <li class="menu-title">
+            Pengaturan
+        </li>
+
+<li class="{{ request()->routeIs('owner.profile.*') ? 'active' : '' }}">
+
+    <a href="{{ route('owner.profile.index') }}">
+
+                <span class="menu-icon">👤</span>
+
+                <span>Profil</span>
+
+            </a>
+
+        </li>
+
+
+    </ul>
 
 </div>

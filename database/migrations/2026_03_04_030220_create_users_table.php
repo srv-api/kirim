@@ -16,7 +16,17 @@ return new class extends Migration
 
             $table->string('email')->unique();
 
-            $table->timestamp('email_verified_at')->nullable();
+            $table->string('whatsapp', 30)
+                ->unique();
+            
+            $table->string('referral_code', 20)
+                ->unique();
+            
+            $table->unsignedBigInteger('referred_by')
+                ->nullable();
+
+            $table->timestamp('email_verified_at')
+                ->nullable();
 
             $table->string('password');
 

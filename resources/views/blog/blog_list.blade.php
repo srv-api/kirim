@@ -1,407 +1,1273 @@
 <!DOCTYPE html>
 <html lang="id">
-<head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-    <title>Blog | Kirim</title>
 
-    <!-- Bootstrap 5 -->
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" />
-    <!-- Font Awesome 6 -->
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" />
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Blog | TesThink</title>
+
+    <link
+        href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css"
+        rel="stylesheet"
+    >
+
+    <link
+        rel="stylesheet"
+        href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css"
+    >
 
     <style>
+
+        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap');
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        html,
         body {
-            background: #f0f2f5;
-            font-family: 'Segoe UI', Roboto, system-ui, sans-serif;
+            font-family: 'Inter', sans-serif;
+            background: #fff;
+            color: #111;
         }
 
-        /* ===== NAVBAR ===== */
+        a {
+            text-decoration: none;
+        }
+
+        /* =========================
+           NAVBAR
+        ========================= */
+
         .navbar-custom {
-            background: linear-gradient(135deg, #0b2b5c, #1a4b8c);
-            box-shadow: 0 4px 20px rgba(0,0,0,0.25);
-            padding: 12px 0;
-        }
-        .navbar-custom .navbar-brand {
-            font-weight: 700;
-            font-size: 1.6rem;
-        }
-        .navbar-custom .nav-link {
-            font-weight: 500;
-            margin: 0 8px;
-            border-radius: 30px;
-            padding: 8px 18px;
-            transition: 0.2s;
-        }
-        .navbar-custom .nav-link:hover {
-            background: rgba(255,255,255,0.15);
-            color: #fff !important;
-        }
-        .navbar-custom .nav-link.active {
-            background: rgba(255,255,255,0.2);
+            background: #fff;
+            border-bottom: 1px solid #eee;
+            padding: 17px 0;
         }
 
-        /* ===== BLOG HEADER ===== */
+        .navbar-brand {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+
+            color: #111 !important;
+
+            font-size: 21px;
+            font-weight: 800;
+
+            letter-spacing: -1px;
+        }
+
+        .brand-logo {
+            width: 38px;
+            height: 38px;
+
+            display: flex;
+            align-items: center;
+            justify-content: center;
+
+            background: #ffde59;
+            color: #000;
+
+            border-radius: 50%;
+
+            font-size: 18px;
+            font-weight: 800;
+        }
+
+        .navbar-custom .nav-link {
+            color: #555 !important;
+
+            font-size: 13px;
+            font-weight: 500;
+
+            padding: 9px 15px !important;
+
+            border-radius: 7px;
+
+            transition: .2s ease;
+        }
+
+        .navbar-custom .nav-link:hover {
+            color: #111 !important;
+            background: #f7f7f7;
+        }
+
+        .navbar-custom .nav-link.active {
+            background: #ffde59;
+            color: #000 !important;
+            font-weight: 600;
+        }
+
+        .btn-login {
+            background: #111;
+            color: #fff !important;
+
+            padding: 10px 18px !important;
+
+            border-radius: 7px !important;
+
+            font-weight: 600 !important;
+        }
+
+        .btn-login:hover {
+            background: #292929 !important;
+        }
+
+        /* =========================
+           BLOG HERO
+        ========================= */
+
         .blog-header {
-            background: linear-gradient(145deg, #0a1e3c, #0b2b5c);
-            padding: 60px 0 50px;
-            color: white;
+            background: #ffde59;
+
+            padding: 90px 20px 85px;
+
             position: relative;
             overflow: hidden;
         }
-        .blog-header .badge-light {
-            background: rgba(255,255,255,0.12) !important;
-            color: #ffd966 !important;
-            backdrop-filter: blur(4px);
+
+        .blog-header::before {
+            content: "";
+
+            position: absolute;
+
+            width: 320px;
+            height: 320px;
+
+            border-radius: 50%;
+
+            background: rgba(255,255,255,.18);
+
+            top: -170px;
+            right: 5%;
         }
 
-        /* ===== BLOG CARD ===== */
-        .blog-card {
-            border: none;
-            border-radius: 20px;
-            overflow: hidden;
-            background: #ffffff;
-            transition: all 0.3s ease;
-            box-shadow: 0 4px 16px rgba(0,0,0,0.06);
-            height: 100%;
-        }
-        .blog-card:hover {
-            transform: translateY(-8px);
-            box-shadow: 0 20px 48px rgba(0,40,80,0.12);
-        }
-        .blog-card .blog-img {
+        .blog-header::after {
+            content: "";
+
+            position: absolute;
+
+            width: 220px;
             height: 220px;
-            object-fit: cover;
-            width: 100%;
+
+            border-radius: 50%;
+
+            background: rgba(0,0,0,.04);
+
+            bottom: -120px;
+            left: 8%;
         }
-        .blog-card .blog-body {
-            padding: 24px;
+
+        .hero-content {
+            position: relative;
+            z-index: 2;
         }
-        .blog-card .blog-category {
-            font-size: 0.75rem;
-            text-transform: uppercase;
-            font-weight: 600;
-            color: #1a4b8c;
-            background: rgba(26,75,140,0.08);
-            padding: 4px 14px;
+
+        .hero-badge {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+
+            padding: 8px 14px;
+
+            background: rgba(0,0,0,.08);
+
             border-radius: 50px;
-            display: inline-block;
-        }
-        .blog-card .blog-title {
+
+            color: #111;
+
+            font-size: 11px;
             font-weight: 700;
-            font-size: 1.2rem;
-            margin: 12px 0 10px;
-            color: #0f172a;
-            text-decoration: none;
+
+            text-transform: uppercase;
+            letter-spacing: .5px;
+
+            margin-bottom: 20px;
+        }
+
+        .blog-header h1 {
+            color: #111;
+
+            font-size: clamp(40px, 6vw, 68px);
+
+            font-weight: 800;
+
+            letter-spacing: -4px;
+
+            line-height: .98;
+
+            margin-bottom: 20px;
+        }
+
+        .blog-header p {
+            max-width: 600px;
+
+            margin: auto;
+
+            color: rgba(0,0,0,.65);
+
+            font-size: 15px;
+            line-height: 1.7;
+        }
+
+        /* =========================
+           MAIN
+        ========================= */
+
+        .blog-main {
+            padding: 70px 0;
+        }
+
+        /* =========================
+           BLOG CARD
+        ========================= */
+
+        .blog-card {
+            height: 100%;
+
+            background: #fff;
+
+            border: 1px solid #e9e9e9;
+
+            border-radius: 14px;
+
+            overflow: hidden;
+
+            transition: .25s ease;
+        }
+
+        .blog-card:hover {
+            transform: translateY(-5px);
+
+            border-color: #ddd;
+
+            box-shadow: 0 18px 45px rgba(0,0,0,.08);
+        }
+
+        .blog-img-wrapper {
+            position: relative;
+
+            height: 220px;
+
+            overflow: hidden;
+
+            background: #f5f5f5;
+        }
+
+        .blog-img {
+            width: 100%;
+            height: 100%;
+
+            object-fit: cover;
+
+            transition: .4s ease;
+        }
+
+        .blog-card:hover .blog-img {
+            transform: scale(1.04);
+        }
+
+        .blog-category {
+            position: absolute;
+
+            top: 15px;
+            left: 15px;
+
+            background: #ffde59;
+            color: #000;
+
+            padding: 6px 11px;
+
+            border-radius: 5px;
+
+            font-size: 10px;
+            font-weight: 700;
+
+            text-transform: uppercase;
+        }
+
+        .blog-body {
+            padding: 23px;
+        }
+
+        .blog-title {
             display: block;
-            transition: 0.2s;
+
+            color: #111;
+
+            font-size: 19px;
+            font-weight: 700;
+
+            line-height: 1.3;
+
+            letter-spacing: -.5px;
+
+            margin-bottom: 11px;
+
+            transition: .2s ease;
         }
-        .blog-card .blog-title:hover {
-            color: #1a4b8c;
+
+        .blog-title:hover {
+            color: #777;
         }
-        .blog-card .blog-excerpt {
-            color: #64748b;
-            font-size: 0.95rem;
-            line-height: 1.6;
+
+        .blog-excerpt {
+            color: #777;
+
+            font-size: 13px;
+
+            line-height: 1.7;
+
+            margin-bottom: 18px;
         }
-        .blog-card .blog-meta {
+
+        .blog-meta {
             display: flex;
             align-items: center;
-            gap: 16px;
-            font-size: 0.85rem;
-            color: #94a3b8;
-            margin-top: 14px;
-            padding-top: 14px;
-            border-top: 1px solid #f1f5f9;
+
+            gap: 10px;
+
+            padding-top: 15px;
+
+            border-top: 1px solid #eee;
+
+            color: #999;
+
+            font-size: 11px;
         }
-        .blog-card .blog-meta img {
+
+        .blog-meta img {
             width: 32px;
             height: 32px;
+
             border-radius: 50%;
+
             object-fit: cover;
         }
-        .blog-card .blog-meta .author-name {
+
+        .author-name {
+            color: #333;
+
             font-weight: 600;
-            color: #334155;
+
+            margin-bottom: 2px;
         }
 
-        /* ===== SIDEBAR ===== */
-        .sidebar-card {
-            background: #ffffff;
-            border-radius: 20px;
-            padding: 24px;
-            box-shadow: 0 4px 16px rgba(0,0,0,0.04);
-            margin-bottom: 24px;
+        /* =========================
+           SECTION TITLE
+        ========================= */
+
+        .section-title {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+
+            margin-bottom: 25px;
         }
-        .sidebar-card .sidebar-title {
+
+        .section-title h2 {
+            font-size: 21px;
+
             font-weight: 700;
-            font-size: 1.1rem;
-            margin-bottom: 16px;
-            color: #0f172a;
-            padding-bottom: 12px;
-            border-bottom: 2px solid #f1f5f9;
+
+            letter-spacing: -1px;
+
+            margin: 0;
         }
-        .sidebar-card .sidebar-post {
+
+        .section-title span {
+            color: #999;
+
+            font-size: 12px;
+        }
+
+        /* =========================
+           SIDEBAR
+        ========================= */
+
+        .sidebar-card {
+            background: #fff;
+
+            border: 1px solid #e9e9e9;
+
+            border-radius: 14px;
+
+            padding: 22px;
+
+            margin-bottom: 20px;
+        }
+
+        .sidebar-title {
             display: flex;
-            gap: 14px;
-            padding: 10px 0;
-            border-bottom: 1px solid #f8fafc;
-            text-decoration: none;
-            color: #0f172a;
-            transition: 0.2s;
+            align-items: center;
+
+            gap: 9px;
+
+            color: #111;
+
+            font-size: 15px;
+
+            font-weight: 700;
+
+            padding-bottom: 15px;
+
+            margin-bottom: 12px;
+
+            border-bottom: 1px solid #eee;
         }
-        .sidebar-card .sidebar-post:hover {
-            color: #1a4b8c;
+
+        .sidebar-title i {
+            color: #000;
+
+            width: 27px;
+            height: 27px;
+
+            display: flex;
+            align-items: center;
+            justify-content: center;
+
+            background: #ffde59;
+
+            border-radius: 6px;
+
+            font-size: 11px;
         }
-        .sidebar-card .sidebar-post img {
-            width: 70px;
-            height: 70px;
-            border-radius: 12px;
-            object-fit: cover;
+
+        /* =========================
+           SEARCH
+        ========================= */
+
+        .search-box {
+            display: flex;
+
+            border: 1px solid #ddd;
+
+            border-radius: 8px;
+
+            overflow: hidden;
+        }
+
+        .search-box input {
+            flex: 1;
+
+            min-width: 0;
+
+            border: 0;
+
+            outline: none;
+
+            padding: 12px 14px;
+
+            font-family: inherit;
+
+            font-size: 13px;
+        }
+
+        .search-box button {
+            width: 48px;
+
+            border: 0;
+
+            background: #111;
+
+            color: #fff;
+
+            cursor: pointer;
+        }
+
+        .search-box button:hover {
+            background: #333;
+        }
+
+        /* =========================
+           RECENT POSTS
+        ========================= */
+
+        .sidebar-post {
+            display: flex;
+
+            gap: 12px;
+
+            padding: 11px 0;
+
+            color: #111;
+
+            border-bottom: 1px solid #f0f0f0;
+
+            transition: .2s;
+        }
+
+        .sidebar-post:last-child {
+            border-bottom: 0;
+        }
+
+        .sidebar-post:hover {
+            opacity: .65;
+        }
+
+        .sidebar-post img {
+            width: 65px;
+            height: 65px;
+
             flex-shrink: 0;
+
+            object-fit: cover;
+
+            border-radius: 8px;
         }
-        .sidebar-card .sidebar-post .post-title {
+
+        .post-title {
+            color: #222;
+
+            font-size: 12px;
+
             font-weight: 600;
-            font-size: 0.9rem;
-            line-height: 1.4;
+
+            line-height: 1.45;
+
+            margin-bottom: 5px;
         }
-        .sidebar-card .sidebar-post .post-date {
-            font-size: 0.75rem;
-            color: #94a3b8;
+
+        .post-date {
+            color: #aaa;
+
+            font-size: 10px;
         }
-        .sidebar-card .tag-cloud {
+
+        /* =========================
+           TAG
+        ========================= */
+
+        .tag-cloud {
             display: flex;
+
             flex-wrap: wrap;
-            gap: 8px;
+
+            gap: 7px;
         }
-        .sidebar-card .tag-cloud .tag {
-            background: #f1f5f9;
-            padding: 4px 14px;
-            border-radius: 50px;
-            font-size: 0.8rem;
-            color: #475569;
-            text-decoration: none;
-            transition: 0.2s;
+
+        .tag {
+            padding: 7px 11px;
+
+            background: #f6f6f6;
+
+            color: #666;
+
+            border-radius: 6px;
+
+            font-size: 11px;
+
+            transition: .2s;
         }
-        .sidebar-card .tag-cloud .tag:hover {
-            background: #1a4b8c;
+
+        .tag:hover {
+            background: #ffde59;
+
+            color: #000;
+        }
+
+        /* =========================
+           EMPTY
+        ========================= */
+
+        .empty-state {
+            padding: 80px 20px;
+
+            text-align: center;
+
+            border: 1px dashed #ddd;
+
+            border-radius: 14px;
+        }
+
+        .empty-state-icon {
+            width: 55px;
+            height: 55px;
+
+            display: flex;
+            align-items: center;
+            justify-content: center;
+
+            margin: 0 auto 15px;
+
+            background: #ffde59;
+
+            border-radius: 50%;
+
+            color: #000;
+        }
+
+        .empty-state h5 {
+            font-size: 16px;
+
+            font-weight: 700;
+        }
+
+        .empty-state p {
+            color: #999;
+
+            font-size: 13px;
+        }
+
+        /* =========================
+           PAGINATION
+        ========================= */
+
+        .pagination {
+            gap: 5px;
+        }
+
+        .pagination .page-link {
+            border: 1px solid #e5e5e5;
+
+            border-radius: 7px !important;
+
+            color: #111;
+
+            font-size: 12px;
+
+            padding: 8px 13px;
+        }
+
+        .pagination .page-link:hover {
+            background: #ffde59;
+
+            border-color: #ffde59;
+
+            color: #000;
+        }
+
+        .pagination .active .page-link {
+            background: #111;
+
+            border-color: #111;
+
             color: #fff;
         }
 
-        /* ===== PAGINATION ===== */
-        .pagination-custom .page-link {
-            border-radius: 50px;
-            margin: 0 4px;
-            color: #0f172a;
-            border: 1px solid #e2e8f0;
-            padding: 8px 18px;
-        }
-        .pagination-custom .page-link:hover {
-            background: #1a4b8c;
-            color: #fff;
-            border-color: #1a4b8c;
-        }
-        .pagination-custom .page-item.active .page-link {
-            background: #1a4b8c;
-            border-color: #1a4b8c;
-            color: #fff;
-        }
+        /* =========================
+           FOOTER
+        ========================= */
 
-        /* ===== FOOTER ===== */
         .footer-custom {
-            background: #0b1a2e;
-            color: rgba(255,255,255,0.7);
-            padding: 28px 0;
-            margin-top: 60px;
-        }
-        .footer-custom a {
-            color: #ffd966;
-            text-decoration: none;
+            background: #111;
+
+            color: rgba(255,255,255,.55);
+
+            padding: 35px 0;
         }
 
-        /* ===== RESPONSIVE ===== */
+        .footer-logo {
+            display: inline-flex;
+
+            align-items: center;
+
+            gap: 8px;
+
+            color: #fff;
+
+            font-size: 17px;
+
+            font-weight: 700;
+        }
+
+        .footer-logo span {
+            width: 30px;
+            height: 30px;
+
+            display: flex;
+            align-items: center;
+            justify-content: center;
+
+            background: #ffde59;
+
+            color: #000;
+
+            border-radius: 50%;
+
+            font-size: 14px;
+
+            font-weight: 800;
+        }
+
+        .footer-custom p {
+            margin: 10px 0 0;
+
+            font-size: 11px;
+        }
+
+        .footer-custom a {
+            color: #ffde59;
+        }
+
+        /* =========================
+           MOBILE
+        ========================= */
+
+        @media (max-width: 991px) {
+
+            .sidebar {
+                margin-top: 40px;
+            }
+
+        }
+
         @media (max-width: 768px) {
-            .blog-card .blog-img {
-                height: 180px;
+
+            .navbar-custom {
+                padding: 12px 0;
             }
+
             .blog-header {
-                padding: 40px 0 30px;
+                padding: 65px 20px;
             }
+
+            .blog-header h1 {
+                font-size: 44px;
+
+                letter-spacing: -2.5px;
+            }
+
+            .blog-main {
+                padding: 45px 0;
+            }
+
+            .blog-img-wrapper {
+                height: 200px;
+            }
+
         }
 
         @media (max-width: 480px) {
-            .blog-card .blog-img {
-                height: 160px;
+
+            .blog-header h1 {
+                font-size: 38px;
             }
+
+            .blog-header p {
+                font-size: 13px;
+            }
+
+            .blog-body {
+                padding: 18px;
+            }
+
+            .blog-title {
+                font-size: 17px;
+            }
+
         }
+
     </style>
+
 </head>
+
 <body>
 
-    <!-- ======= NAVBAR ======= -->
-    <nav class="navbar navbar-expand-lg navbar-custom">
-        <div class="container">
-            <a class="navbar-brand text-white" href="{{ route('home') }}">
-                <i class="fas fa-box me-2"></i>Kirim
-            </a>
-            <button class="navbar-toggler border-0" type="button" data-bs-toggle="collapse" data-bs-target="#mainNav">
-                <span class="navbar-toggler-icon"></span>
-            </button>
-            <div class="collapse navbar-collapse" id="mainNav">
-                <ul class="navbar-nav ms-auto">
-                    <li class="nav-item">
-                        <a href="{{ route('home') }}" class="nav-link text-white">
-                            <i class="fas fa-home me-1"></i> Home
-                        </a>
-                    </li>
-                    <li class="nav-item">
-                        <a href="{{ route('blog') }}" class="nav-link text-white active">
-                            <i class="fas fa-newspaper me-1"></i> Blog
-                        </a>
-                    </li>
-                </ul>
-            </div>
-        </div>
-    </nav>
 
-    <!-- ======= BLOG HEADER ======= -->
-    <section class="blog-header text-center">
-        <div class="container">
-            <span class="badge badge-light px-4 py-2 mb-4 d-inline-block">
-                <i class="fas fa-pencil-alt me-2"></i> Artikel Terbaru
+{{-- =========================
+     NAVBAR
+========================= --}}
+
+<nav class="navbar navbar-expand-lg navbar-custom">
+
+    <div class="container">
+
+        <a
+            class="navbar-brand"
+            href="{{ route('home') }}"
+        >
+
+            <span class="brand-logo">
+                Y
             </span>
-            <h1 class="display-4 fw-bold mb-3">Blog & Informasi</h1>
-            <p class="lead text-white-50" style="max-width:540px; margin:0 auto;">
-                Dapatkan informasi seputar pengiriman, tips packing, dan berita terbaru dari <strong>Kirim</strong>.
-            </p>
-        </div>
-    </section>
 
-    <!-- ======= LIST BLOG ======= -->
-    <div class="container py-4">
-        <div class="row">
-            <div class="col-lg-8">
-                <div class="row g-4">
-                    @forelse($blogs as $blog)
-                    <div class="col-md-6">
-                        <div class="blog-card">
-                            <img src="{{ $blog->image ?? 'https://picsum.photos/800/400?random='.$loop->index }}" 
-                                 alt="{{ $blog->title }}" 
-                                 class="blog-img" 
-                                 loading="lazy">
-                            <div class="blog-body">
-                                <span class="blog-category">{{ $blog->category ?? 'Umum' }}</span>
-                                <a href="{{ route('blog.detail', $blog->slug) }}" class="blog-title">
-                                    {{ $blog->title }}
-                                </a>
-                                <p class="blog-excerpt">{{ Str::limit($blog->excerpt ?? $blog->content, 120) }}</p>
-                                <div class="blog-meta">
-                                    <img src="{{ $blog->author_avatar ?? 'https://ui-avatars.com/api/?name='.urlencode($blog->author ?? 'Admin').'&background=1a4b8c&color=fff&size=32' }}" 
-                                         alt="{{ $blog->author ?? 'Admin' }}">
-                                    <div>
-                                        <div class="author-name">{{ $blog->author ?? 'Admin' }}</div>
-                                        <div>
-                                            <i class="far fa-calendar-alt"></i> 
-                                            {{ $blog->published_at ? $blog->published_at->format('d M Y') : $blog->created_at->format('d M Y') }}
-                                            <span class="mx-1">•</span>
-                                            <i class="far fa-clock"></i> 
-                                            {{ $blog->read_time ?? '3 min read' }}
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                    @empty
-                    <div class="col-12 text-center py-5">
-                        <i class="fas fa-inbox fa-3x text-muted mb-3"></i>
-                        <h5>Belum ada artikel</h5>
-                        <p class="text-muted">Belum ada artikel yang dipublikasikan saat ini.</p>
-                    </div>
-                    @endforelse
-                </div>
+            TesThink
 
-                <!-- Pagination -->
-                @if(isset($blogs) && method_exists($blogs, 'links'))
-                <div class="mt-5">
-                    {{ $blogs->links('pagination::bootstrap-5') }}
-                </div>
-                @else
-                <nav class="mt-5">
-                    <ul class="pagination justify-content-center pagination-custom">
-                        <li class="page-item disabled"><span class="page-link">Sebelumnya</span></li>
-                        <li class="page-item active"><span class="page-link">1</span></li>
-                        <li class="page-item"><a class="page-link" href="#">2</a></li>
-                        <li class="page-item"><a class="page-link" href="#">3</a></li>
-                        <li class="page-item"><a class="page-link" href="#">Selanjutnya</a></li>
-                    </ul>
-                </nav>
-                @endif
-            </div>
+        </a>
 
-            <!-- Sidebar -->
-            <div class="col-lg-4">
-                <!-- Pencarian -->
-                <div class="sidebar-card">
-                    <h5 class="sidebar-title"><i class="fas fa-search me-2"></i> Cari Artikel</h5>
-                    <form action="{{ route('blog.search') }}" method="GET">
-                        <div class="input-group">
-                            <input type="text" 
-                                   name="q" 
-                                   class="form-control" 
-                                   placeholder="Cari..." 
-                                   style="border-radius:50px 0 0 50px;"
-                                   value="{{ request('q') }}">
-                            <button class="btn btn-primary" 
-                                    style="border-radius:0 50px 50px 0; background:#1a4b8c; border-color:#1a4b8c;">
-                                <i class="fas fa-search"></i>
-                            </button>
-                        </div>
-                    </form>
-                </div>
 
-                <!-- Postingan Terbaru -->
-                <div class="sidebar-card">
-                    <h5 class="sidebar-title"><i class="fas fa-clock me-2"></i> Postingan Terbaru</h5>
-                    @forelse($recentPosts ?? [] as $post)
-                    <a href="{{ route('blog.detail', $post->slug) }}" class="sidebar-post">
-                        <img src="{{ $post->image ?? 'https://picsum.photos/70/70?random='.$loop->index }}" 
-                             alt="{{ $post->title }}">
-                        <div>
-                            <div class="post-title">{{ $post->title }}</div>
-                            <div class="post-date">
-                                {{ $post->published_at ? $post->published_at->format('d M Y') : $post->created_at->format('d M Y') }}
-                            </div>
-                        </div>
+        <button
+            class="navbar-toggler"
+            type="button"
+            data-bs-toggle="collapse"
+            data-bs-target="#mainNav"
+            style="border:0;"
+        >
+
+            <i class="fas fa-bars"></i>
+
+        </button>
+
+
+        <div
+            class="collapse navbar-collapse"
+            id="mainNav"
+        >
+
+            <ul class="navbar-nav ms-auto align-items-lg-center">
+
+                <li class="nav-item">
+
+                    <a
+                        href="{{ route('home') }}"
+                        class="nav-link"
+                    >
+                        Beranda
                     </a>
-                    @empty
-                    <p class="text-muted text-center py-2">Belum ada postingan</p>
-                    @endforelse
-                </div>
 
-                <!-- Kategori -->
-                <div class="sidebar-card">
-                    <h5 class="sidebar-title"><i class="fas fa-tags me-2"></i> Kategori</h5>
-                    <div class="tag-cloud">
-                        @forelse($categories ?? [] as $category)
-                        <a href="{{ route('blog.category', $category->slug) }}" class="tag">{{ $category->name }}</a>
-                        @empty
-                        <span class="text-muted">Belum ada kategori</span>
-                        @endforelse
-                    </div>
-                </div>
-            </div>
+                </li>
+
+
+                <li class="nav-item">
+
+                    <a
+                        href="{{ route('blog') }}"
+                        class="nav-link active"
+                    >
+                        Blog
+                    </a>
+
+                </li>
+
+
+                @if(Route::has('login'))
+
+                    <li class="nav-item ms-lg-2 mt-2 mt-lg-0">
+
+                        <a
+                            href="{{ route('login') }}"
+                            class="nav-link btn-login"
+                        >
+                            Masuk
+                        </a>
+
+                    </li>
+
+                @endif
+
+            </ul>
+
         </div>
+
     </div>
 
-    <!-- ======= FOOTER ======= -->
-    <footer class="footer-custom text-center">
-        <div class="container">
-            <p>&copy; {{ date('Y') }} <a href="{{ route('home') }}">PT Kirim Mengirim Terkirim</a></p>
-        </div>
-    </footer>
+</nav>
 
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+
+
+{{-- =========================
+     HERO
+========================= --}}
+
+<section class="blog-header">
+
+    <div class="container">
+
+        <div class="hero-content text-center">
+
+            <div class="hero-badge">
+
+                <i class="fas fa-newspaper"></i>
+
+                Artikel TesThink
+
+            </div>
+
+
+            <h1>
+                Insight untuk<br>
+                bisnis yang lebih baik.
+            </h1>
+
+
+            <p>
+                Tips, informasi, dan wawasan seputar
+                kasir, penjualan, stok, dan pengelolaan
+                bisnis bersama TesThink.
+            </p>
+
+        </div>
+
+    </div>
+
+</section>
+
+
+
+{{-- =========================
+     BLOG
+========================= --}}
+
+<main class="blog-main">
+
+    <div class="container">
+
+        <div class="row">
+
+
+            {{-- =====================
+                 BLOG LIST
+            ====================== --}}
+
+            <div class="col-lg-8">
+
+                <div class="section-title">
+
+                    <h2>
+                        Artikel terbaru
+                    </h2>
+
+                    <span>
+                        {{ isset($blogs) ? $blogs->count() : 0 }}
+                        artikel
+                    </span>
+
+                </div>
+
+
+                <div class="row g-4">
+
+                    @forelse($blogs as $blog)
+
+                        <div class="col-md-6">
+
+                            <article class="blog-card">
+
+                                <div class="blog-img-wrapper">
+
+                                    <img
+                                        src="{{ $blog->image ?? 'https://picsum.photos/800/400?random='.$loop->index }}"
+                                        alt="{{ $blog->title }}"
+                                        class="blog-img"
+                                        loading="lazy"
+                                    >
+
+                                    <span class="blog-category">
+
+                                        {{ $blog->category ?? 'Umum' }}
+
+                                    </span>
+
+                                </div>
+
+
+                                <div class="blog-body">
+
+                                    <a
+                                        href="{{ route('blog.detail', $blog->slug) }}"
+                                        class="blog-title"
+                                    >
+                                        {{ $blog->title }}
+                                    </a>
+
+
+                                    <p class="blog-excerpt">
+
+                                        {{ Str::limit(
+                                            $blog->excerpt ?? $blog->content,
+                                            120
+                                        ) }}
+
+                                    </p>
+
+
+                                    <div class="blog-meta">
+
+                                        <img
+                                            src="{{ $blog->author_avatar ?? 'https://ui-avatars.com/api/?name='.urlencode($blog->author ?? 'Admin').'&background=ffde59&color=000&size=32' }}"
+                                            alt="{{ $blog->author ?? 'Admin' }}"
+                                        >
+
+
+                                        <div>
+
+                                            <div class="author-name">
+
+                                                {{ $blog->author ?? 'Admin' }}
+
+                                            </div>
+
+
+                                            <div>
+
+                                                <i class="far fa-calendar"></i>
+
+                                                {{ $blog->published_at
+                                                    ? $blog->published_at->format('d M Y')
+                                                    : $blog->created_at->format('d M Y')
+                                                }}
+
+                                                <span class="mx-1">
+                                                    •
+                                                </span>
+
+                                                <i class="far fa-clock"></i>
+
+                                                {{ $blog->read_time ?? '3 min read' }}
+
+                                            </div>
+
+                                        </div>
+
+                                    </div>
+
+                                </div>
+
+                            </article>
+
+                        </div>
+
+                    @empty
+
+                        <div class="col-12">
+
+                            <div class="empty-state">
+
+                                <div class="empty-state-icon">
+
+                                    <i class="fas fa-newspaper"></i>
+
+                                </div>
+
+
+                                <h5>
+                                    Belum ada artikel
+                                </h5>
+
+
+                                <p>
+                                    Belum ada artikel yang dipublikasikan
+                                    saat ini.
+                                </p>
+
+                            </div>
+
+                        </div>
+
+                    @endforelse
+
+                </div>
+
+
+
+                {{-- PAGINATION --}}
+
+                @if(isset($blogs) && method_exists($blogs, 'links'))
+
+                    <div class="mt-5">
+
+                        {{ $blogs->links('pagination::bootstrap-5') }}
+
+                    </div>
+
+                @endif
+
+            </div>
+
+
+
+            {{-- =====================
+                 SIDEBAR
+            ====================== --}}
+
+            <div class="col-lg-4 sidebar">
+
+
+                {{-- SEARCH --}}
+
+                <div class="sidebar-card">
+
+                    <h5 class="sidebar-title">
+
+                        <i class="fas fa-search"></i>
+
+                        Cari artikel
+
+                    </h5>
+
+
+                    <form
+                        action="{{ route('blog.search') }}"
+                        method="GET"
+                    >
+
+                        <div class="search-box">
+
+                            <input
+                                type="text"
+                                name="q"
+                                placeholder="Cari artikel..."
+                                value="{{ request('q') }}"
+                            >
+
+
+                            <button type="submit">
+
+                                <i class="fas fa-search"></i>
+
+                            </button>
+
+                        </div>
+
+                    </form>
+
+                </div>
+
+
+
+                {{-- RECENT POSTS --}}
+
+                <div class="sidebar-card">
+
+                    <h5 class="sidebar-title">
+
+                        <i class="fas fa-clock"></i>
+
+                        Artikel terbaru
+
+                    </h5>
+
+
+                    @forelse($recentPosts ?? [] as $post)
+
+                        <a
+                            href="{{ route('blog.detail', $post->slug) }}"
+                            class="sidebar-post"
+                        >
+
+                            <img
+                                src="{{ $post->image ?? 'https://picsum.photos/70/70?random='.$loop->index }}"
+                                alt="{{ $post->title }}"
+                            >
+
+
+                            <div>
+
+                                <div class="post-title">
+
+                                    {{ $post->title }}
+
+                                </div>
+
+
+                                <div class="post-date">
+
+                                    <i class="far fa-calendar"></i>
+
+                                    {{ $post->published_at
+                                        ? $post->published_at->format('d M Y')
+                                        : $post->created_at->format('d M Y')
+                                    }}
+
+                                </div>
+
+                            </div>
+
+                        </a>
+
+                    @empty
+
+                        <p class="text-muted text-center mb-0">
+
+                            Belum ada artikel.
+
+                        </p>
+
+                    @endforelse
+
+                </div>
+
+
+
+                {{-- CATEGORY --}}
+
+                <div class="sidebar-card">
+
+                    <h5 class="sidebar-title">
+
+                        <i class="fas fa-tags"></i>
+
+                        Kategori
+
+                    </h5>
+
+
+                    <div class="tag-cloud">
+
+                        @forelse($categories ?? [] as $category)
+
+                            <a
+                                href="{{ route('blog.category', $category->slug) }}"
+                                class="tag"
+                            >
+
+                                {{ $category->name }}
+
+                            </a>
+
+                        @empty
+
+                            <span class="text-muted">
+
+                                Belum ada kategori.
+
+                            </span>
+
+                        @endforelse
+
+                    </div>
+
+                </div>
+
+            </div>
+
+        </div>
+
+    </div>
+
+</main>
+
+
+
+{{-- =========================
+     FOOTER
+========================= --}}
+
+<footer class="footer-custom">
+
+    <div class="container text-center">
+
+        <div class="footer-logo">
+
+            <span>Y</span>
+
+            TesThink
+
+        </div>
+
+
+        <p>
+
+            © {{ date('Y') }} TesThink.
+            Solusi POS sederhana untuk bisnis Anda.
+
+        </p>
+
+    </div>
+
+</footer>
+
+
+
+<script
+    src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js">
+</script>
 
 </body>
+
 </html>

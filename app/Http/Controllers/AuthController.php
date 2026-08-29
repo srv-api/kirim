@@ -28,16 +28,12 @@ public function login(Request $request)
 
         $user = Auth::user();
 
-        if ($user->hasRole('admin')) {
+        if ($user->hasRole('superadmin')) {
             return redirect()->route('admin.dashboard');
         }
 
-        if ($user->hasRole('seller')) {
-            return redirect()->route('seller.dashboard');
-        }
-
-        if ($user->hasRole('user')) {
-            return redirect()->route('user.dashboard');
+        if ($user->hasRole('owner')) {
+            return redirect()->route('owner.dashboard');
         }
 
         return redirect('/');
@@ -59,4 +55,9 @@ public function login(Request $request)
 
     }
 
-}
+public function showRegister()
+    {
+        return view('auth.register');
+    }
+
+    }

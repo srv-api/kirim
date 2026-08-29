@@ -4,9 +4,9 @@
 
 <h2 class="mb-4">Tambah User Baru</h2>
 
-<a href="{{ route('users.index') }}" class="btn btn-secondary mb-3">Kembali ke Users</a>
+<a href="{{ route('admin.users.index') }}" class="btn btn-secondary mb-3">Kembali ke Users</a>
 
-<form action="{{ route('users.store') }}" method="POST">
+<form action="{{ route('admin.users.store') }}" method="POST">
     @csrf
 
     <div class="mb-3">
@@ -43,7 +43,7 @@
     </div>
 
     <button type="submit" class="btn btn-primary">Simpan</button>
-    <a href="{{ route('users.index') }}" class="btn btn-secondary">Cancel</a>
+    <a href="{{ route('admin.users.index') }}" class="btn btn-secondary">Cancel</a>
 </form>
 
 @endsection
