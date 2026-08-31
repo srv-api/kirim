@@ -2,6 +2,12 @@
 
 use Illuminate\Support\Facades\Route;
 
+/*
+|--------------------------------------------------------------------------
+| CONTROLLERS
+|--------------------------------------------------------------------------
+*/
+
 use App\Http\Controllers\TrackingController;
 use App\Http\Controllers\BlogController;
 
@@ -21,8 +27,11 @@ use App\Http\Controllers\Owner\Panel\AssessmentController;
 use App\Http\Controllers\Owner\Panel\QuestionController;
 use App\Http\Controllers\Owner\Panel\ParticipantController;
 use App\Http\Controllers\Owner\Panel\ResultController;
-use App\Http\Controllers\AssessmentParticipantController;
 use App\Http\Controllers\Owner\Panel\ProfileController;
+
+use App\Http\Controllers\AssessmentParticipantController;
+use App\Http\Controllers\SubscriptionController;
+
 
 /*
 |--------------------------------------------------------------------------
@@ -37,43 +46,157 @@ Route::get('/', function () {
 
 /*
 |--------------------------------------------------------------------------
+| SUBSCRIPTION
+|--------------------------------------------------------------------------
+|
+| Checkout tetap tersedia sebagai route.
+| Tetapi tombol Upgrade pada sidebar membuka modal,
+| jadi sidebar TIDAK memanggil route checkout ini.
+|
+*/
+
+/*
+|--------------------------------------------------------------------------
+| Subscription Checkout
+|--------------------------------------------------------------------------
+|
+| GET /subscription/plus/checkout
+|
+| Route name:
+| subscription.checkout
+|
+*/
+
+Route::get(
+    '/subscription/{slug}/checkout',
+    [
+        SubscriptionController::class,
+        'checkout'
+    ]
+)->name('subscription.checkout');
+
+
+/*
+|--------------------------------------------------------------------------
+| Subscription Subscribe
+|--------------------------------------------------------------------------
+|
+| POST /subscription/plus/subscribe
+|
+| Route name:
+| subscription.subscribe
+|
+*/
+
+Route::post(
+    '/subscription/{slug}/subscribe',
+    [
+        SubscriptionController::class,
+        'subscribe'
+    ]
+)
+    ->middleware('auth')
+    ->name('subscription.subscribe');
+
+
+/*
+|--------------------------------------------------------------------------
 | BLOG
 |--------------------------------------------------------------------------
 */
 
 Route::prefix('blog')->group(function () {
 
-    Route::get('/', [
-        BlogController::class,
-        'index'
-    ])->name('blog');
+    /*
+    |--------------------------------------------------------------------------
+    | Blog Index
+    |--------------------------------------------------------------------------
+    */
 
-    Route::get('/search', [
-        BlogController::class,
-        'search'
-    ])->name('blog.search');
+    Route::get(
+        '/',
+        [
+            BlogController::class,
+            'index'
+        ]
+    )->name('blog');
 
-    Route::get('/category/{slug}', [
-        BlogController::class,
-        'category'
-    ])->name('blog.category');
 
-    Route::get('/tag/{tag}', [
-        BlogController::class,
-        'tag'
-    ])->name('blog.tag');
+    /*
+    |--------------------------------------------------------------------------
+    | Blog Search
+    |--------------------------------------------------------------------------
+    */
 
-    Route::post('/{id}/comment', [
-        BlogController::class,
-        'comment'
-    ])
+    Route::get(
+        '/search',
+        [
+            BlogController::class,
+            'search'
+        ]
+    )->name('blog.search');
+
+
+    /*
+    |--------------------------------------------------------------------------
+    | Blog Category
+    |--------------------------------------------------------------------------
+    */
+
+    Route::get(
+        '/category/{slug}',
+        [
+            BlogController::class,
+            'category'
+        ]
+    )->name('blog.category');
+
+
+    /*
+    |--------------------------------------------------------------------------
+    | Blog Tag
+    |--------------------------------------------------------------------------
+    */
+
+    Route::get(
+        '/tag/{tag}',
+        [
+            BlogController::class,
+            'tag'
+        ]
+    )->name('blog.tag');
+
+
+    /*
+    |--------------------------------------------------------------------------
+    | Blog Comment
+    |--------------------------------------------------------------------------
+    */
+
+    Route::post(
+        '/{id}/comment',
+        [
+            BlogController::class,
+            'comment'
+        ]
+    )
         ->middleware('auth')
         ->name('blog.comment');
 
-    Route::get('/{slug}', [
-        BlogController::class,
-        'show'
-    ])->name('blog.detail');
+
+    /*
+    |--------------------------------------------------------------------------
+    | Blog Detail
+    |--------------------------------------------------------------------------
+    */
+
+    Route::get(
+        '/{slug}',
+        [
+            BlogController::class,
+            'show'
+        ]
+    )->name('blog.detail');
 
 });
 
@@ -84,36 +207,82 @@ Route::prefix('blog')->group(function () {
 |--------------------------------------------------------------------------
 */
 
-Route::get('/login', [
-    AuthController::class,
-    'showLogin'
-])->name('login');
+
+/*
+|--------------------------------------------------------------------------
+| Login
+|--------------------------------------------------------------------------
+*/
+
+Route::get(
+    '/login',
+    [
+        AuthController::class,
+        'showLogin'
+    ]
+)->name('login');
 
 
-Route::post('/login', [
-    AuthController::class,
-    'login'
-])->name('login.process');
+/*
+|--------------------------------------------------------------------------
+| Login Process
+|--------------------------------------------------------------------------
+*/
+
+Route::post(
+    '/login',
+    [
+        AuthController::class,
+        'login'
+    ]
+)->name('login.process');
 
 
-Route::post('/logout', [
-    AuthController::class,
-    'logout'
-])
+/*
+|--------------------------------------------------------------------------
+| Logout
+|--------------------------------------------------------------------------
+*/
+
+Route::post(
+    '/logout',
+    [
+        AuthController::class,
+        'logout'
+    ]
+)
     ->middleware('auth')
     ->name('logout');
 
 
-Route::get('/register', [
-    RegisterController::class,
-    'create'
-])->name('register');
+/*
+|--------------------------------------------------------------------------
+| Register
+|--------------------------------------------------------------------------
+*/
+
+Route::get(
+    '/register',
+    [
+        RegisterController::class,
+        'create'
+    ]
+)->name('register');
 
 
-Route::post('/register', [
-    RegisterController::class,
-    'store'
-])->name('register.store');
+/*
+|--------------------------------------------------------------------------
+| Register Process
+|--------------------------------------------------------------------------
+*/
+
+Route::post(
+    '/register',
+    [
+        RegisterController::class,
+        'store'
+    ]
+)->name('register.store');
 
 
 /*
@@ -122,21 +291,52 @@ Route::post('/register', [
 |--------------------------------------------------------------------------
 */
 
-Route::get('/dashboard', function () {
+Route::get(
+    '/dashboard',
+    function () {
 
-    $user = auth()->user();
+        $user = auth()->user();
 
-    if ($user->hasRole('superadmin')) {
-        return redirect()->route('admin.dashboard');
+        /*
+        |--------------------------------------------------------------------------
+        | Superadmin
+        |--------------------------------------------------------------------------
+        */
+
+        if ($user->hasRole('superadmin')) {
+
+            return redirect()->route(
+                'admin.dashboard'
+            );
+
+        }
+
+
+        /*
+        |--------------------------------------------------------------------------
+        | Owner
+        |--------------------------------------------------------------------------
+        */
+
+        if ($user->hasRole('owner')) {
+
+            return redirect()->route(
+                'owner.dashboard'
+            );
+
+        }
+
+
+        /*
+        |--------------------------------------------------------------------------
+        | Default User
+        |--------------------------------------------------------------------------
+        */
+
+        return view('dashboard');
+
     }
-
-    if ($user->hasRole('owner')) {
-        return redirect()->route('owner.dashboard');
-    }
-
-    return view('dashboard');
-
-})
+)
     ->middleware('auth')
     ->name('dashboard');
 
@@ -145,6 +345,13 @@ Route::get('/dashboard', function () {
 |--------------------------------------------------------------------------
 | ADMIN PANEL
 |--------------------------------------------------------------------------
+|
+| URL:
+| /admin/panel/...
+|
+| Route prefix:
+| admin.
+|
 */
 
 Route::middleware([
@@ -155,20 +362,28 @@ Route::middleware([
     ->name('admin.')
     ->group(function () {
 
+
         /*
         |--------------------------------------------------------------------------
-        | Dashboard
+        | ADMIN DASHBOARD
         |--------------------------------------------------------------------------
         */
 
-        Route::get('/dashboard', function () {
-            return view('admin.panel.dashboard');
-        })->name('dashboard');
+        Route::get(
+            '/dashboard',
+            function () {
+
+                return view(
+                    'admin.panel.dashboard'
+                );
+
+            }
+        )->name('dashboard');
 
 
         /*
         |--------------------------------------------------------------------------
-        | Roles
+        | ROLES
         |--------------------------------------------------------------------------
         */
 
@@ -180,7 +395,7 @@ Route::middleware([
 
         /*
         |--------------------------------------------------------------------------
-        | Users
+        | USERS
         |--------------------------------------------------------------------------
         */
 
@@ -192,7 +407,7 @@ Route::middleware([
 
         /*
         |--------------------------------------------------------------------------
-        | Posts
+        | POSTS
         |--------------------------------------------------------------------------
         */
 
@@ -204,7 +419,7 @@ Route::middleware([
 
         /*
         |--------------------------------------------------------------------------
-        | Categories
+        | CATEGORIES
         |--------------------------------------------------------------------------
         */
 
@@ -216,7 +431,7 @@ Route::middleware([
 
         /*
         |--------------------------------------------------------------------------
-        | Tags
+        | TAGS
         |--------------------------------------------------------------------------
         */
 
@@ -228,7 +443,7 @@ Route::middleware([
 
         /*
         |--------------------------------------------------------------------------
-        | Comments
+        | COMMENTS
         |--------------------------------------------------------------------------
         */
 
@@ -244,6 +459,13 @@ Route::middleware([
 |--------------------------------------------------------------------------
 | OWNER PANEL
 |--------------------------------------------------------------------------
+|
+| URL:
+| /owner/panel/...
+|
+| Route prefix:
+| owner.
+|
 */
 
 Route::middleware([
@@ -254,9 +476,10 @@ Route::middleware([
     ->name('owner.')
     ->group(function () {
 
+
         /*
         |--------------------------------------------------------------------------
-        | Dashboard
+        | DASHBOARD
         |--------------------------------------------------------------------------
         */
 
@@ -271,7 +494,7 @@ Route::middleware([
 
         /*
         |--------------------------------------------------------------------------
-        | Assessments
+        | ASSESSMENTS
         |--------------------------------------------------------------------------
         */
 
@@ -283,11 +506,8 @@ Route::middleware([
 
         /*
         |--------------------------------------------------------------------------
-        | Assessment PIN
+        | REGENERATE ASSESSMENT PIN
         |--------------------------------------------------------------------------
-        |
-        | Membuat ulang PIN assessment.
-        |
         */
 
         Route::post(
@@ -303,7 +523,7 @@ Route::middleware([
 
         /*
         |--------------------------------------------------------------------------
-        | Questions
+        | QUESTIONS
         |--------------------------------------------------------------------------
         */
 
@@ -315,7 +535,7 @@ Route::middleware([
 
         /*
         |--------------------------------------------------------------------------
-        | Assessment Categories
+        | ASSESSMENT CATEGORIES
         |--------------------------------------------------------------------------
         */
 
@@ -335,20 +555,26 @@ Route::middleware([
 
         /*
         |--------------------------------------------------------------------------
-        | Participants
+        | PARTICIPANTS
         |--------------------------------------------------------------------------
         */
 
-Route::get(
-    '/participants',
-    [
-        ParticipantController::class,
-        'index'
-    ]
-)->name(
-    'participants.index'
-);
+        Route::get(
+            '/participants',
+            [
+                ParticipantController::class,
+                'index'
+            ]
+        )->name(
+            'participants.index'
+        );
 
+
+        /*
+        |--------------------------------------------------------------------------
+        | CREATE PARTICIPANT
+        |--------------------------------------------------------------------------
+        */
 
         Route::get(
             '/participants/create',
@@ -364,37 +590,43 @@ Route::get(
         );
 
 
-     /*
-|--------------------------------------------------------------------------
-| Results
-|--------------------------------------------------------------------------
-*/
+        /*
+        |--------------------------------------------------------------------------
+        | RESULTS
+        |--------------------------------------------------------------------------
+        */
 
-Route::get(
-    '/results',
-    [
-        ResultController::class,
-        'index'
-    ]
-)->name(
-    'results.index'
-);
-
-
-Route::get(
-    '/results/{result}',
-    [
-        ResultController::class,
-        'show'
-    ]
-)->name(
-    'results.show'
-);
+        Route::get(
+            '/results',
+            [
+                ResultController::class,
+                'index'
+            ]
+        )->name(
+            'results.index'
+        );
 
 
         /*
         |--------------------------------------------------------------------------
-        | Analytics
+        | RESULT DETAIL
+        |--------------------------------------------------------------------------
+        */
+
+        Route::get(
+            '/results/{result}',
+            [
+                ResultController::class,
+                'show'
+            ]
+        )->name(
+            'results.show'
+        );
+
+
+        /*
+        |--------------------------------------------------------------------------
+        | ANALYTICS
         |--------------------------------------------------------------------------
         */
 
@@ -414,23 +646,24 @@ Route::get(
 
         /*
         |--------------------------------------------------------------------------
-        | Ranking
+        | RANKING
         |--------------------------------------------------------------------------
         */
 
         Route::get(
-    '/ranking',
-    [
-        DashboardController::class,
-        'ranking'
-    ]
-)->name(
-    'ranking.index'
-);
+            '/ranking',
+            [
+                DashboardController::class,
+                'ranking'
+            ]
+        )->name(
+            'ranking.index'
+        );
+
 
         /*
         |--------------------------------------------------------------------------
-        | Settings
+        | SETTINGS
         |--------------------------------------------------------------------------
         */
 
@@ -450,7 +683,7 @@ Route::get(
 
         /*
         |--------------------------------------------------------------------------
-        | Profile
+        | PROFILE
         |--------------------------------------------------------------------------
         */
 
@@ -463,6 +696,13 @@ Route::get(
         )->name(
             'profile.index'
         );
+
+
+        /*
+        |--------------------------------------------------------------------------
+        | UPDATE PROFILE
+        |--------------------------------------------------------------------------
+        */
 
         Route::put(
             '/profile',
@@ -484,8 +724,6 @@ Route::get(
 |
 | URL:
 | /assessment/{assessment}
-|
-| {assessment} = ID assessment
 |
 */
 
@@ -526,8 +764,8 @@ Route::get(
 | VERIFY PIN
 |--------------------------------------------------------------------------
 |
-| URL:
-| POST /assessment/{assessment}/pin
+| POST:
+| /assessment/{assessment}/pin
 |
 */
 
@@ -550,9 +788,6 @@ Route::post(
 | URL:
 | /assessment/{assessment}/question/{question}
 |
-| Contoh:
-| /assessment/CKYY35NPGL/question/T0X4J5
-|
 */
 
 Route::get(
@@ -571,8 +806,8 @@ Route::get(
 | ANSWER
 |--------------------------------------------------------------------------
 |
-| URL:
-| POST /assessment/{assessment}/question/{question}/answer
+| POST:
+| /assessment/{assessment}/question/{question}/answer
 |
 */
 
@@ -641,6 +876,7 @@ Route::get(
     'assessment.participant.result'
 );
 
+
 /*
 |--------------------------------------------------------------------------
 | ABOUT
@@ -671,6 +907,13 @@ Route::view(
 |--------------------------------------------------------------------------
 */
 
+
+/*
+|--------------------------------------------------------------------------
+| Tracking Search
+|--------------------------------------------------------------------------
+*/
+
 Route::post(
     '/tracking',
     [
@@ -680,6 +923,12 @@ Route::post(
 )->name('tracking.search');
 
 
+/*
+|--------------------------------------------------------------------------
+| Tracking Detail
+|--------------------------------------------------------------------------
+*/
+
 Route::get(
     '/tracking/{awb}',
     [
@@ -687,4 +936,3 @@ Route::get(
         'show'
     ]
 )->name('tracking.show');
-

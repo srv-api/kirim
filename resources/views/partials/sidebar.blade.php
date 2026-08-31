@@ -170,10 +170,13 @@
                     Dapatkan fitur lebih lengkap untuk assessment Anda.
                 </div>
 
-                <a href="#" class="upgrade-button">
-                    <span>Upgrade</span>
-                    <i class="bi bi-arrow-right"></i>
-                </a>
+               <a
+    href="{{ route('subscription.checkout', 'plus') }}"
+    class="upgrade-button"
+>
+    <span>Upgrade</span>
+    <i class="bi bi-arrow-right"></i>
+</a>
             </div>
         </div>
 </div>
