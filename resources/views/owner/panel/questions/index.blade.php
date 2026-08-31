@@ -2,304 +2,1030 @@
 
 @section('content')
 
-<div class="container-fluid">
+<style>
+
+    /* =====================================================
+       QUESTIONS PAGE
+    ====================================================== */
+
+    .questions-page {
+        --page-text: #111827;
+        --page-muted: #6b7280;
+        --page-border: #e5e7eb;
+        --page-radius: 16px;
+
+        padding-bottom: 35px;
+    }
 
 
-{{-- HEADER --}}
-<div class="d-flex justify-content-between align-items-center mb-4">
+    /* =====================================================
+       HEADER
+    ====================================================== */
+
+    .questions-header {
+        margin-bottom: 30px;
+    }
+
+    .questions-eyebrow {
+        display: flex;
+        align-items: center;
+        gap: 8px;
+
+        margin-bottom: 7px;
+
+        color: #9ca3af;
+        font-size: 11px;
+        font-weight: 700;
+
+        letter-spacing: .08em;
+        text-transform: uppercase;
+    }
+
+    .questions-eyebrow span {
+        width: 6px;
+        height: 6px;
+
+        border-radius: 50%;
+
+        background: #059669;
+
+        box-shadow: 0 0 0 4px rgba(5, 150, 105, .08);
+    }
+
+    .questions-title {
+        margin: 0;
+
+        color: var(--page-text);
+
+        font-size: 28px;
+        line-height: 1.2;
+        font-weight: 750;
+
+        letter-spacing: -.035em;
+    }
+
+    .questions-description {
+        margin: 7px 0 0;
+
+        color: var(--page-muted);
+
+        font-size: 13px;
+    }
+
+
+    /* =====================================================
+       ADD BUTTON
+    ====================================================== */
+
+    .btn-add-question {
+        display: inline-flex;
+        align-items: center;
+        gap: 8px;
+
+        padding: 10px 15px;
+
+        border: 0;
+        border-radius: 10px;
+
+        background: #111827;
+        color: #fff;
+
+        font-size: 12px;
+        font-weight: 650;
+
+        text-decoration: none;
+
+        transition: all .18s ease;
+    }
+
+    .btn-add-question:hover {
+        background: #000;
+        color: #fff;
+
+        transform: translateY(-1px);
+
+        box-shadow: 0 7px 18px rgba(15, 23, 42, .12);
+    }
+
+    .btn-add-question i {
+        font-size: 14px;
+    }
+
+
+    /* =====================================================
+       ALERT
+    ====================================================== */
+
+    .question-alert {
+        display: flex;
+        align-items: flex-start;
+        gap: 10px;
+
+        padding: 12px 14px;
+
+        border-radius: 10px;
+
+        font-size: 12px;
+    }
+
+    .question-alert i {
+        margin-top: 1px;
+
+        font-size: 14px;
+    }
+
+    .question-alert .btn-close {
+        margin-left: auto;
+
+        padding: 5px;
+
+        font-size: 9px;
+    }
+
+
+    /* =====================================================
+       MAIN CARD
+    ====================================================== */
+
+    .questions-table-card {
+        background: #fff;
+
+        border: 1px solid var(--page-border);
+        border-radius: var(--page-radius);
+
+        overflow: hidden;
+    }
+
+
+    /* =====================================================
+       TOOLBAR
+    ====================================================== */
+
+    .questions-toolbar {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+
+        padding: 20px 22px;
+
+        border-bottom: 1px solid var(--page-border);
+    }
+
+    .toolbar-heading {
+        display: flex;
+        align-items: center;
+
+        gap: 11px;
+    }
+
+    .toolbar-icon {
+        width: 34px;
+        height: 34px;
+
+        display: flex;
+        align-items: center;
+        justify-content: center;
+
+        border-radius: 9px;
+
+        background: #f3f4f6;
+        color: #374151;
+
+        font-size: 14px;
+    }
+
+    .toolbar-title {
+        margin: 0;
+
+        color: var(--page-text);
+
+        font-size: 14px;
+        font-weight: 700;
+    }
+
+    .toolbar-description {
+        margin: 3px 0 0;
+
+        color: #9ca3af;
+
+        font-size: 11px;
+    }
+
+    .toolbar-count {
+        padding: 5px 9px;
+
+        border-radius: 20px;
+
+        background: #f8fafc;
+        border: 1px solid #eef0f3;
+
+        color: #6b7280;
+
+        font-size: 10px;
+        font-weight: 650;
+    }
+
+
+    /* =====================================================
+       TABLE
+    ====================================================== */
+
+    .questions-table {
+        margin: 0;
+    }
+
+    .questions-table thead th {
+        padding: 12px 18px;
+
+        background: #fafafa;
+
+        border-bottom: 1px solid var(--page-border);
+
+        color: #9ca3af;
+
+        font-size: 10px;
+        font-weight: 700;
+
+        letter-spacing: .07em;
+
+        text-transform: uppercase;
+
+        white-space: nowrap;
+    }
+
+    .questions-table tbody td {
+        padding: 15px 18px;
+
+        border-bottom: 1px solid #f3f4f6;
+
+        color: #374151;
+
+        font-size: 13px;
+
+        vertical-align: middle;
+    }
+
+    .questions-table tbody tr:last-child td {
+        border-bottom: 0;
+    }
+
+    .questions-table tbody tr {
+        transition: background .15s ease;
+    }
+
+    .questions-table tbody tr:hover {
+        background: #fafafa;
+    }
+
+
+    /* =====================================================
+       NUMBER
+    ====================================================== */
+
+    .number-column {
+        width: 55px;
+
+        color: #9ca3af !important;
+
+        font-size: 11px !important;
+        font-weight: 500;
+    }
+
+
+    /* =====================================================
+       ASSESSMENT
+    ====================================================== */
+
+    .assessment-name {
+        color: var(--page-text);
+
+        font-size: 13px;
+        font-weight: 650;
+
+        line-height: 1.4;
+    }
+
+
+    /* =====================================================
+       QUESTION
+    ====================================================== */
+
+    .question-text {
+        max-width: 500px;
+
+        color: #4b5563;
+
+        font-size: 12px;
+
+        line-height: 1.55;
+    }
+
+
+    /* =====================================================
+       TYPE
+    ====================================================== */
+
+    .question-type {
+        display: inline-flex;
+        align-items: center;
+        gap: 6px;
+
+        padding: 5px 9px;
+
+        border-radius: 20px;
+
+        font-size: 10px;
+        font-weight: 700;
+
+        white-space: nowrap;
+    }
+
+    .question-type.multiple {
+        color: #374151;
+        background: #f3f4f6;
+    }
+
+    .question-type.text {
+        color: #92400e;
+        background: #fffbeb;
+    }
+
+    .question-type i {
+        font-size: 10px;
+    }
+
+
+    /* =====================================================
+       SCORE
+    ====================================================== */
+
+    .score-wrapper {
+        display: inline-flex;
+        align-items: center;
+        gap: 5px;
+    }
+
+    .score-value {
+        color: #111827;
+
+        font-size: 12px;
+        font-weight: 700;
+    }
+
+    .score-unit {
+        color: #9ca3af;
+
+        font-size: 10px;
+    }
+
+
+    /* =====================================================
+       ACTION
+    ====================================================== */
+
+    .question-actions {
+        display: flex;
+        align-items: center;
+
+        gap: 5px;
+    }
+
+    .question-action {
+        width: 31px;
+        height: 31px;
+
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+
+        border: 1px solid #e5e7eb;
+        border-radius: 8px;
+
+        background: #fff;
+        color: #6b7280;
+
+        font-size: 12px;
+
+        text-decoration: none;
+
+        transition: all .15s ease;
+    }
+
+    .question-action:hover {
+        color: #111827;
+
+        background: #f9fafb;
+
+        border-color: #d1d5db;
+    }
+
+    .question-action.view:hover {
+        color: #374151;
+
+        background: #f3f4f6;
+    }
+
+    .question-action.edit:hover {
+        color: #2563eb;
+
+        background: #eff6ff;
+
+        border-color: #bfdbfe;
+    }
+
+    .question-action.delete {
+        cursor: pointer;
+    }
+
+    .question-action.delete:hover {
+        color: #dc2626;
+
+        background: #fef2f2;
+
+        border-color: #fecaca;
+    }
+
+
+    /* =====================================================
+       EMPTY STATE
+    ====================================================== */
+
+    .questions-empty {
+        padding: 70px 20px;
+
+        text-align: center;
+    }
+
+    .questions-empty-icon {
+        width: 52px;
+        height: 52px;
+
+        display: flex;
+        align-items: center;
+        justify-content: center;
+
+        margin: 0 auto 14px;
+
+        border-radius: 13px;
+
+        background: #f8fafc;
+
+        border: 1px solid #eef0f3;
+
+        color: #9ca3af;
+
+        font-size: 19px;
+    }
+
+    .questions-empty-title {
+        margin-bottom: 5px;
+
+        color: #111827;
+
+        font-size: 14px;
+        font-weight: 700;
+    }
+
+    .questions-empty-description {
+        max-width: 340px;
+
+        margin: 0 auto 18px;
+
+        color: #9ca3af;
+
+        font-size: 12px;
+
+        line-height: 1.6;
+    }
+
+
+    /* =====================================================
+       PAGINATION
+    ====================================================== */
+
+    .questions-pagination {
+        padding: 15px 20px;
+
+        border-top: 1px solid var(--page-border);
+
+        background: #fff;
+    }
+
+    .questions-pagination .pagination {
+        margin-bottom: 0;
+    }
+
+
+    /* =====================================================
+       RESPONSIVE
+    ====================================================== */
+
+    @media (max-width: 768px) {
+
+        .questions-header {
+            align-items: flex-start !important;
+
+            flex-direction: column;
+
+            gap: 15px;
+        }
+
+        .questions-title {
+            font-size: 25px;
+        }
+
+        .btn-add-question {
+            width: 100%;
+
+            justify-content: center;
+        }
+
+        .questions-toolbar {
+            align-items: flex-start;
+
+            flex-direction: column;
+
+            gap: 12px;
+        }
+
+        .questions-table {
+            min-width: 950px;
+        }
+
+        .question-actions {
+            justify-content: flex-start;
+        }
+
+    }
+
+</style>
+
+<div class="container-fluid questions-page">
+
+
+{{-- =====================================================
+     HEADER
+====================================================== --}}
+
+<div class="questions-header d-flex justify-content-between align-items-center">
 
     <div>
-        <h2 class="fw-bold mb-1">
-            Soal Assessment
-        </h2>
 
-        <p class="text-muted mb-0">
-            Kelola soal yang digunakan dalam assessment.
+        <div class="questions-eyebrow">
+
+            <span></span>
+
+            Assessment Management
+
+        </div>
+
+        <h1 class="questions-title">
+            Soal Assessment
+        </h1>
+
+        <p class="questions-description">
+            Kelola pertanyaan dan soal yang digunakan dalam assessment.
         </p>
+
     </div>
 
-    <a href="{{ route('owner.questions.create') }}"
-       class="btn btn-dark px-3">
 
-        + Tambah Soal
+    <a
+        href="{{ route('owner.questions.create') }}"
+        class="btn-add-question"
+    >
+
+        <i class="bi bi-plus-lg"></i>
+
+        <span>
+            Tambah Soal
+        </span>
 
     </a>
 
 </div>
 
 
-{{-- SUCCESS --}}
+{{-- =====================================================
+     ALERT SUCCESS
+====================================================== --}}
+
 @if(session('success'))
 
-    <div class="alert alert-success alert-dismissible fade show"
-         role="alert">
+    <div
+        class="alert alert-success question-alert alert-dismissible fade show mb-4"
+        role="alert"
+    >
 
-        {{ session('success') }}
+        <i class="bi bi-check-circle-fill"></i>
 
-        <button type="button"
-                class="btn-close"
-                data-bs-dismiss="alert">
-        </button>
+        <span>
+            {{ session('success') }}
+        </span>
+
+        <button
+            type="button"
+            class="btn-close"
+            data-bs-dismiss="alert"
+        ></button>
 
     </div>
 
 @endif
 
 
-{{-- ERROR --}}
+{{-- =====================================================
+     ALERT ERROR
+====================================================== --}}
+
 @if(session('error'))
 
-    <div class="alert alert-danger alert-dismissible fade show"
-         role="alert">
+    <div
+        class="alert alert-danger question-alert alert-dismissible fade show mb-4"
+        role="alert"
+    >
 
-        {{ session('error') }}
+        <i class="bi bi-exclamation-circle-fill"></i>
 
-        <button type="button"
-                class="btn-close"
-                data-bs-dismiss="alert">
-        </button>
+        <span>
+            {{ session('error') }}
+        </span>
+
+        <button
+            type="button"
+            class="btn-close"
+            data-bs-dismiss="alert"
+        ></button>
 
     </div>
 
 @endif
 
 
-{{-- TABLE --}}
-<div class="card border shadow-sm">
+{{-- =====================================================
+     VALIDATION
+====================================================== --}}
 
-    <div class="card-header bg-white py-3">
+@if($errors->any())
 
-        <div class="d-flex justify-content-between align-items-center">
+    <div
+        class="alert alert-danger question-alert mb-4"
+        role="alert"
+    >
+
+        <i class="bi bi-exclamation-triangle-fill"></i>
+
+        <div>
+
+            <div class="fw-semibold mb-1">
+                Terdapat beberapa kesalahan:
+            </div>
+
+            <ul class="mb-0 ps-3">
+
+                @foreach($errors->all() as $error)
+
+                    <li>
+                        {{ $error }}
+                    </li>
+
+                @endforeach
+
+            </ul>
+
+        </div>
+
+    </div>
+
+@endif
+
+
+{{-- =====================================================
+     MAIN TABLE
+====================================================== --}}
+
+<div class="questions-table-card">
+
+
+    {{-- =================================================
+         TOOLBAR
+    ================================================== --}}
+
+    <div class="questions-toolbar">
+
+        <div class="toolbar-heading">
+
+            <div class="toolbar-icon">
+
+                <i class="bi bi-question-circle"></i>
+
+            </div>
+
 
             <div>
-                <h6 class="fw-semibold mb-1">
-                    Daftar Soal
-                </h6>
 
-                <small class="text-muted">
-                    {{ $questions->total() }} soal tersedia
-                </small>
+                <h2 class="toolbar-title">
+                    Daftar Soal
+                </h2>
+
+                <p class="toolbar-description">
+                    Semua pertanyaan yang telah dibuat.
+                </p>
+
             </div>
+
+        </div>
+
+
+        <div class="toolbar-count">
+
+            {{ number_format($questions->total()) }}
+
+            soal
 
         </div>
 
     </div>
 
 
-    <div class="card-body p-0">
+    {{-- =================================================
+         TABLE
+    ================================================== --}}
 
-        @if($questions->count() > 0)
+    <div class="table-responsive">
 
-            <div class="table-responsive">
+        <table class="table questions-table align-middle">
 
-                <table class="table table-hover align-middle mb-0">
+            <thead>
 
-                    <thead class="table-light">
+                <tr>
 
-                        <tr>
+                    <th class="number-column">
+                        #
+                    </th>
 
-                            <th width="70"
-                                class="ps-4">
-                                No
-                            </th>
+                    <th>
+                        Assessment
+                    </th>
 
-                            <th width="200">
-                                Assessment
-                            </th>
+                    <th>
+                        Pertanyaan
+                    </th>
 
-                            <th>
-                                Pertanyaan
-                            </th>
+                    <th>
+                        Tipe
+                    </th>
 
-                            <th width="130">
-                                Tipe
-                            </th>
+                    <th>
+                        Nilai
+                    </th>
 
-                            <th width="100">
-                                Nilai
-                            </th>
+                    <th>
+                        Aksi
+                    </th>
 
-                            <th width="210"
-                                class="text-end pe-4">
-                                Aksi
-                            </th>
+                </tr>
 
-                        </tr>
+            </thead>
 
-                    </thead>
 
+            <tbody>
 
-                    <tbody>
+                @forelse($questions as $question)
 
-                        @foreach($questions as $question)
+                    <tr>
 
-                            <tr>
 
-                                {{-- NOMOR --}}
-                                <td class="ps-4 text-muted">
+                        {{-- NUMBER --}}
 
-                                    {{ $questions->firstItem() + $loop->index }}
+                        <td class="number-column">
 
-                                </td>
+                            {{ $questions->firstItem() + $loop->index }}
 
+                        </td>
 
-                                {{-- ASSESSMENT --}}
-                                <td>
 
-                                    <div class="fw-semibold">
+                        {{-- ASSESSMENT --}}
 
-                                        {{ $question->assessment?->title ?? '-' }}
+                        <td>
 
-                                    </div>
+                            <div class="assessment-name">
 
-                                </td>
+                                {{ $question->assessment?->title ?? '—' }}
 
+                            </div>
 
-                                {{-- PERTANYAAN --}}
-                                <td>
+                        </td>
 
-                                    <div style="max-width: 500px;">
 
-                                        {{ \Illuminate\Support\Str::limit(
-                                            $question->question,
-                                            100
-                                        ) }}
+                        {{-- QUESTION --}}
 
-                                    </div>
+                        <td>
 
-                                </td>
+                            <div class="question-text">
 
+                                {{ \Illuminate\Support\Str::limit(
+                                    $question->question,
+                                    100
+                                ) }}
 
-                                {{-- TIPE --}}
-                                <td>
+                            </div>
 
-                                    @if($question->type === 'multiple_choice')
+                        </td>
 
-                                        <span class="badge bg-light text-dark border">
-                                            Pilihan Ganda
-                                        </span>
 
-                                    @else
+                        {{-- TYPE --}}
 
-                                        <span class="badge bg-light text-dark border">
-                                            Free Text
-                                        </span>
+                        <td>
 
-                                    @endif
+                            @if($question->type === 'multiple_choice')
 
-                                </td>
+                                <span class="question-type multiple">
 
+                                    <i class="bi bi-list-check"></i>
 
-                                {{-- NILAI --}}
-                                <td>
+                                    Pilihan Ganda
 
-                                    <span class="fw-semibold">
+                                </span>
 
-                                        {{ $question->score }}
+                            @else
 
-                                    </span>
+                                <span class="question-type text">
 
-                                </td>
+                                    <i class="bi bi-input-cursor-text"></i>
 
+                                    Free Text
 
-                                {{-- AKSI --}}
-                                <td class="text-end pe-4">
+                                </span>
 
-                                    <div class="d-inline-flex gap-1">
+                            @endif
 
-                                        <a href="{{ route(
-                                            'owner.questions.show',
-                                            $question
-                                        ) }}"
-                                           class="btn btn-sm btn-outline-secondary">
+                        </td>
 
-                                            Lihat
 
-                                        </a>
+                        {{-- SCORE --}}
 
+                        <td>
 
-                                        <a href="{{ route(
-                                            'owner.questions.edit',
-                                            $question
-                                        ) }}"
-                                           class="btn btn-sm btn-outline-primary">
+                            <div class="score-wrapper">
 
-                                            Edit
+                                <span class="score-value">
 
-                                        </a>
+                                    {{ $question->score }}
 
+                                </span>
 
-                                        <form
-                                            action="{{ route(
-                                                'owner.questions.destroy',
-                                                $question
-                                            ) }}"
-                                            method="POST"
-                                            class="d-inline"
-                                            onsubmit="return confirm('Yakin ingin menghapus soal ini?')"
-                                        >
+                                <span class="score-unit">
+                                    poin
+                                </span>
 
-                                            @csrf
+                            </div>
 
-                                            @method('DELETE')
+                        </td>
 
-                                            <button
-                                                type="submit"
-                                                class="btn btn-sm btn-outline-danger"
-                                            >
 
-                                                Hapus
+                        {{-- ACTION --}}
 
-                                            </button>
+                        <td>
 
-                                        </form>
+                            <div class="question-actions">
 
-                                    </div>
 
-                                </td>
+                                {{-- VIEW --}}
 
-                            </tr>
+                                <a
+                                    href="{{ route(
+                                        'owner.questions.show',
+                                        $question
+                                    ) }}"
+                                    class="question-action view"
+                                    title="Lihat Soal"
+                                >
 
-                        @endforeach
+                                    <i class="bi bi-eye"></i>
 
-                    </tbody>
+                                </a>
 
-                </table>
 
-            </div>
+                                {{-- EDIT --}}
 
-        @else
+                                <a
+                                    href="{{ route(
+                                        'owner.questions.edit',
+                                        $question
+                                    ) }}"
+                                    class="question-action edit"
+                                    title="Edit Soal"
+                                >
 
-            {{-- EMPTY STATE --}}
+                                    <i class="bi bi-pencil"></i>
 
-            <div class="text-center py-5">
+                                </a>
 
-                <h5 class="fw-semibold mb-2">
-                    Belum ada soal
-                </h5>
 
-                <p class="text-muted mb-3">
-                    Belum ada soal yang ditambahkan ke assessment.
-                </p>
+                                {{-- DELETE --}}
 
-                <a href="{{ route('owner.questions.create') }}"
-                   class="btn btn-dark">
+                                <form
+                                    method="POST"
+                                    action="{{ route(
+                                        'owner.questions.destroy',
+                                        $question
+                                    ) }}"
+                                    onsubmit="return confirm(
+                                        'Yakin ingin menghapus soal ini?'
+                                    )"
+                                >
 
-                    + Tambah Soal
+                                    @csrf
 
-                </a>
+                                    @method('DELETE')
 
-            </div>
+                                    <button
+                                        type="submit"
+                                        class="question-action delete"
+                                        title="Hapus Soal"
+                                    >
 
-        @endif
+                                        <i class="bi bi-trash3"></i>
+
+                                    </button>
+
+                                </form>
+
+                            </div>
+
+                        </td>
+
+                    </tr>
+
+
+                @empty
+
+
+                    {{-- EMPTY STATE --}}
+
+                    <tr>
+
+                        <td colspan="6">
+
+                            <div class="questions-empty">
+
+                                <div class="questions-empty-icon">
+
+                                    <i class="bi bi-question-circle"></i>
+
+                                </div>
+
+                                <div class="questions-empty-title">
+
+                                    Belum ada soal
+
+                                </div>
+
+                                <p class="questions-empty-description">
+
+                                    Belum ada soal yang dibuat.
+                                    Tambahkan soal pertama untuk mulai
+                                    membangun assessment.
+
+                                </p>
+
+                                <a
+                                    href="{{ route(
+                                        'owner.questions.create'
+                                    ) }}"
+                                    class="btn-add-question"
+                                >
+
+                                    <i class="bi bi-plus-lg"></i>
+
+                                    Tambah Soal
+
+                                </a>
+
+                            </div>
+
+                        </td>
+
+                    </tr>
+
+
+                @endforelse
+
+            </tbody>
+
+        </table>
 
     </div>
 
 
-    {{-- PAGINATION --}}
+    {{-- =================================================
+         PAGINATION
+    ================================================== --}}
+
     @if($questions->hasPages())
 
-        <div class="card-footer bg-white border-top py-3">
+        <div class="questions-pagination">
 
             {{ $questions->links() }}
 
@@ -307,9 +1033,19 @@
 
     @endif
 
+
 </div>
 
 
 </div>
+
+{{-- =====================================================
+BOOTSTRAP ICONS
+====================================================== --}}
+
+<link
+    rel="stylesheet"
+    href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css"
+>
 
 @endsection

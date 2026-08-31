@@ -4,6 +4,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="icon" type="image/x-icon" href="{{ asset('logo.png') }}">
 
     <title>{{ $blog->title ?? 'Blog Detail' }} | TesThink</title>
 
@@ -127,7 +128,7 @@
             border-radius: 7px;
 
             background: #111;
-            color: #fff !important;
+            color: #fff;
 
             font-size: 13px;
             font-weight: 600;
@@ -137,7 +138,7 @@
 
         .btn-login:hover {
             background: #292929;
-            color: #fff !important;
+            color: #fff;
 
             transform: translateY(-1px);
         }

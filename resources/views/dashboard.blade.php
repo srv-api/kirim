@@ -4,9 +4,14 @@
 <head>
 
     <meta charset="UTF-8">
+    <link rel="icon" type="image/x-icon" href="{{ asset('logo.png') }}">
 
     <title>Dashboard</title>
-
+<link
+    rel="icon"
+    type="image/x-icon"
+    href="{{ asset('preview.png') }}"
+>
     <meta
         name="viewport"
         content="width=device-width, initial-scale=1"

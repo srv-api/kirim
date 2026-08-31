@@ -601,7 +601,129 @@
             height: 240px;
         }
     }
+/* =========================================================
+   FINISH CONFIRMATION MODAL
+========================================================= */
 
+.finish-modal {
+    position: fixed;
+    inset: 0;
+    z-index: 9999;
+
+    display: none;
+    align-items: center;
+    justify-content: center;
+
+    padding: 16px;
+
+    background: rgba(17, 24, 39, .45);
+
+    opacity: 0;
+    transition: opacity .2s ease;
+}
+
+.finish-modal.show {
+    display: flex;
+    opacity: 1;
+}
+
+.finish-modal-box {
+    width: 100%;
+    max-width: 380px;
+
+    background: #fff;
+
+    border-radius: 12px;
+
+    padding: 24px;
+
+    box-shadow:
+        0 20px 60px rgba(0, 0, 0, .18);
+
+    transform: translateY(10px) scale(.98);
+    transition: .2s ease;
+}
+
+.finish-modal.show .finish-modal-box {
+    transform: translateY(0) scale(1);
+}
+
+.finish-modal-title {
+    margin: 0 0 7px;
+
+    font-size: 17px;
+    font-weight: 700;
+
+    color: #212529;
+}
+
+.finish-modal-text {
+    margin: 0;
+
+    font-size: 12px;
+    line-height: 1.6;
+
+    color: #6c757d;
+}
+
+.finish-modal-actions {
+    display: flex;
+    justify-content: flex-end;
+
+    gap: 8px;
+
+    margin-top: 22px;
+}
+
+.finish-modal-actions button {
+    border-radius: 6px;
+
+    padding: 8px 13px;
+
+    font-size: 11px;
+    font-weight: 600;
+
+    cursor: pointer;
+}
+
+.finish-cancel {
+    background: #fff;
+    color: #495057;
+
+    border: 1px solid #dee2e6;
+}
+
+.finish-cancel:hover {
+    background: #f8f9fa;
+}
+
+.finish-confirm {
+    background: #212529;
+    color: #fff;
+
+    border: 1px solid #212529;
+}
+
+.finish-confirm:hover {
+    background: #000;
+}
+
+@media (max-width: 600px) {
+
+    .finish-modal-box {
+        max-width: 100%;
+        padding: 20px;
+    }
+
+    .finish-modal-title {
+        font-size: 16px;
+    }
+
+    .finish-modal-text {
+        font-size: 11px;
+    }
+
+}
 </style>
 
 
@@ -1042,13 +1164,58 @@
 {{-- =============================================================
 JAVASCRIPT
 ============================================================= --}}
+{{-- =============================================================
+     FINISH CONFIRMATION MODAL
+============================================================= --}}
 
+<div
+    class="finish-modal"
+    id="finishModal"
+>
+
+    <div
+        class="finish-modal-box"
+        role="dialog"
+        aria-modal="true"
+    >
+
+        <h3 class="finish-modal-title">
+          ✓   Selesaikan Assessment?
+        </h3>
+
+        <p class="finish-modal-text">
+            Pastikan semua jawaban Anda sudah benar.
+            Setelah assessment diselesaikan, jawaban tidak dapat diubah kembali.
+        </p>
+
+        <div class="finish-modal-actions">
+
+            <button
+                type="button"
+                class="finish-cancel"
+                id="cancelFinish"
+            >
+                Periksa Lagi
+            </button>
+
+            <button
+                type="button"
+                class="finish-confirm"
+                id="confirmFinish"
+            >
+                Ya, Selesaikan
+            </button>
+
+        </div>
+
+    </div>
+
+</div>
 <script>
 
 document.addEventListener(
     'DOMContentLoaded',
     function () {
-
 
         /*
         |--------------------------------------------------------------------------
@@ -1099,6 +1266,24 @@ document.addEventListener(
             );
 
 
+        const finishModal =
+            document.getElementById(
+                'finishModal'
+            );
+
+
+        const cancelFinish =
+            document.getElementById(
+                'cancelFinish'
+            );
+
+
+        const confirmFinish =
+            document.getElementById(
+                'confirmFinish'
+            );
+
+
         if (!form) {
             return;
         }
@@ -1108,6 +1293,9 @@ document.addEventListener(
             form.querySelector(
                 'button[type="submit"]'
             );
+
+
+        let allowSubmit = false;
 
 
         if (
@@ -1121,15 +1309,93 @@ document.addEventListener(
                 'submit',
                 function (event) {
 
-                    const confirmed =
-                        confirm(
-                            'Apakah Anda yakin ingin menyelesaikan assessment?'
+                    if (allowSubmit) {
+                        return;
+                    }
+
+
+                    event.preventDefault();
+
+
+                    finishModal.classList.add(
+                        'show'
+                    );
+
+                }
+            );
+
+        }
+
+
+        /*
+        |--------------------------------------------------------------------------
+        | BATAL
+        |--------------------------------------------------------------------------
+        */
+
+        if (cancelFinish) {
+
+            cancelFinish.addEventListener(
+                'click',
+                function () {
+
+                    finishModal.classList.remove(
+                        'show'
+                    );
+
+                }
+            );
+
+        }
+
+
+        /*
+        |--------------------------------------------------------------------------
+        | KONFIRMASI SELESAI
+        |--------------------------------------------------------------------------
+        */
+
+        if (confirmFinish) {
+
+            confirmFinish.addEventListener(
+                'click',
+                function () {
+
+                    allowSubmit = true;
+
+                    confirmFinish.disabled = true;
+
+                    confirmFinish.innerHTML =
+                        'Menyelesaikan...';
+
+
+                    form.submit();
+
+                }
+            );
+
+        }
+
+
+        /*
+        |--------------------------------------------------------------------------
+        | KLIK BACKDROP UNTUK MENUTUP
+        |--------------------------------------------------------------------------
+        */
+
+        if (finishModal) {
+
+            finishModal.addEventListener(
+                'click',
+                function (event) {
+
+                    if (
+                        event.target === finishModal
+                    ) {
+
+                        finishModal.classList.remove(
+                            'show'
                         );
-
-
-                    if (!confirmed) {
-
-                        event.preventDefault();
 
                     }
 
@@ -1138,8 +1404,38 @@ document.addEventListener(
 
         }
 
+
+        /*
+        |--------------------------------------------------------------------------
+        | ESC UNTUK MENUTUP
+        |--------------------------------------------------------------------------
+        */
+
+        document.addEventListener(
+            'keydown',
+            function (event) {
+
+                if (
+                    event.key === 'Escape' &&
+                    finishModal &&
+                    finishModal.classList.contains(
+                        'show'
+                    )
+                ) {
+
+                    finishModal.classList.remove(
+                        'show'
+                    );
+
+                }
+
+            }
+        );
+
     }
 );
+
+
 
 </script>
 

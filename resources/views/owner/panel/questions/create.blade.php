@@ -3,478 +3,1048 @@
 @section('content')
 
 <style>
-    .question-builder {
-        max-width: 1100px;
-        margin: 0 auto;
+    /* =====================================================
+       QUESTION BUILDER
+    ====================================================== */
+
+    .question-builder-page {
+        --page-text: #111827;
+        --page-muted: #6b7280;
+        --page-border: #e5e7eb;
+        --page-soft: #f8fafc;
+        --page-radius: 16px;
+        padding-bottom: 40px;
     }
 
-    .page-header {
-        border-bottom: 1px solid #e9ecef;
-        padding-bottom: 20px;
-        margin-bottom: 24px;
+    /* =====================================================
+       HEADER
+    ====================================================== */
+
+    .builder-header {
+        margin-bottom: 28px;
     }
 
-    .page-title {
-        font-size: 24px;
+    .builder-eyebrow {
+        display: flex;
+        align-items: center;
+        gap: 8px;
+        margin-bottom: 7px;
+        color: #9ca3af;
+        font-size: 11px;
         font-weight: 700;
-        color: #212529;
-        margin-bottom: 4px;
+        letter-spacing: .08em;
+        text-transform: uppercase;
     }
 
-    .page-description {
-        color: #6c757d;
-        font-size: 14px;
+    .builder-eyebrow span {
+        width: 6px;
+        height: 6px;
+        border-radius: 50%;
+        background: #059669;
+        box-shadow: 0 0 0 4px rgba(5, 150, 105, .08);
+    }
+
+    .builder-title {
         margin: 0;
+        color: var(--page-text);
+        font-size: 28px;
+        line-height: 1.2;
+        font-weight: 750;
+        letter-spacing: -.035em;
     }
 
-    .builder-section {
-        background: #fff;
+    .builder-description {
+        margin: 7px 0 0;
+        color: var(--page-muted);
+        font-size: 13px;
+    }
+
+    /* =====================================================
+       ALERT
+    ====================================================== */
+
+    .builder-alert {
+        display: flex;
+        align-items: flex-start;
+        gap: 10px;
+        margin-bottom: 20px;
+        padding: 12px 14px;
         border: 1px solid #e5e7eb;
         border-radius: 10px;
-        margin-bottom: 18px;
-    }
-
-    .section-header {
-        padding: 16px 20px;
-        border-bottom: 1px solid #edf0f2;
         background: #fafafa;
-        border-radius: 10px 10px 0 0;
+        color: #6b7280;
+        font-size: 11px;
+        line-height: 1.5;
     }
 
-    .section-header h6 {
+    .builder-alert-danger {
+        border-color: #fecaca;
+        background: #fffafa;
+        color: #b91c1c;
+    }
+
+    .builder-alert-success {
+        border-color: #bbf7d0;
+        background: #f7fff9;
+        color: #166534;
+    }
+
+    .builder-alert-icon {
+        width: 28px;
+        height: 28px;
+        flex: 0 0 28px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        border-radius: 8px;
+        background: #f3f4f6;
+        color: #374151;
+        font-size: 13px;
+    }
+
+    .builder-alert-danger .builder-alert-icon {
+        background: #fee2e2;
+        color: #dc2626;
+    }
+
+    .builder-alert-success .builder-alert-icon {
+        background: #dcfce7;
+        color: #16a34a;
+    }
+
+    .builder-alert ul {
+        margin: 4px 0 0;
+        padding-left: 17px;
+    }
+
+    /* =====================================================
+       MAIN CARD
+    ====================================================== */
+
+    .builder-card {
+        background: #fff;
+        border: 1px solid var(--page-border);
+        border-radius: var(--page-radius);
+        overflow: hidden;
+    }
+
+    /* =====================================================
+       CARD HEADER
+    ====================================================== */
+
+    .builder-card-header {
+        display: flex;
+        align-items: center;
+        gap: 12px;
+        padding: 20px 24px;
+        border-bottom: 1px solid var(--page-border);
+    }
+
+    .builder-card-icon {
+        width: 38px;
+        height: 38px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        border-radius: 10px;
+        background: #f3f4f6;
+        color: #374151;
+        font-size: 16px;
+    }
+
+    .builder-card-title {
         margin: 0;
-        font-weight: 600;
+        color: var(--page-text);
         font-size: 14px;
+        font-weight: 700;
     }
 
-    .section-body {
-        padding: 20px;
+    .builder-card-description {
+        margin: 3px 0 0;
+        color: #9ca3af;
+        font-size: 11px;
     }
+
+    /* =====================================================
+       FORM BODY
+    ====================================================== */
+
+    .builder-card-body {
+        padding: 26px 24px;
+    }
+
+    /* =====================================================
+       ASSESSMENT SELECT
+    ====================================================== */
+
+    .assessment-section {
+        margin-bottom: 28px;
+    }
+
+    .form-section-title {
+        display: flex;
+        align-items: center;
+        gap: 7px;
+        margin-bottom: 17px;
+        color: #374151;
+        font-size: 12px;
+        font-weight: 700;
+    }
+
+    .form-section-title i {
+        color: #9ca3af;
+        font-size: 13px;
+    }
+
+    .form-section-title::after {
+        content: "";
+        flex: 1;
+        height: 1px;
+        margin-left: 4px;
+        background: #f1f5f9;
+    }
+
+    .builder-label {
+        display: block;
+        margin-bottom: 7px;
+        color: #374151;
+        font-size: 12px;
+        font-weight: 650;
+    }
+
+    .required-mark {
+        color: #dc2626;
+        margin-left: 2px;
+    }
+
+    .builder-input,
+    .builder-select,
+    .builder-textarea {
+        width: 100%;
+        border: 1px solid #dfe3e8;
+        border-radius: 9px;
+        background: #fff;
+        color: #111827;
+        font-size: 13px;
+        transition:
+            border-color .15s ease,
+            box-shadow .15s ease,
+            background .15s ease;
+    }
+
+    .builder-input,
+    .builder-select {
+        min-height: 42px;
+        padding: 9px 12px;
+    }
+
+    .builder-textarea {
+        min-height: 120px;
+        padding: 11px 12px;
+        resize: vertical;
+        line-height: 1.6;
+    }
+
+    .builder-input:hover,
+    .builder-select:hover,
+    .builder-textarea:hover {
+        border-color: #cbd0d7;
+    }
+
+    .builder-input:focus,
+    .builder-select:focus,
+    .builder-textarea:focus {
+        border-color: #9ca3af;
+        background: #fff;
+        box-shadow: 0 0 0 3px rgba(17, 24, 39, .05);
+        outline: none;
+    }
+
+    /* =====================================================
+       QUESTION CARD
+    ====================================================== */
 
     .question-card {
+        margin-bottom: 20px;
+        border: 1px solid var(--page-border);
+        border-radius: 14px;
         background: #fff;
-        border: 1px solid #dfe3e7;
-        border-radius: 10px;
-        margin-bottom: 18px;
         overflow: hidden;
     }
 
     .question-header {
-        background: #f8f9fa;
-        border-bottom: 1px solid #e5e7eb;
-        padding: 14px 18px;
         display: flex;
         align-items: center;
         justify-content: space-between;
+        gap: 15px;
+        padding: 16px 20px;
+        border-bottom: 1px solid var(--page-border);
+        background: #fafafa;
     }
 
-    .question-title {
+    .question-heading {
         display: flex;
         align-items: center;
-        gap: 10px;
-        font-weight: 600;
-        font-size: 15px;
+        gap: 11px;
     }
 
     .question-number {
-        width: 30px;
-        height: 30px;
-        border-radius: 6px;
-        background: #212529;
-        color: #fff;
-        display: inline-flex;
+        width: 34px;
+        height: 34px;
+        flex: 0 0 34px;
+        display: flex;
         align-items: center;
         justify-content: center;
+        border-radius: 9px;
+        background: #111827;
+        color: #fff;
+        font-size: 12px;
+        font-weight: 700;
+    }
+
+    .question-title {
+        margin: 0;
+        color: #111827;
         font-size: 13px;
         font-weight: 700;
     }
 
-    .question-body {
-        padding: 20px;
+    .question-meta {
+        margin-top: 2px;
+        color: #9ca3af;
+        font-size: 10px;
     }
 
-    .form-label {
-        font-size: 13px;
+    .remove-question {
+        min-height: 34px;
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        gap: 6px;
+        padding: 7px 11px;
+        border: 1px solid #e5e7eb;
+        border-radius: 8px;
+        background: #fff;
+        color: #6b7280;
+        font-size: 11px;
         font-weight: 600;
-        color: #343a40;
-        margin-bottom: 7px;
+        transition: all .18s ease;
     }
 
-    .form-control,
-    .form-select {
-        border-color: #dfe3e7;
-        border-radius: 7px;
-        font-size: 14px;
-        min-height: 42px;
+    .remove-question:hover {
+        border-color: #fecaca;
+        background: #fffafa;
+        color: #dc2626;
     }
 
-    textarea.form-control {
-        min-height: 110px;
-        resize: vertical;
+    .question-body {
+        padding: 24px 20px;
     }
 
-    .form-control:focus,
-    .form-select:focus {
-        border-color: #adb5bd;
-        box-shadow: 0 0 0 3px rgba(33, 37, 41, .06);
-    }
+    /* =====================================================
+       OPTION SECTION
+    ====================================================== */
 
     .option-section {
-        margin-top: 20px;
-        border-top: 1px solid #edf0f2;
-        padding-top: 20px;
+        margin-top: 25px;
+        padding-top: 22px;
+        border-top: 1px solid #f1f5f9;
     }
 
     .option-header {
         display: flex;
-        justify-content: space-between;
         align-items: center;
-        margin-bottom: 12px;
+        justify-content: space-between;
+        gap: 15px;
+        margin-bottom: 13px;
+    }
+
+    .option-heading {
+        display: flex;
+        align-items: center;
+        gap: 9px;
+    }
+
+    .option-icon {
+        width: 30px;
+        height: 30px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        border-radius: 8px;
+        background: #f3f4f6;
+        color: #4b5563;
+        font-size: 12px;
     }
 
     .option-title {
-        font-size: 14px;
-        font-weight: 600;
         margin: 0;
+        color: #374151;
+        font-size: 12px;
+        font-weight: 700;
     }
 
     .option-help {
-        font-size: 12px;
-        color: #868e96;
-        margin-top: 3px;
+        margin-top: 2px;
+        color: #9ca3af;
+        font-size: 10px;
+    }
+
+    .add-option {
+        min-height: 34px;
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        gap: 6px;
+        padding: 7px 11px;
+        border: 1px solid #e5e7eb;
+        border-radius: 8px;
+        background: #fff;
+        color: #4b5563;
+        font-size: 11px;
+        font-weight: 600;
+        transition: all .18s ease;
+    }
+
+    .add-option:hover {
+        border-color: #d1d5db;
+        background: #f9fafb;
+        color: #111827;
+    }
+
+    .options-container {
+        display: flex;
+        flex-direction: column;
+        gap: 8px;
     }
 
     .option-item {
-        display: flex;
+        display: grid;
+        grid-template-columns: 32px minmax(0, 1fr) auto 34px;
         align-items: center;
-        gap: 10px;
-        border: 1px solid #e1e5e8;
-        border-radius: 7px;
-        padding: 8px 10px;
-        margin-bottom: 8px;
+        gap: 9px;
+        padding: 7px;
+        border: 1px solid #e5e7eb;
+        border-radius: 9px;
         background: #fff;
     }
 
     .option-label {
-        width: 30px;
-        height: 30px;
-        flex: 0 0 30px;
-        border: 1px solid #dee2e6;
-        border-radius: 5px;
+        width: 32px;
+        height: 32px;
         display: flex;
         align-items: center;
         justify-content: center;
-        font-size: 12px;
+        border-radius: 7px;
+        background: #f3f4f6;
+        color: #4b5563;
+        font-size: 11px;
         font-weight: 700;
-        color: #495057;
-        background: #f8f9fa;
     }
 
-    .option-item .form-control {
-        min-height: 38px;
+    .option-item .builder-input {
+        min-height: 36px;
+        border-color: transparent;
+        background: #f9fafb;
+    }
+
+    .option-item .builder-input:focus {
+        border-color: #d1d5db;
+        background: #fff;
+        box-shadow: none;
     }
 
     .correct-answer {
-        display: flex;
+        display: inline-flex;
         align-items: center;
         gap: 6px;
+        min-height: 32px;
+        padding: 0 9px;
+        border: 1px solid #e5e7eb;
+        border-radius: 7px;
+        background: #fafafa;
+        color: #6b7280;
+        font-size: 10px;
+        font-weight: 600;
+        cursor: pointer;
         white-space: nowrap;
-        font-size: 12px;
-        color: #495057;
+    }
+
+    .correct-answer:has(input:checked) {
+        border-color: #bbf7d0;
+        background: #f0fdf4;
+        color: #166534;
     }
 
     .correct-answer input {
+        width: 13px;
+        height: 13px;
         margin: 0;
+        accent-color: #059669;
+        cursor: pointer;
     }
 
     .remove-option {
         width: 32px;
         height: 32px;
-        padding: 0;
         display: flex;
         align-items: center;
         justify-content: center;
+        border: 1px solid transparent;
+        border-radius: 7px;
+        background: transparent;
+        color: #9ca3af;
+        font-size: 15px;
+        transition: all .18s ease;
     }
 
-    .add-question-box {
-        border: 1px dashed #cfd4da;
-        border-radius: 9px;
-        padding: 18px;
-        text-align: center;
-        background: #fafafa;
-        margin-bottom: 20px;
+    .remove-option:hover {
+        border-color: #fecaca;
+        background: #fffafa;
+        color: #dc2626;
     }
 
-    .add-question-box button {
-        font-weight: 500;
+    /* =====================================================
+       FILE UPLOAD
+    ====================================================== */
+
+    .file-section {
+        margin-top: 20px;
     }
 
-    .bottom-actions {
-        position: sticky;
-        bottom: 0;
-        background: rgba(255,255,255,.96);
-        border-top: 1px solid #e5e7eb;
-        padding: 14px 0;
-        z-index: 20;
-        backdrop-filter: blur(6px);
-    }
-
-    .question-count {
-        font-size: 13px;
-        color: #6c757d;
+    .file-help {
+        display: flex;
+        align-items: flex-start;
+        gap: 5px;
+        margin-top: 6px;
+        color: #9ca3af;
+        font-size: 10px;
+        line-height: 1.5;
     }
 
     .file-preview {
-        margin-top: 10px;
         display: none;
+        margin-top: 10px;
+        padding: 10px;
+        border: 1px solid #e5e7eb;
+        border-radius: 9px;
+        background: #fafafa;
     }
 
     .file-preview img {
-        max-width: 180px;
-        max-height: 120px;
+        max-width: 200px;
+        max-height: 130px;
         object-fit: cover;
         border-radius: 7px;
-        border: 1px solid #dee2e6;
     }
 
     .file-info {
-        font-size: 12px;
-        color: #6c757d;
-        margin-top: 5px;
+        margin-top: 6px;
+        color: #6b7280;
+        font-size: 10px;
     }
 
+    /* =====================================================
+       ADD QUESTION
+    ====================================================== */
+
+    .add-question-box {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        min-height: 110px;
+        margin-bottom: 24px;
+        padding: 20px;
+        border: 1px dashed #d1d5db;
+        border-radius: 12px;
+        background: #fafafa;
+    }
+
+    .add-question-button {
+        min-height: 38px;
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        gap: 7px;
+        padding: 8px 15px;
+        border: 1px solid #e5e7eb;
+        border-radius: 9px;
+        background: #fff;
+        color: #374151;
+        font-size: 12px;
+        font-weight: 650;
+        transition: all .18s ease;
+    }
+
+    .add-question-button:hover {
+        border-color: #d1d5db;
+        background: #f9fafb;
+        color: #111827;
+    }
+
+    .question-count-help {
+        margin-top: 7px;
+        color: #9ca3af;
+        font-size: 10px;
+    }
+
+    /* =====================================================
+       FOOTER
+    ====================================================== */
+
+    .builder-footer {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        gap: 15px;
+        padding: 18px 24px;
+        border-top: 1px solid var(--page-border);
+        background: #fafafa;
+    }
+
+    .footer-note {
+        display: flex;
+        align-items: center;
+        gap: 6px;
+        color: #9ca3af;
+        font-size: 10px;
+    }
+
+    .footer-note i {
+        font-size: 11px;
+    }
+
+    .builder-total {
+        display: flex;
+        align-items: center;
+        gap: 7px;
+        color: #6b7280;
+        font-size: 11px;
+    }
+
+    .total-badge {
+        min-width: 25px;
+        height: 25px;
+        padding: 0 7px;
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        border-radius: 7px;
+        background: #f3f4f6;
+        color: #111827;
+        font-size: 11px;
+        font-weight: 700;
+    }
+
+    .builder-actions {
+        display: flex;
+        align-items: center;
+        gap: 8px;
+    }
+
+    .btn-builder-cancel,
+    .btn-builder-save {
+        min-height: 39px;
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        gap: 7px;
+        padding: 8px 14px;
+        border-radius: 9px;
+        font-size: 12px;
+        font-weight: 650;
+        text-decoration: none;
+        transition: all .18s ease;
+    }
+
+    .btn-builder-cancel {
+        border: 1px solid #e5e7eb;
+        background: #fff;
+        color: #6b7280;
+    }
+
+    .btn-builder-cancel:hover {
+        color: #111827;
+        background: #f9fafb;
+        border-color: #d1d5db;
+    }
+
+    .btn-builder-save {
+        border: 1px solid #111827;
+        background: #111827;
+        color: #fff;
+    }
+
+    .btn-builder-save:hover {
+        background: #000;
+        border-color: #000;
+        color: #fff;
+        transform: translateY(-1px);
+        box-shadow: 0 7px 18px rgba(15, 23, 42, .12);
+    }
+
+    .btn-builder-save:disabled {
+        opacity: .65;
+        cursor: not-allowed;
+        transform: none;
+        box-shadow: none;
+    }
+
+    /* =====================================================
+       RESPONSIVE
+    ====================================================== */
+
     @media (max-width: 768px) {
-        .question-builder {
-            width: 100%;
+
+        .builder-title {
+            font-size: 25px;
         }
 
-        .question-body,
-        .section-body {
-            padding: 15px;
-        }
-
-        .option-item {
-            flex-wrap: wrap;
-        }
-
-        .correct-answer {
-            margin-left: 40px;
+        .builder-card-header,
+        .builder-card-body,
+        .builder-footer {
+            padding-left: 18px;
+            padding-right: 18px;
         }
 
         .question-header {
-            padding: 12px 14px;
+            padding: 14px 15px;
         }
 
-        .bottom-actions .d-flex {
-            flex-wrap: wrap;
-            gap: 10px;
+        .question-body {
+            padding: 18px 15px;
+        }
+
+        .option-header {
+            align-items: flex-start;
+            flex-direction: column;
+        }
+
+        .add-option {
+            width: 100%;
+        }
+
+        .option-item {
+            grid-template-columns: 30px minmax(0, 1fr) 32px;
+        }
+
+        .option-item .builder-input {
+            grid-column: 2 / 3;
+        }
+
+        .correct-answer {
+            grid-column: 2 / 3;
+            justify-self: start;
+        }
+
+        .remove-option {
+            grid-column: 3 / 4;
+            grid-row: 1;
+        }
+
+        .builder-footer {
+            align-items: stretch;
+            flex-direction: column;
+        }
+
+        .builder-total {
+            justify-content: center;
+        }
+
+        .builder-actions {
+            width: 100%;
+        }
+
+        .btn-builder-cancel,
+        .btn-builder-save {
+            flex: 1;
+        }
+    }
+
+    @media (max-width: 480px) {
+
+        .question-title {
+            font-size: 12px;
+        }
+
+        .question-meta {
+            display: none;
+        }
+
+        .remove-question {
+            padding: 7px 9px;
+        }
+
+        .remove-question span {
+            display: none;
         }
     }
 </style>
 
-<div class="container-fluid">
+<div class="container-fluid question-builder-page">
 
-    <div class="question-builder">
 
-        {{-- ==========================================================
-             HEADER
-        =========================================================== --}}
-        <div class="page-header d-flex justify-content-between align-items-center">
+{{-- =====================================================
+     HEADER
+====================================================== --}}
 
-            <div>
-                <div class="page-title">
-                    Tambah Soal
-                </div>
+<div class="builder-header">
 
-                <p class="page-description">
-                    Buat beberapa soal sekaligus untuk assessment.
-                </p>
-            </div>
+    <div class="builder-eyebrow">
+        <span></span>
+        Assessment Builder
+    </div>
 
-            <a
-                href="{{ route('owner.questions.index') }}"
-                class="btn btn-outline-secondary"
-            >
-                ← Kembali
-            </a>
+    <h1 class="builder-title">
+        Tambah Soal
+    </h1>
+
+    <p class="builder-description">
+        Buat beberapa soal sekaligus untuk assessment.
+    </p>
+
+</div>
+
+
+{{-- =====================================================
+     ALERT
+====================================================== --}}
+
+@if ($errors->any())
+
+    <div class="builder-alert builder-alert-danger">
+
+        <div class="builder-alert-icon">
+            <i class="bi bi-exclamation-lg"></i>
+        </div>
+
+        <div>
+
+            <strong>Terdapat kesalahan</strong>
+
+            <ul>
+                @foreach ($errors->all() as $error)
+                    <li>{{ $error }}</li>
+                @endforeach
+            </ul>
 
         </div>
 
+    </div>
 
-        {{-- ==========================================================
-             ERROR
-        =========================================================== --}}
-        @if ($errors->any())
+@endif
 
-            <div class="alert alert-danger mb-4">
 
-                <div class="fw-semibold mb-2">
-                    Terdapat kesalahan:
+@if (session('success'))
+
+    <div class="builder-alert builder-alert-success">
+
+        <div class="builder-alert-icon">
+            <i class="bi bi-check-lg"></i>
+        </div>
+
+        <div>
+            {{ session('success') }}
+        </div>
+
+    </div>
+
+@endif
+
+
+{{-- =====================================================
+     MAIN CARD
+====================================================== --}}
+
+<div class="builder-card">
+
+    {{-- =================================================
+         CARD HEADER
+    ================================================== --}}
+
+    <div class="builder-card-header">
+
+        <div class="builder-card-icon">
+            <i class="bi bi-ui-checks-grid"></i>
+        </div>
+
+        <div>
+
+            <h2 class="builder-card-title">
+                Question Builder
+            </h2>
+
+            <p class="builder-card-description">
+                Buat dan kelola beberapa soal dalam satu assessment.
+            </p>
+
+        </div>
+
+    </div>
+
+
+    {{-- =================================================
+         FORM
+    ================================================== --}}
+
+    <form
+        method="POST"
+        action="{{ route('owner.questions.store') }}"
+        enctype="multipart/form-data"
+        id="questionForm"
+    >
+
+        @csrf
+
+        <div class="builder-card-body">
+
+            {{-- =================================================
+                 ASSESSMENT
+            ================================================== --}}
+
+            <div class="assessment-section">
+
+                <div class="form-section-title">
+                    <i class="bi bi-clipboard-check"></i>
+                    Assessment
                 </div>
 
-                <ul class="mb-0 ps-3">
+                <label class="builder-label">
 
-                    @foreach ($errors->all() as $error)
+                    Pilih Assessment
 
-                        <li>
-                            {{ $error }}
-                        </li>
+                    <span class="required-mark">*</span>
+
+                </label>
+
+                <select
+                    name="assessment_id"
+                    class="builder-select"
+                    required
+                >
+
+                    <option value="">
+                        Pilih assessment...
+                    </option>
+
+                    @foreach($assessments as $assessment)
+
+                        <option
+                            value="{{ $assessment->id }}"
+                            @selected(old('assessment_id') == $assessment->id)
+                        >
+                            {{ $assessment->title }}
+                        </option>
 
                     @endforeach
 
-                </ul>
-
-            </div>
-
-        @endif
-
-
-        {{-- ==========================================================
-             SUCCESS
-        =========================================================== --}}
-        @if (session('success'))
-
-            <div class="alert alert-success mb-4">
-                {{ session('success') }}
-            </div>
-
-        @endif
-
-
-        {{-- ==========================================================
-             FORM
-        =========================================================== --}}
-        <form
-            method="POST"
-            action="{{ route('owner.questions.store') }}"
-            enctype="multipart/form-data"
-            id="questionForm"
-        >
-
-            @csrf
-
-
-            {{-- ======================================================
-                 ASSESSMENT
-            ======================================================= --}}
-            <div class="builder-section">
-
-                <div class="section-header">
-
-                    <h6>
-                        Assessment
-                    </h6>
-
-                </div>
-
-
-                <div class="section-body">
-
-                    <label class="form-label">
-                        Pilih Assessment
-                    </label>
-
-                    <select
-                        name="assessment_id"
-                        class="form-select"
-                        required
-                    >
-
-                        <option value="">
-                            Pilih assessment...
-                        </option>
-
-                        @foreach($assessments as $assessment)
-
-                            <option
-                                value="{{ $assessment->id }}"
-                                @selected(old('assessment_id') == $assessment->id)
-                            >
-                                {{ $assessment->title }}
-                            </option>
-
-                        @endforeach
-
-                    </select>
-
-                </div>
+                </select>
 
             </div>
 
 
-            {{-- ======================================================
-                 SOAL
-            ======================================================= --}}
+            {{-- =================================================
+                 QUESTIONS
+            ================================================== --}}
+
             <div id="questionsContainer"></div>
 
 
-            {{-- ======================================================
-                 TAMBAH SOAL
-            ======================================================= --}}
+            {{-- =================================================
+                 ADD QUESTION
+            ================================================== --}}
+
             <div class="add-question-box">
 
                 <button
                     type="button"
                     id="addQuestion"
-                    class="btn btn-outline-dark"
+                    class="add-question-button"
                 >
-                    + Tambah Soal
+
+                    <i class="bi bi-plus-lg"></i>
+
+                    Tambah Soal
+
                 </button>
 
-                <div class="question-count mt-2">
-                    Buat soal berikutnya tanpa meninggalkan halaman.
+                <div class="question-count-help">
+                    Tambahkan soal berikutnya tanpa meninggalkan halaman.
                 </div>
 
             </div>
 
-
-            {{-- ======================================================
-                 ACTION
-            ======================================================= --}}
-            <div class="bottom-actions">
-
-                <div class="d-flex justify-content-between align-items-center">
-
-                    <div class="question-count">
-
-                        Total soal:
-
-                        <strong id="questionCount">
-                            0
-                        </strong>
-
-                    </div>
+        </div>
 
 
-                    <div class="d-flex gap-2">
+        {{-- =================================================
+             FOOTER
+        ================================================== --}}
 
-                        <a
-                            href="{{ route('owner.questions.index') }}"
-                            class="btn btn-light border"
-                        >
-                            Batal
-                        </a>
+        <div class="builder-footer">
 
-                        <button
-                            type="submit"
-                            class="btn btn-dark px-4"
-                            id="submitButton"
-                        >
-                            Simpan Semua Soal
-                        </button>
+            <div class="builder-total">
 
-                    </div>
+                <i class="bi bi-list-check"></i>
 
-                </div>
+                Total soal
+
+                <strong
+                    id="questionCount"
+                    class="total-badge"
+                >
+                    0
+                </strong>
 
             </div>
 
-        </form>
 
-    </div>
+            <div class="builder-actions">
+
+                <a
+                    href="{{ route('owner.questions.index') }}"
+                    class="btn-builder-cancel"
+                >
+
+                    <i class="bi bi-arrow-left"></i>
+
+                    Batal
+
+                </a>
+
+
+                <button
+                    type="submit"
+                    class="btn-builder-save"
+                    id="submitButton"
+                >
+
+                    <i class="bi bi-check-lg"></i>
+
+                    Simpan Semua Soal
+
+                </button>
+
+            </div>
+
+        </div>
+
+    </form>
 
 </div>
 
+
+</div>
+
+{{-- =====================================================
+BOOTSTRAP ICONS
+====================================================== --}}
+
+<link
+    rel="stylesheet"
+    href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css"
+>
 
 <script>
 document.addEventListener('DOMContentLoaded', function () {
@@ -497,12 +1067,12 @@ document.addEventListener('DOMContentLoaded', function () {
     let questionIndex = 0;
 
 
-    /* ==========================================================
+    /* =====================================================
        LABEL PILIHAN
-    ========================================================== */
+    ====================================================== */
 
-    function getLabel(index)
-    {
+    function getLabel(index) {
+
         let label = '';
 
         do {
@@ -521,12 +1091,12 @@ document.addEventListener('DOMContentLoaded', function () {
     }
 
 
-    /* ==========================================================
+    /* =====================================================
        UPDATE JUMLAH SOAL
-    ========================================================== */
+    ====================================================== */
 
-    function updateQuestionCount()
-    {
+    function updateQuestionCount() {
+
         const total =
             container.querySelectorAll(
                 '.question-card'
@@ -536,12 +1106,12 @@ document.addEventListener('DOMContentLoaded', function () {
     }
 
 
-    /* ==========================================================
+    /* =====================================================
        TAMBAH SOAL
-    ========================================================== */
+    ====================================================== */
 
-    function addQuestion()
-    {
+    function addQuestion() {
+
         const index = questionIndex;
 
         const html = `
@@ -551,48 +1121,61 @@ document.addEventListener('DOMContentLoaded', function () {
                 data-index="${index}"
             >
 
-                {{-- HEADER SOAL --}}
                 <div class="question-header">
 
-                    <div class="question-title">
+                    <div class="question-heading">
 
                         <span class="question-number">
                             ${index + 1}
                         </span>
 
-                        <span>
-                            Pertanyaan
-                        </span>
+                        <div>
+
+                            <h3 class="question-title">
+                                Pertanyaan
+                            </h3>
+
+                            <div class="question-meta">
+                                Soal ${index + 1}
+                            </div>
+
+                        </div>
 
                     </div>
 
 
                     <button
                         type="button"
-                        class="btn btn-sm btn-outline-danger remove-question"
+                        class="remove-question"
                     >
-                        Hapus
+
+                        <i class="bi bi-trash3"></i>
+
+                        <span>Hapus</span>
+
                     </button>
 
                 </div>
 
 
-                {{-- BODY --}}
                 <div class="question-body">
 
 
                     {{-- TIPE / NILAI / URUTAN --}}
+
                     <div class="row g-3">
 
                         <div class="col-md-6">
 
-                            <label class="form-label">
+                            <label class="builder-label">
                                 Tipe Soal
+                                <span class="required-mark">*</span>
                             </label>
 
                             <select
                                 name="questions[${index}][type]"
-                                class="form-select question-type"
+                                class="builder-select question-type"
+                                required
                             >
 
                                 <option value="multiple_choice">
@@ -610,14 +1193,15 @@ document.addEventListener('DOMContentLoaded', function () {
 
                         <div class="col-md-3">
 
-                            <label class="form-label">
+                            <label class="builder-label">
                                 Nilai
+                                <span class="required-mark">*</span>
                             </label>
 
                             <input
                                 type="number"
                                 name="questions[${index}][score]"
-                                class="form-control"
+                                class="builder-input"
                                 value="1"
                                 min="1"
                                 required
@@ -628,14 +1212,15 @@ document.addEventListener('DOMContentLoaded', function () {
 
                         <div class="col-md-3">
 
-                            <label class="form-label">
+                            <label class="builder-label">
                                 Urutan
+                                <span class="required-mark">*</span>
                             </label>
 
                             <input
                                 type="number"
                                 name="questions[${index}][order]"
-                                class="form-control question-order"
+                                class="builder-input question-order"
                                 value="${index + 1}"
                                 min="1"
                                 required
@@ -647,62 +1232,75 @@ document.addEventListener('DOMContentLoaded', function () {
 
 
                     {{-- PERTANYAAN --}}
-                    <div class="mt-3">
 
-                        <label class="form-label">
+                    <div style="margin-top: 20px;">
+
+                        <label class="builder-label">
                             Pertanyaan
+                            <span class="required-mark">*</span>
                         </label>
 
                         <textarea
                             name="questions[${index}][question]"
-                            class="form-control"
-                            rows="4"
+                            class="builder-textarea question-textarea"
                             placeholder="Tulis pertanyaan di sini..."
                             required
                         ></textarea>
 
+
+                </div>
+
+
+                {{-- FILE --}}
+
+                <div class="file-section">
+
+                    <label class="builder-label">
+                        Lampiran Soal
+                    </label>
+
+                    <input
+                        type="file"
+                        name="questions[${index}][image]"
+                        class="builder-input question-image"
+                        accept=".jpg,.jpeg,.png,.webp,.gif,.pdf"
+                    >
+
+                    <div class="file-help">
+
+                        <i class="bi bi-info-circle"></i>
+
+                        <span>
+                            JPG, JPEG, PNG, WEBP, GIF atau PDF · Maksimal 5 MB
+                        </span>
+
                     </div>
 
+                    <div class="file-preview">
 
-                    {{-- FILE / GAMBAR --}}
-                    <div class="mt-3">
-
-                        <label class="form-label">
-                            File / Gambar Soal
-                        </label>
-
-                        <input
-                            type="file"
-                            name="questions[${index}][image]"
-                            class="form-control question-image"
-                            accept=".jpg,.jpeg,.png,.webp,.gif,.pdf"
+                        <img
+                            src=""
+                            alt="Preview"
                         >
 
-                        <div class="form-text">
-                            JPG, JPEG, PNG, WEBP, GIF atau PDF.
-                            Maksimal 5 MB.
-                        </div>
-
-
-                        {{-- PREVIEW --}}
-                        <div class="file-preview">
-
-                            <img
-                                src=""
-                                alt="Preview"
-                            >
-
-                            <div class="file-info"></div>
-
-                        </div>
+                        <div class="file-info"></div>
 
                     </div>
 
+                </div>
 
-                    {{-- PILIHAN --}}
-                    <div class="option-section">
 
-                        <div class="option-header">
+                {{-- OPTIONS --}}
+
+                <div class="option-section">
+
+                    <div class="option-header">
+
+                        <div class="option-heading">
+
+                            <div class="option-icon">
+                                <i class="bi bi-list-ul"></i>
+                            </div>
 
                             <div>
 
@@ -711,395 +1309,457 @@ document.addEventListener('DOMContentLoaded', function () {
                                 </div>
 
                                 <div class="option-help">
-                                    Tandai salah satu pilihan sebagai jawaban benar.
+                                    Tandai satu pilihan sebagai jawaban benar.
                                 </div>
 
                             </div>
 
-
-                            <button
-                                type="button"
-                                class="btn btn-sm btn-outline-secondary add-option"
-                            >
-                                + Pilihan
-                            </button>
-
                         </div>
 
 
-                        <div class="options-container"></div>
+                        <button
+                            type="button"
+                            class="add-option"
+                        >
+
+                            <i class="bi bi-plus-lg"></i>
+
+                            Pilihan
+
+                        </button>
 
                     </div>
 
+
+                    <div class="options-container"></div>
+
                 </div>
 
             </div>
 
-        `;
+        </div>
+
+    `;
 
 
-        container.insertAdjacentHTML(
-            'beforeend',
-            html
-        );
+    container.insertAdjacentHTML(
+        'beforeend',
+        html
+    );
 
 
-        const card =
-            container.lastElementChild;
+    const card =
+        container.lastElementChild;
 
 
-        /*
-        |----------------------------------------------------------
-        | Default 4 pilihan
-        |----------------------------------------------------------
-        */
+    /* =================================================
+       DEFAULT 4 PILIHAN
+    ================================================== */
 
-        addOption(card);
-        addOption(card);
-        addOption(card);
-        addOption(card);
+    addOption(card);
+    addOption(card);
+    addOption(card);
+    addOption(card);
 
 
-        questionIndex++;
+    questionIndex++;
 
-        refreshQuestionNumbers();
+    refreshQuestionNumbers();
 
-        updateQuestionCount();
+    updateQuestionCount();
 
 
-        /*
-        |----------------------------------------------------------
-        | Event file
-        |----------------------------------------------------------
-        */
+    /* =================================================
+       FILE EVENT
+    ================================================== */
 
-        const fileInput =
-            card.querySelector('.question-image');
+    const fileInput =
+        card.querySelector('.question-image');
 
-        fileInput.addEventListener(
-            'change',
-            function () {
+    fileInput.addEventListener(
+        'change',
+        function () {
 
-                previewFile(
-                    fileInput,
-                    card
-                );
+            previewFile(
+                fileInput,
+                card
+            );
 
-            }
-        );
+        }
+    );
+
+}
+
+
+/* =====================================================
+   PREVIEW FILE
+====================================================== */
+
+function previewFile(input, card) {
+
+    const preview =
+        card.querySelector('.file-preview');
+
+    const image =
+        preview.querySelector('img');
+
+    const info =
+        preview.querySelector('.file-info');
+
+
+    if (!input.files || !input.files[0]) {
+
+        preview.style.display = 'none';
+
+        image.src = '';
+
+        info.innerText = '';
+
+        return;
     }
 
 
-    /* ==========================================================
-       PREVIEW FILE
-    ========================================================== */
-
-    function previewFile(input, card)
-    {
-        const preview =
-            card.querySelector('.file-preview');
-
-        const image =
-            preview.querySelector('img');
-
-        const info =
-            preview.querySelector('.file-info');
-
-        if (!input.files || !input.files[0]) {
-
-            preview.style.display = 'none';
-
-            image.src = '';
-
-            info.innerText = '';
-
-            return;
-        }
+    const file =
+        input.files[0];
 
 
-        const file =
-            input.files[0];
+    if (file.size > 5 * 1024 * 1024) {
 
-
-        /*
-        |----------------------------------------------------------
-        | Validasi ukuran 5 MB
-        |----------------------------------------------------------
-        */
-
-        if (file.size > 5 * 1024 * 1024) {
-
-            alert(
-                'Ukuran file maksimal 5 MB.'
-            );
-
-            input.value = '';
-
-            preview.style.display = 'none';
-
-            return;
-        }
-
-
-        info.innerText =
-            file.name +
-            ' (' +
-            formatFileSize(file.size) +
-            ')';
-
-
-        /*
-        |----------------------------------------------------------
-        | Preview gambar
-        |----------------------------------------------------------
-        */
-
-        if (
-            file.type.startsWith('image/')
-        ) {
-
-            const reader =
-                new FileReader();
-
-            reader.onload =
-                function (event) {
-
-                    image.src =
-                        event.target.result;
-
-                    image.style.display =
-                        'block';
-
-                    preview.style.display =
-                        'block';
-
-                };
-
-            reader.readAsDataURL(file);
-
-        } else {
-
-            image.src = '';
-
-            image.style.display =
-                'none';
-
-            preview.style.display =
-                'block';
-
-        }
-    }
-
-
-    /* ==========================================================
-       FORMAT UKURAN FILE
-    ========================================================== */
-
-    function formatFileSize(bytes)
-    {
-        if (bytes === 0) {
-            return '0 Bytes';
-        }
-
-        const units = [
-            'Bytes',
-            'KB',
-            'MB',
-            'GB'
-        ];
-
-        const i =
-            Math.floor(
-                Math.log(bytes) /
-                Math.log(1024)
-            );
-
-        return (
-            parseFloat(
-                (bytes / Math.pow(1024, i))
-                    .toFixed(2)
-            )
-            + ' '
-            + units[i]
+        alert(
+            'Ukuran file maksimal 5 MB.'
         );
+
+        input.value = '';
+
+        preview.style.display = 'none';
+
+        return;
     }
 
 
-    /* ==========================================================
-       TAMBAH PILIHAN
-    ========================================================== */
-
-    function addOption(card)
-    {
-        const optionsContainer =
-            card.querySelector(
-                '.options-container'
-            );
-
-        const index =
-            optionsContainer.querySelectorAll(
-                '.option-item'
-            ).length;
-
-        const label =
-            getLabel(index);
-
-        const currentQuestionIndex =
-            card.dataset.index;
+    info.innerText =
+        file.name +
+        ' · ' +
+        formatFileSize(file.size);
 
 
-        const html = `
+    if (file.type.startsWith('image/')) {
 
-            <div class="option-item">
+        const reader =
+            new FileReader();
 
-                <div class="option-label">
-                    ${label}
-                </div>
+        reader.onload =
+            function (event) {
 
+                image.src =
+                    event.target.result;
+
+                image.style.display =
+                    'block';
+
+                preview.style.display =
+                    'block';
+
+            };
+
+        reader.readAsDataURL(file);
+
+    } else {
+
+        image.src = '';
+
+        image.style.display =
+            'none';
+
+        preview.style.display =
+            'block';
+
+    }
+
+}
+
+
+/* =====================================================
+   FORMAT FILE SIZE
+====================================================== */
+
+function formatFileSize(bytes) {
+
+    if (bytes === 0) {
+        return '0 Bytes';
+    }
+
+    const units = [
+        'Bytes',
+        'KB',
+        'MB',
+        'GB'
+    ];
+
+    const i =
+        Math.floor(
+            Math.log(bytes) /
+            Math.log(1024)
+        );
+
+    return (
+        parseFloat(
+            (
+                bytes /
+                Math.pow(1024, i)
+            ).toFixed(2)
+        )
+        + ' '
+        + units[i]
+    );
+}
+
+
+/* =====================================================
+   TAMBAH PILIHAN
+====================================================== */
+
+function addOption(card) {
+
+    const optionsContainer =
+        card.querySelector(
+            '.options-container'
+        );
+
+    const index =
+        optionsContainer.querySelectorAll(
+            '.option-item'
+        ).length;
+
+    const label =
+        getLabel(index);
+
+    const currentQuestionIndex =
+        card.dataset.index;
+
+
+    const html = `
+
+        <div class="option-item">
+
+            <div class="option-label">
+                ${label}
+            </div>
+
+
+            <input
+                type="text"
+                name="questions[${currentQuestionIndex}][options][]"
+                class="builder-input"
+                placeholder="Tulis pilihan ${label}..."
+                required
+            >
+
+
+            <label class="correct-answer">
 
                 <input
-                    type="text"
-                    name="questions[${currentQuestionIndex}][options][]"
-                    class="form-control"
-                    placeholder="Pilihan ${label}"
+                    type="radio"
+                    name="questions[${currentQuestionIndex}][correct_answer]"
+                    value="${index}"
                     required
                 >
 
+                <i class="bi bi-check-circle"></i>
 
-                <label class="correct-answer">
+                Benar
 
-                    <input
-                        type="radio"
-                        name="questions[${currentQuestionIndex}][correct_answer]"
-                        value="${index}"
-                        required
-                    >
-
-                    Benar
-
-                </label>
+            </label>
 
 
-                <button
-                    type="button"
-                    class="btn btn-sm btn-outline-danger remove-option"
-                    title="Hapus pilihan"
-                >
-                    ×
-                </button>
+            <button
+                type="button"
+                class="remove-option"
+                title="Hapus pilihan"
+            >
 
-            </div>
+                <i class="bi bi-trash3"></i>
 
-        `;
+            </button>
+
+        </div>
+
+    `;
 
 
-        optionsContainer.insertAdjacentHTML(
-            'beforeend',
-            html
+    optionsContainer.insertAdjacentHTML(
+        'beforeend',
+        html
+    );
+
+}
+
+
+/* =====================================================
+   NOMOR SOAL
+====================================================== */
+
+function refreshQuestionNumbers() {
+
+    const cards =
+        container.querySelectorAll(
+            '.question-card'
         );
-    }
 
 
-    /* ==========================================================
-       NOMOR SOAL
-    ========================================================== */
+    cards.forEach(
+        function (card, index) {
 
-    function refreshQuestionNumbers()
-    {
+            card.querySelector(
+                '.question-number'
+            ).innerText =
+                index + 1;
+
+
+            const meta =
+                card.querySelector(
+                    '.question-meta'
+                );
+
+
+            if (meta) {
+
+                meta.innerText =
+                    'Soal ' +
+                    (index + 1);
+
+            }
+
+
+            const order =
+                card.querySelector(
+                    '.question-order'
+                );
+
+
+            if (order) {
+
+                order.value =
+                    index + 1;
+
+            }
+
+        }
+    );
+
+
+    updateQuestionCount();
+
+}
+
+
+/* =====================================================
+   REFRESH PILIHAN
+====================================================== */
+
+function refreshOptionValues(card) {
+
+    const options =
+        card.querySelectorAll(
+            '.option-item'
+        );
+
+    const currentQuestionIndex =
+        card.dataset.index;
+
+
+    options.forEach(
+        function (option, index) {
+
+            const label =
+                getLabel(index);
+
+
+            option.querySelector(
+                '.option-label'
+            ).innerText =
+                label;
+
+
+            const input =
+                option.querySelector(
+                    'input[type="text"]'
+                );
+
+
+            input.placeholder =
+                'Tulis pilihan ' +
+                label +
+                '...';
+
+
+            const radio =
+                option.querySelector(
+                    'input[type="radio"]'
+                );
+
+
+            radio.value =
+                index;
+
+
+            radio.name =
+                `questions[${currentQuestionIndex}][correct_answer]`;
+
+        }
+    );
+
+}
+
+
+/* =====================================================
+   TAMBAH SOAL
+====================================================== */
+
+addQuestionButton.addEventListener(
+    'click',
+    function () {
+
+        addQuestion();
+
         const cards =
             container.querySelectorAll(
                 '.question-card'
             );
 
-
-        cards.forEach(
-            function (card, index) {
-
-                card.querySelector(
-                    '.question-number'
-                ).innerText =
-                    index + 1;
+        const lastCard =
+            cards[cards.length - 1];
 
 
-                card.querySelector(
-                    '.question-order'
-                ).value =
-                    index + 1;
+        lastCard.scrollIntoView({
+            behavior: 'smooth',
+            block: 'start'
+        });
 
-            }
-        );
-
-
-        updateQuestionCount();
     }
+);
 
 
-    /* ==========================================================
-       REFRESH PILIHAN
-    ========================================================== */
+/* =====================================================
+   CLICK EVENT
+====================================================== */
 
-    function refreshOptionValues(card)
-    {
-        const options =
-            card.querySelectorAll(
-                '.option-item'
+container.addEventListener(
+    'click',
+    function (event) {
+
+
+        /* =================================================
+           HAPUS SOAL
+        ================================================== */
+
+        const removeQuestionButton =
+            event.target.closest(
+                '.remove-question'
             );
 
-        const currentQuestionIndex =
-            card.dataset.index;
 
-
-        options.forEach(
-            function (option, index) {
-
-                const label =
-                    getLabel(index);
-
-
-                option.querySelector(
-                    '.option-label'
-                ).innerText =
-                    label;
-
-
-                const input =
-                    option.querySelector(
-                        'input[type="text"]'
-                    );
-
-
-                input.placeholder =
-                    'Pilihan ' + label;
-
-
-                const radio =
-                    option.querySelector(
-                        'input[type="radio"]'
-                    );
-
-
-                radio.value =
-                    index;
-
-
-                radio.name =
-                    `questions[${currentQuestionIndex}][correct_answer]`;
-
-            }
-        );
-    }
-
-
-    /* ==========================================================
-       EVENT TAMBAH SOAL
-    ========================================================== */
-
-    addQuestionButton.addEventListener(
-        'click',
-        function () {
-
-            addQuestion();
-
+        if (removeQuestionButton) {
 
             const cards =
                 container.querySelectorAll(
@@ -1107,300 +1767,7 @@ document.addEventListener('DOMContentLoaded', function () {
                 );
 
 
-            const lastCard =
-                cards[cards.length - 1];
-
-
-            lastCard.scrollIntoView({
-                behavior: 'smooth',
-                block: 'start'
-            });
-
-        }
-    );
-
-
-    /* ==========================================================
-       EVENT CLICK
-    ========================================================== */
-
-    container.addEventListener(
-        'click',
-        function (event) {
-
-
-            /* ---------------------------------------------------
-               HAPUS SOAL
-            --------------------------------------------------- */
-
-            if (
-                event.target.classList.contains(
-                    'remove-question'
-                )
-            ) {
-
-                const cards =
-                    container.querySelectorAll(
-                        '.question-card'
-                    );
-
-
-                if (cards.length <= 1) {
-
-                    alert(
-                        'Minimal harus ada 1 soal.'
-                    );
-
-                    return;
-                }
-
-
-                event.target
-                    .closest('.question-card')
-                    .remove();
-
-
-                refreshQuestionNumbers();
-
-            }
-
-
-            /* ---------------------------------------------------
-               TAMBAH PILIHAN
-            --------------------------------------------------- */
-
-            if (
-                event.target.classList.contains(
-                    'add-option'
-                )
-            ) {
-
-                const card =
-                    event.target.closest(
-                        '.question-card'
-                    );
-
-
-                addOption(card);
-
-            }
-
-
-            /* ---------------------------------------------------
-               HAPUS PILIHAN
-            --------------------------------------------------- */
-
-            if (
-                event.target.classList.contains(
-                    'remove-option'
-                )
-            ) {
-
-                const card =
-                    event.target.closest(
-                        '.question-card'
-                    );
-
-
-                const options =
-                    card.querySelectorAll(
-                        '.option-item'
-                    );
-
-
-                if (options.length <= 2) {
-
-                    alert(
-                        'Minimal harus ada 2 pilihan.'
-                    );
-
-                    return;
-                }
-
-
-                const currentOption =
-                    event.target.closest(
-                        '.option-item'
-                    );
-
-
-                const radio =
-                    currentOption.querySelector(
-                        'input[type="radio"]'
-                    );
-
-
-                const wasChecked =
-                    radio.checked;
-
-
-                currentOption.remove();
-
-
-                refreshOptionValues(card);
-
-
-                /*
-                |--------------------------------------------------
-                | Jika jawaban benar dihapus
-                |--------------------------------------------------
-                */
-
-                if (wasChecked) {
-
-                    card.querySelectorAll(
-                        'input[type="radio"]'
-                    ).forEach(
-                        function (radio) {
-
-                            radio.checked = false;
-
-                        }
-                    );
-
-                }
-
-            }
-
-        }
-    );
-
-
-    /* ==========================================================
-       PERUBAHAN TIPE SOAL
-    ========================================================== */
-
-    container.addEventListener(
-        'change',
-        function (event) {
-
-            if (
-                !event.target.classList.contains(
-                    'question-type'
-                )
-            ) {
-                return;
-            }
-
-
-            const card =
-                event.target.closest(
-                    '.question-card'
-                );
-
-
-            const wrapper =
-                card.querySelector(
-                    '.option-section'
-                );
-
-
-            const textInputs =
-                card.querySelectorAll(
-                    '.options-container input[type="text"]'
-                );
-
-
-            const radios =
-                card.querySelectorAll(
-                    '.options-container input[type="radio"]'
-                );
-
-
-            /*
-            |------------------------------------------------------
-            | FREE TEXT
-            |------------------------------------------------------
-            */
-
-            if (
-                event.target.value ===
-                'free_text'
-            ) {
-
-                wrapper.style.display =
-                    'none';
-
-
-                textInputs.forEach(
-                    function (input) {
-
-                        input.required =
-                            false;
-
-                    }
-                );
-
-
-                radios.forEach(
-                    function (radio) {
-
-                        radio.required =
-                            false;
-
-                        radio.checked =
-                            false;
-
-                    }
-                );
-
-            }
-
-
-            /*
-            |------------------------------------------------------
-            | MULTIPLE CHOICE
-            |------------------------------------------------------
-            */
-
-            else {
-
-                wrapper.style.display =
-                    'block';
-
-
-                textInputs.forEach(
-                    function (input) {
-
-                        input.required =
-                            true;
-
-                    }
-                );
-
-
-                radios.forEach(
-                    function (radio) {
-
-                        radio.required =
-                            true;
-
-                    }
-                );
-
-            }
-
-        }
-    );
-
-
-    /* ==========================================================
-       VALIDASI SEBELUM SUBMIT
-    ========================================================== */
-
-    questionForm.addEventListener(
-        'submit',
-        function (event) {
-
-            const cards =
-                container.querySelectorAll(
-                    '.question-card'
-                );
-
-
-            if (cards.length === 0) {
-
-                event.preventDefault();
+            if (cards.length <= 1) {
 
                 alert(
                     'Minimal harus ada 1 soal.'
@@ -1410,103 +1777,391 @@ document.addEventListener('DOMContentLoaded', function () {
             }
 
 
-            let valid = true;
+            removeQuestionButton
+                .closest('.question-card')
+                .remove();
 
 
-            cards.forEach(
-                function (card) {
+            refreshQuestionNumbers();
 
-                    const type =
-                        card.querySelector(
-                            '.question-type'
-                        ).value;
+            return;
+        }
 
 
-                    /*
-                    |------------------------------------------------
-                    | Multiple choice
-                    |------------------------------------------------
-                    */
+        /* =================================================
+           TAMBAH PILIHAN
+        ================================================== */
 
-                    if (
-                        type ===
-                        'multiple_choice'
-                    ) {
-
-                        const options =
-                            card.querySelectorAll(
-                                '.options-container .option-item'
-                            );
-
-
-                        if (
-                            options.length < 2
-                        ) {
-
-                            valid = false;
-
-                            alert(
-                                'Minimal harus ada 2 pilihan jawaban.'
-                            );
-
-                            return;
-                        }
-
-
-                        const checked =
-                            card.querySelector(
-                                '.options-container input[type="radio"]:checked'
-                            );
-
-
-                        if (!checked) {
-
-                            valid = false;
-
-                            alert(
-                                'Silakan pilih jawaban yang benar pada setiap soal pilihan ganda.'
-                            );
-
-                            return;
-                        }
-
-                    }
-
-                }
+        const addOptionButton =
+            event.target.closest(
+                '.add-option'
             );
 
 
-            if (!valid) {
+        if (addOptionButton) {
 
-                event.preventDefault();
+            const card =
+                addOptionButton.closest(
+                    '.question-card'
+                );
+
+
+            addOption(card);
+
+            return;
+        }
+
+
+        /* =================================================
+           HAPUS PILIHAN
+        ================================================== */
+
+        const removeOptionButton =
+            event.target.closest(
+                '.remove-option'
+            );
+
+
+        if (removeOptionButton) {
+
+            const card =
+                removeOptionButton.closest(
+                    '.question-card'
+                );
+
+
+            const options =
+                card.querySelectorAll(
+                    '.option-item'
+                );
+
+
+            if (options.length <= 2) {
+
+                alert(
+                    'Minimal harus ada 2 pilihan.'
+                );
 
                 return;
             }
 
 
-            /*
-            |------------------------------------------------------
-            | Cegah double submit
-            |------------------------------------------------------
-            */
+            const currentOption =
+                removeOptionButton.closest(
+                    '.option-item'
+                );
 
-            submitButton.disabled =
-                true;
 
-            submitButton.innerText =
-                'Menyimpan...';
+            const radio =
+                currentOption.querySelector(
+                    'input[type="radio"]'
+                );
+
+
+            const wasChecked =
+                radio.checked;
+
+
+            currentOption.remove();
+
+
+            refreshOptionValues(card);
+
+
+            if (wasChecked) {
+
+                card.querySelectorAll(
+                    'input[type="radio"]'
+                ).forEach(
+                    function (radio) {
+
+                        radio.checked = false;
+
+                    }
+                );
+
+            }
 
         }
-    );
+
+    }
+);
 
 
-    /* ==========================================================
-       SOAL PERTAMA
-    ========================================================== */
+/* =====================================================
+   PERUBAHAN TIPE SOAL
+====================================================== */
 
-    addQuestion();
+container.addEventListener(
+    'change',
+    function (event) {
 
-});
-</script>
+        if (
+            !event.target.classList.contains(
+                'question-type'
+            )
+        ) {
+            return;
+        }
+
+
+        const card =
+            event.target.closest(
+                '.question-card'
+            );
+
+
+        const wrapper =
+            card.querySelector(
+                '.option-section'
+            );
+
+
+        const textInputs =
+            card.querySelectorAll(
+                '.options-container input[type="text"]'
+            );
+
+
+        const radios =
+            card.querySelectorAll(
+                '.options-container input[type="radio"]'
+            );
+
+
+        /* =================================================
+           FREE TEXT
+        ================================================== */
+
+        if (
+            event.target.value ===
+            'free_text'
+        ) {
+
+            wrapper.style.display =
+                'none';
+
+
+            textInputs.forEach(
+                function (input) {
+
+                    input.required =
+                        false;
+
+                    input.disabled =
+                        true;
+
+                }
+            );
+
+
+            radios.forEach(
+                function (radio) {
+
+                    radio.required =
+                        false;
+
+                    radio.checked =
+                        false;
+
+                    radio.disabled =
+                        true;
+
+                }
+            );
+
+        }
+
+
+        /* =================================================
+           MULTIPLE CHOICE
+        ================================================== */
+
+        else {
+
+            wrapper.style.display =
+                'block';
+
+
+            textInputs.forEach(
+                function (input) {
+
+                    input.required =
+                        true;
+
+                    input.disabled =
+                        false;
+
+                }
+            );
+
+
+            radios.forEach(
+                function (radio) {
+
+                    radio.required =
+                        true;
+
+                    radio.disabled =
+                        false;
+
+                }
+            );
+
+        }
+
+    }
+);
+
+
+/* =====================================================
+   VALIDASI SUBMIT
+====================================================== */
+
+questionForm.addEventListener(
+    'submit',
+    function (event) {
+
+        const cards =
+            container.querySelectorAll(
+                '.question-card'
+            );
+
+
+        if (cards.length === 0) {
+
+            event.preventDefault();
+
+            alert(
+                'Minimal harus ada 1 soal.'
+            );
+
+            return;
+        }
+
+
+        let valid = true;
+
+
+        cards.forEach(
+            function (card) {
+
+                const type =
+                    card.querySelector(
+                        '.question-type'
+                    ).value;
+
+
+                if (
+                    type ===
+                    'multiple_choice'
+                ) {
+
+                    const options =
+                        card.querySelectorAll(
+                            '.options-container .option-item'
+                        );
+
+
+                    if (
+                        options.length < 2
+                    ) {
+
+                        valid = false;
+
+                        alert(
+                            'Minimal harus ada 2 pilihan jawaban.'
+                        );
+
+                        return;
+
+                    }
+
+
+                    const checked =
+                        card.querySelector(
+                            '.options-container input[type="radio"]:checked'
+                        );
+
+
+                    if (!checked) {
+
+                        valid = false;
+
+                        alert(
+                            'Silakan pilih jawaban yang benar pada setiap soal pilihan ganda.'
+                        );
+
+                        return;
+
+                    }
+
+
+                    const emptyOption =
+                        Array.from(
+                            card.querySelectorAll(
+                                '.options-container input[type="text"]'
+                            )
+                        ).some(
+                            function (input) {
+
+                                return (
+                                    input.value.trim() === ''
+                                );
+
+                            }
+                        );
+
+
+                    if (emptyOption) {
+
+                        valid = false;
+
+                        alert(
+                            'Semua pilihan jawaban harus diisi.'
+                        );
+
+                        return;
+
+                    }
+
+                }
+
+            }
+        );
+
+
+        if (!valid) {
+
+            event.preventDefault();
+
+            return;
+
+        }
+
+
+        /* =================================================
+           CEGAH DOUBLE SUBMIT
+        ================================================== */
+
+        submitButton.disabled =
+            true;
+
+
+        submitButton.innerHTML =
+            '<i class="bi bi-hourglass-split"></i> Menyimpan...';
+
+    }
+);
+
+
+/* =====================================================
+   SOAL PERTAMA
+====================================================== */
+
+addQuestion();
+
+
+}); </script>
 
 @endsection

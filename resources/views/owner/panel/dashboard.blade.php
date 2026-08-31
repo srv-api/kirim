@@ -2,35 +2,605 @@
 
 @section('content')
 
-<div class="container-fluid">
+<style>
+    /* =====================================================
+       ASSESSMENT DASHBOARD
+    ====================================================== */
+
+    .assessment-dashboard {
+        --dash-text: #111827;
+        --dash-muted: #6b7280;
+        --dash-light: #f8fafc;
+        --dash-border: #e5e7eb;
+        --dash-primary: #111827;
+        --dash-success: #059669;
+        --dash-blue: #2563eb;
+        --dash-radius: 16px;
+    }
+
+    .assessment-dashboard * {
+        box-sizing: border-box;
+    }
+
+    /* HEADER */
+
+    .dashboard-header {
+        margin-bottom: 32px;
+    }
+
+    .dashboard-eyebrow {
+        display: inline-flex;
+        align-items: center;
+        gap: 8px;
+        font-size: 12px;
+        font-weight: 700;
+        letter-spacing: .08em;
+        text-transform: uppercase;
+        color: var(--dash-muted);
+        margin-bottom: 8px;
+    }
+
+    .dashboard-eyebrow span {
+        width: 7px;
+        height: 7px;
+        border-radius: 50%;
+        background: var(--dash-success);
+        box-shadow: 0 0 0 4px rgba(5, 150, 105, .10);
+    }
+
+    .dashboard-title {
+        margin: 0;
+        font-size: 30px;
+        line-height: 1.2;
+        font-weight: 750;
+        letter-spacing: -.035em;
+        color: var(--dash-text);
+    }
+
+    .dashboard-subtitle {
+        margin: 8px 0 0;
+        color: var(--dash-muted);
+        font-size: 14px;
+    }
+
+    .period-card {
+        display: flex;
+        align-items: center;
+        gap: 12px;
+        padding: 10px 14px;
+        background: #fff;
+        border: 1px solid var(--dash-border);
+        border-radius: 12px;
+    }
+
+    .period-icon {
+        width: 36px;
+        height: 36px;
+        border-radius: 10px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        background: #ffde59;
+        color: #374151;
+        font-size: 16px;
+    }
+
+    .period-label {
+        display: block;
+        font-size: 11px;
+        color: var(--dash-muted);
+        margin-bottom: 1px;
+    }
+
+    .period-value {
+        display: block;
+        font-size: 13px;
+        font-weight: 700;
+        color: var(--dash-text);
+    }
+
+
+    /* =====================================================
+       STAT CARDS
+    ====================================================== */
+
+    .stat-card {
+        position: relative;
+        height: 100%;
+        padding: 22px;
+        background: #fff;
+        border: 1px solid var(--dash-border);
+        border-radius: var(--dash-radius);
+        transition: all .2s ease;
+        overflow: hidden;
+    }
+
+    .stat-card:hover {
+        transform: translateY(-2px);
+        border-color: #d1d5db;
+        box-shadow: 0 12px 30px rgba(15, 23, 42, .06);
+    }
+
+    .stat-top {
+        display: flex;
+        justify-content: space-between;
+        align-items: flex-start;
+    }
+
+    .stat-label {
+        color: var(--dash-muted);
+        font-size: 13px;
+        font-weight: 500;
+    }
+
+    .stat-number {
+        margin-top: 8px;
+        color: var(--dash-text);
+        font-size: 30px;
+        line-height: 1;
+        font-weight: 750;
+        letter-spacing: -.035em;
+    }
+
+    .stat-icon {
+        width: 42px;
+        height: 42px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        border-radius: 12px;
+        background: #ffde59;
+        border: 1px solid #eef0f3;
+        color: #374151;
+        font-size: 18px;
+    }
+
+    .stat-footer {
+        display: flex;
+        align-items: center;
+        gap: 6px;
+        margin-top: 22px;
+        font-size: 12px;
+    }
+
+    .stat-highlight {
+        font-weight: 700;
+    }
+
+    .stat-description {
+        color: var(--dash-muted);
+    }
+
+
+    /* =====================================================
+       SECTION CARD
+    ====================================================== */
+
+    .dashboard-card {
+        height: 100%;
+        background: #fff;
+        border: 1px solid var(--dash-border);
+        border-radius: var(--dash-radius);
+        overflow: hidden;
+    }
+
+    .dashboard-card-body {
+        padding: 22px;
+    }
+
+    .section-heading {
+        margin-bottom: 20px;
+    }
+
+    .section-title {
+        display: flex;
+        align-items: center;
+        gap: 9px;
+        margin: 0;
+        color: var(--dash-text);
+        font-size: 15px;
+        font-weight: 700;
+        letter-spacing: -.01em;
+    }
+
+    .section-title i {
+        color: #6b7280;
+        font-size: 16px;
+    }
+
+    .section-description {
+        margin: 5px 0 0;
+        color: var(--dash-muted);
+        font-size: 12px;
+    }
+
+
+    /* =====================================================
+       STATUS CARDS
+    ====================================================== */
+
+    .status-card {
+        position: relative;
+        height: 100%;
+        padding: 22px;
+        background: #fff;
+        border: 1px solid var(--dash-border);
+        border-radius: var(--dash-radius);
+    }
+
+    .status-head {
+        display: flex;
+        justify-content: space-between;
+        align-items: flex-start;
+    }
+
+    .status-label {
+        font-size: 13px;
+        color: var(--dash-muted);
+    }
+
+    .status-number {
+        margin-top: 8px;
+        font-size: 28px;
+        font-weight: 750;
+        color: var(--dash-text);
+        letter-spacing: -.03em;
+    }
+
+    .status-icon {
+        width: 38px;
+        height: 38px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        border-radius: 10px;
+        font-size: 15px;
+    }
+
+    .status-icon.active {
+        color: #047857;
+        background: #ecfdf5;
+    }
+
+    .status-icon.draft {
+        color: #6b7280;
+        background: #f3f4f6;
+    }
+
+    .status-icon.completed {
+        color: #2563eb;
+        background: #eff6ff;
+    }
+
+    .status-divider {
+        margin: 18px 0 13px;
+        border-top: 1px solid #f0f1f3;
+    }
+
+    .status-description {
+        color: var(--dash-muted);
+        font-size: 12px;
+        line-height: 1.6;
+    }
+
+
+    /* =====================================================
+       TODAY
+    ====================================================== */
+
+    .today-card {
+        padding: 20px 22px;
+        background: #fff;
+        border: 1px solid var(--dash-border);
+        border-radius: var(--dash-radius);
+    }
+
+    .today-content {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+    }
+
+    .today-label {
+        font-size: 13px;
+        color: var(--dash-muted);
+    }
+
+    .today-value {
+        margin-top: 7px;
+        font-size: 27px;
+        font-weight: 750;
+        color: var(--dash-text);
+        letter-spacing: -.03em;
+    }
+
+    .today-value small {
+        font-size: 12px;
+        font-weight: 500;
+        color: var(--dash-muted);
+        letter-spacing: 0;
+    }
+
+    .today-icon {
+        width: 42px;
+        height: 42px;
+        border-radius: 12px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        background: #ffde59;
+        color: #374151;
+        font-size: 18px;
+    }
+
+
+    /* =====================================================
+       CHART
+    ====================================================== */
+
+    .chart-wrapper {
+        position: relative;
+        height: 310px;
+    }
+
+    .chart-wrapper-small {
+        position: relative;
+        height: 250px;
+    }
+
+
+    /* =====================================================
+       TABLE
+    ====================================================== */
+
+    .assessment-table {
+        margin-bottom: 0;
+    }
+
+    .assessment-table thead th {
+        padding: 10px 12px;
+        border-bottom: 1px solid var(--dash-border);
+        color: #9ca3af;
+        font-size: 10px;
+        font-weight: 700;
+        letter-spacing: .06em;
+        text-transform: uppercase;
+        white-space: nowrap;
+    }
+
+    .assessment-table tbody td {
+        padding: 14px 12px;
+        border-bottom: 1px solid #f3f4f6;
+        color: #374151;
+        font-size: 13px;
+        vertical-align: middle;
+    }
+
+    .assessment-table tbody tr:last-child td {
+        border-bottom: 0;
+    }
+
+    .assessment-name {
+        color: var(--dash-text);
+        font-weight: 600;
+    }
+
+    .assessment-date {
+        color: var(--dash-muted);
+        font-size: 12px;
+    }
+
+    .status-badge {
+        display: inline-flex;
+        align-items: center;
+        gap: 6px;
+        padding: 5px 9px;
+        border-radius: 20px;
+        font-size: 10px;
+        font-weight: 700;
+    }
+
+    .status-badge::before {
+        content: "";
+        width: 5px;
+        height: 5px;
+        border-radius: 50%;
+        background: currentColor;
+    }
+
+    .status-badge.active {
+        color: #047857;
+        background: #ecfdf5;
+    }
+
+    .status-badge.completed {
+        color: #2563eb;
+        background: #eff6ff;
+    }
+
+    .status-badge.draft {
+        color: #6b7280;
+        background: #f3f4f6;
+    }
+
+
+    /* =====================================================
+       QUICK MENU
+    ====================================================== */
+
+    .quick-menu {
+        display: grid;
+        grid-template-columns: repeat(2, 1fr);
+        gap: 10px;
+    }
+
+    .quick-item {
+        display: flex;
+        align-items: center;
+        gap: 12px;
+        min-height: 66px;
+        padding: 12px;
+        text-decoration: none;
+        background: #fff;
+        border: 1px solid #e5e7eb;
+        border-radius: 12px;
+        transition: all .2s ease;
+    }
+
+    .quick-item:hover {
+        color: inherit;
+        text-decoration: none;
+        background: #f9fafb;
+        border-color: #d1d5db;
+        transform: translateY(-1px);
+    }
+
+    .quick-icon {
+        width: 38px;
+        height: 38px;
+        flex: 0 0 38px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        border-radius: 10px;
+        background: #ffde59;
+        color: #374151;
+        font-size: 16px;
+    }
+
+    .quick-text {
+        min-width: 0;
+    }
+
+    .quick-title {
+        display: block;
+        color: var(--dash-text);
+        font-size: 12px;
+        font-weight: 700;
+    }
+
+    .quick-subtitle {
+        display: block;
+        margin-top: 2px;
+        color: var(--dash-muted);
+        font-size: 10px;
+    }
+
+
+    /* =====================================================
+       EMPTY STATE
+    ====================================================== */
+
+    .empty-state {
+        padding: 45px 20px;
+        text-align: center;
+    }
+
+    .empty-icon {
+        width: 46px;
+        height: 46px;
+        margin: 0 auto 12px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        border-radius: 12px;
+        background: #f8fafc;
+        color: #9ca3af;
+        font-size: 18px;
+    }
+
+    .empty-state p {
+        margin: 0;
+        color: var(--dash-muted);
+        font-size: 13px;
+    }
+
+
+    /* =====================================================
+       RESPONSIVE
+    ====================================================== */
+
+    @media (max-width: 767px) {
+
+        .dashboard-header {
+            margin-bottom: 24px;
+        }
+
+        .dashboard-title {
+            font-size: 25px;
+        }
+
+        .period-card {
+            display: none;
+        }
+
+        .stat-card,
+        .status-card,
+        .today-card {
+            padding: 18px;
+        }
+
+        .stat-number {
+            font-size: 27px;
+        }
+
+        .chart-wrapper {
+            height: 260px;
+        }
+
+        .chart-wrapper-small {
+            height: 220px;
+        }
+
+        .dashboard-card-body {
+            padding: 18px;
+        }
+
+    }
+</style>
+
+
+<div class="container-fluid assessment-dashboard">
 
     {{-- =====================================================
          HEADER
     ====================================================== --}}
 
-    <div class="d-flex justify-content-between align-items-center mb-4">
+    <div class="dashboard-header d-flex justify-content-between align-items-center">
 
         <div>
 
-            <h2 class="fw-bold mb-1">
-                📊 Dashboard Assessment
-            </h2>
+            <div class="dashboard-eyebrow">
+                <span></span>
+                Assessment Workspace
+            </div>
 
-            <p class="text-muted mb-0">
-                Ringkasan sistem assessment
-                {{ $currentMonth }} {{ $currentYear }}
+            <h1 class="dashboard-title">
+                Dashboard
+            </h1>
+
+            <p class="dashboard-subtitle">
+                Ringkasan aktivitas assessment dan perkembangan peserta.
             </p>
 
         </div>
 
-        <div class="text-end">
+        <div class="period-card">
 
-            <small class="text-muted">
-                Periode
-            </small>
+            <div class="period-icon">
+                <i class="bi bi-calendar3"></i>
+            </div>
 
-            <div class="fw-bold">
-                {{ $currentMonth }} {{ $currentYear }}
+            <div>
+
+                <span class="period-label">
+                    Periode
+                </span>
+
+                <span class="period-value">
+                    {{ $currentMonth }} {{ $currentYear }}
+                </span>
+
             </div>
 
         </div>
@@ -44,46 +614,41 @@
 
     <div class="row g-3 mb-4">
 
-
         {{-- ASSESSMENT --}}
 
         <div class="col-xl-3 col-md-6">
 
-            <div class="card border-0 shadow-sm h-100">
+            <div class="stat-card">
 
-                <div class="card-body">
+                <div class="stat-top">
 
-                    <div class="d-flex justify-content-between">
+                    <div>
 
-                        <div>
-
-                            <small class="text-muted">
-                                Total Assessment
-                            </small>
-
-                            <h3 class="fw-bold mt-2 mb-0">
-                                {{ number_format($totalAssessments) }}
-                            </h3>
-
+                        <div class="stat-label">
+                            Total Assessment
                         </div>
 
-                        <div class="fs-1">
-                            📝
+                        <div class="stat-number">
+                            {{ number_format($totalAssessments) }}
                         </div>
 
                     </div>
 
-                    <div class="mt-3">
-
-                        <span class="text-success">
-                            {{ number_format($activeAssessments) }}
-                        </span>
-
-                        <small class="text-muted">
-                            assessment aktif
-                        </small>
-
+                    <div class="stat-icon">
+                        <i class="bi bi-clipboard-check"></i>
                     </div>
+
+                </div>
+
+                <div class="stat-footer">
+
+                    <span class="stat-highlight text-success">
+                        {{ number_format($activeAssessments) }}
+                    </span>
+
+                    <span class="stat-description">
+                        assessment aktif
+                    </span>
 
                 </div>
 
@@ -96,37 +661,33 @@
 
         <div class="col-xl-3 col-md-6">
 
-            <div class="card border-0 shadow-sm h-100">
+            <div class="stat-card">
 
-                <div class="card-body">
+                <div class="stat-top">
 
-                    <div class="d-flex justify-content-between">
+                    <div>
 
-                        <div>
-
-                            <small class="text-muted">
-                                Total Soal
-                            </small>
-
-                            <h3 class="fw-bold mt-2 mb-0">
-                                {{ number_format($totalQuestions) }}
-                            </h3>
-
+                        <div class="stat-label">
+                            Total Soal
                         </div>
 
-                        <div class="fs-1">
-                            📚
+                        <div class="stat-number">
+                            {{ number_format($totalQuestions) }}
                         </div>
 
                     </div>
 
-                    <div class="mt-3">
-
-                        <small class="text-muted">
-                            Soal yang tersedia
-                        </small>
-
+                    <div class="stat-icon">
+                        <i class="bi bi-journal-text"></i>
                     </div>
+
+                </div>
+
+                <div class="stat-footer">
+
+                    <span class="stat-description">
+                        Soal yang tersedia dalam sistem
+                    </span>
 
                 </div>
 
@@ -139,41 +700,37 @@
 
         <div class="col-xl-3 col-md-6">
 
-            <div class="card border-0 shadow-sm h-100">
+            <div class="stat-card">
 
-                <div class="card-body">
+                <div class="stat-top">
 
-                    <div class="d-flex justify-content-between">
+                    <div>
 
-                        <div>
-
-                            <small class="text-muted">
-                                Total Peserta
-                            </small>
-
-                            <h3 class="fw-bold mt-2 mb-0">
-                                {{ number_format($totalParticipants) }}
-                            </h3>
-
+                        <div class="stat-label">
+                            Total Peserta
                         </div>
 
-                        <div class="fs-1">
-                            👥
+                        <div class="stat-number">
+                            {{ number_format($totalParticipants) }}
                         </div>
 
                     </div>
 
-                    <div class="mt-3">
-
-                        <span class="text-primary">
-                            {{ number_format($monthParticipants) }}
-                        </span>
-
-                        <small class="text-muted">
-                            peserta bulan ini
-                        </small>
-
+                    <div class="stat-icon">
+                        <i class="bi bi-people"></i>
                     </div>
+
+                </div>
+
+                <div class="stat-footer">
+
+                    <span class="stat-highlight text-primary">
+                        {{ number_format($monthParticipants) }}
+                    </span>
+
+                    <span class="stat-description">
+                        peserta bulan ini
+                    </span>
 
                 </div>
 
@@ -186,41 +743,37 @@
 
         <div class="col-xl-3 col-md-6">
 
-            <div class="card border-0 shadow-sm h-100">
+            <div class="stat-card">
 
-                <div class="card-body">
+                <div class="stat-top">
 
-                    <div class="d-flex justify-content-between">
+                    <div>
 
-                        <div>
-
-                            <small class="text-muted">
-                                Hasil Assessment
-                            </small>
-
-                            <h3 class="fw-bold mt-2 mb-0">
-                                {{ number_format($totalResults) }}
-                            </h3>
-
+                        <div class="stat-label">
+                            Hasil Assessment
                         </div>
 
-                        <div class="fs-1">
-                            📊
+                        <div class="stat-number">
+                            {{ number_format($totalResults) }}
                         </div>
 
                     </div>
 
-                    <div class="mt-3">
-
-                        <span class="text-success">
-                            {{ number_format($monthResults) }}
-                        </span>
-
-                        <small class="text-muted">
-                            hasil bulan ini
-                        </small>
-
+                    <div class="stat-icon">
+                        <i class="bi bi-bar-chart"></i>
                     </div>
+
+                </div>
+
+                <div class="stat-footer">
+
+                    <span class="stat-highlight text-success">
+                        {{ number_format($monthResults) }}
+                    </span>
+
+                    <span class="stat-description">
+                        hasil bulan ini
+                    </span>
 
                 </div>
 
@@ -232,46 +785,42 @@
 
 
     {{-- =====================================================
-         STATUS ASSESSMENT
+         STATUS
     ====================================================== --}}
 
     <div class="row g-3 mb-4">
-
 
         {{-- ACTIVE --}}
 
         <div class="col-lg-4">
 
-            <div class="card border-0 shadow-sm">
+            <div class="status-card">
 
-                <div class="card-body">
+                <div class="status-head">
 
-                    <div class="d-flex justify-content-between">
+                    <div>
 
-                        <div>
-
-                            <small class="text-muted">
-                                Assessment Aktif
-                            </small>
-
-                            <h3 class="fw-bold mt-2 mb-0">
-                                {{ number_format($activeAssessments) }}
-                            </h3>
-
+                        <div class="status-label">
+                            Assessment Aktif
                         </div>
 
-                        <span class="fs-2">
-                            🟢
-                        </span>
+                        <div class="status-number">
+                            {{ number_format($activeAssessments) }}
+                        </div>
 
                     </div>
 
-                    <hr>
+                    <div class="status-icon active">
+                        <i class="bi bi-check-circle"></i>
+                    </div>
 
-                    <small class="text-muted">
-                        Assessment yang dapat dikerjakan peserta.
-                    </small>
+                </div>
 
+                <div class="status-divider"></div>
+
+                <div class="status-description">
+                    Assessment yang saat ini tersedia dan dapat
+                    dikerjakan oleh peserta.
                 </div>
 
             </div>
@@ -283,36 +832,33 @@
 
         <div class="col-lg-4">
 
-            <div class="card border-0 shadow-sm">
+            <div class="status-card">
 
-                <div class="card-body">
+                <div class="status-head">
 
-                    <div class="d-flex justify-content-between">
+                    <div>
 
-                        <div>
-
-                            <small class="text-muted">
-                                Assessment Draft
-                            </small>
-
-                            <h3 class="fw-bold mt-2 mb-0">
-                                {{ number_format($draftAssessments) }}
-                            </h3>
-
+                        <div class="status-label">
+                            Assessment Draft
                         </div>
 
-                        <span class="fs-2">
-                            📝
-                        </span>
+                        <div class="status-number">
+                            {{ number_format($draftAssessments) }}
+                        </div>
 
                     </div>
 
-                    <hr>
+                    <div class="status-icon draft">
+                        <i class="bi bi-pencil-square"></i>
+                    </div>
 
-                    <small class="text-muted">
-                        Assessment yang masih dalam tahap penyusunan.
-                    </small>
+                </div>
 
+                <div class="status-divider"></div>
+
+                <div class="status-description">
+                    Assessment yang masih dalam tahap penyusunan
+                    dan belum dipublikasikan.
                 </div>
 
             </div>
@@ -324,36 +870,33 @@
 
         <div class="col-lg-4">
 
-            <div class="card border-0 shadow-sm">
+            <div class="status-card">
 
-                <div class="card-body">
+                <div class="status-head">
 
-                    <div class="d-flex justify-content-between">
+                    <div>
 
-                        <div>
-
-                            <small class="text-muted">
-                                Assessment Selesai
-                            </small>
-
-                            <h3 class="fw-bold mt-2 mb-0">
-                                {{ number_format($completedAssessments) }}
-                            </h3>
-
+                        <div class="status-label">
+                            Assessment Selesai
                         </div>
 
-                        <span class="fs-2">
-                            ✅
-                        </span>
+                        <div class="status-number">
+                            {{ number_format($completedAssessments) }}
+                        </div>
 
                     </div>
 
-                    <hr>
+                    <div class="status-icon completed">
+                        <i class="bi bi-check2-all"></i>
+                    </div>
 
-                    <small class="text-muted">
-                        Assessment yang telah diselesaikan.
-                    </small>
+                </div>
 
+                <div class="status-divider"></div>
+
+                <div class="status-description">
+                    Assessment yang telah selesai digunakan
+                    atau diselesaikan.
                 </div>
 
             </div>
@@ -369,39 +912,30 @@
 
     <div class="row g-3 mb-4">
 
-
-        {{-- PARTICIPANT TODAY --}}
-
         <div class="col-lg-6">
 
-            <div class="card border-0 shadow-sm">
+            <div class="today-card">
 
-                <div class="card-body">
+                <div class="today-content">
 
-                    <div class="d-flex justify-content-between">
+                    <div>
 
-                        <div>
-
-                            <small class="text-muted">
-                                Peserta Hari Ini
-                            </small>
-
-                            <h3 class="fw-bold mt-2 mb-0">
-
-                                {{ number_format($todayParticipants) }}
-
-                                <small class="fs-6 text-muted">
-                                    peserta
-                                </small>
-
-                            </h3>
-
+                        <div class="today-label">
+                            Peserta Hari Ini
                         </div>
 
-                        <span class="fs-2">
-                            👤
-                        </span>
+                        <div class="today-value">
+                            {{ number_format($todayParticipants) }}
 
+                            <small>
+                                peserta
+                            </small>
+                        </div>
+
+                    </div>
+
+                    <div class="today-icon">
+                        <i class="bi bi-person-plus"></i>
                     </div>
 
                 </div>
@@ -411,38 +945,30 @@
         </div>
 
 
-        {{-- RESULT TODAY --}}
-
         <div class="col-lg-6">
 
-            <div class="card border-0 shadow-sm">
+            <div class="today-card">
 
-                <div class="card-body">
+                <div class="today-content">
 
-                    <div class="d-flex justify-content-between">
+                    <div>
 
-                        <div>
-
-                            <small class="text-muted">
-                                Assessment Dikerjakan Hari Ini
-                            </small>
-
-                            <h3 class="fw-bold mt-2 mb-0">
-
-                                {{ number_format($todayResults) }}
-
-                                <small class="fs-6 text-muted">
-                                    pengerjaan
-                                </small>
-
-                            </h3>
-
+                        <div class="today-label">
+                            Assessment Dikerjakan Hari Ini
                         </div>
 
-                        <span class="fs-2">
-                            🎯
-                        </span>
+                        <div class="today-value">
+                            {{ number_format($todayResults) }}
 
+                            <small>
+                                pengerjaan
+                            </small>
+                        </div>
+
+                    </div>
+
+                    <div class="today-icon">
+                        <i class="bi bi-activity"></i>
                     </div>
 
                 </div>
@@ -460,27 +986,31 @@
 
     <div class="row g-3 mb-4">
 
-
         {{-- PARTICIPANT CHART --}}
 
         <div class="col-lg-8">
 
-            <div class="card border-0 shadow-sm">
+            <div class="dashboard-card">
 
-                <div class="card-body">
+                <div class="dashboard-card-body">
 
-                    <h5 class="fw-bold mb-1">
-                        📈 Aktivitas Peserta
-                    </h5>
+                    <div class="section-heading">
 
-                    <small class="text-muted">
-                        Jumlah peserta setiap bulan
-                    </small>
+                        <h5 class="section-title">
 
-                    <div
-                        class="mt-3"
-                        style="height:320px;"
-                    >
+                            <i class="bi bi-graph-up"></i>
+
+                            Aktivitas Peserta
+
+                        </h5>
+
+                        <p class="section-description">
+                            Jumlah peserta berdasarkan aktivitas setiap bulan.
+                        </p>
+
+                    </div>
+
+                    <div class="chart-wrapper">
 
                         <canvas id="participantChart"></canvas>
 
@@ -497,22 +1027,27 @@
 
         <div class="col-lg-4">
 
-            <div class="card border-0 shadow-sm">
+            <div class="dashboard-card">
 
-                <div class="card-body">
+                <div class="dashboard-card-body">
 
-                    <h5 class="fw-bold mb-1">
-                        🎯 Pengerjaan Assessment
-                    </h5>
+                    <div class="section-heading">
 
-                    <small class="text-muted">
-                        Aktivitas pengerjaan per bulan
-                    </small>
+                        <h5 class="section-title">
 
-                    <div
-                        class="mt-4"
-                        style="height:230px;"
-                    >
+                            <i class="bi bi-pie-chart"></i>
+
+                            Pengerjaan Assessment
+
+                        </h5>
+
+                        <p class="section-description">
+                            Perbandingan aktivitas assessment.
+                        </p>
+
+                    </div>
+
+                    <div class="chart-wrapper-small">
 
                         <canvas id="resultChart"></canvas>
 
@@ -528,27 +1063,33 @@
 
 
     {{-- =====================================================
-         RECENT ASSESSMENTS
+         RECENT + QUICK MENU
     ====================================================== --}}
 
     <div class="row g-3 mb-4">
 
 
+        {{-- RECENT ASSESSMENTS --}}
+
         <div class="col-lg-7">
 
-            <div class="card border-0 shadow-sm">
+            <div class="dashboard-card">
 
-                <div class="card-body">
+                <div class="dashboard-card-body">
 
-                    <div class="mb-3">
+                    <div class="section-heading">
 
-                        <h5 class="fw-bold mb-1">
-                            📝 Assessment Terbaru
+                        <h5 class="section-title">
+
+                            <i class="bi bi-clock-history"></i>
+
+                            Assessment Terbaru
+
                         </h5>
 
-                        <small class="text-muted">
-                            Assessment yang baru dibuat
-                        </small>
+                        <p class="section-description">
+                            Assessment yang baru ditambahkan ke sistem.
+                        </p>
 
                     </div>
 
@@ -557,7 +1098,7 @@
 
                         <div class="table-responsive">
 
-                            <table class="table table-sm align-middle">
+                            <table class="table assessment-table align-middle">
 
                                 <thead>
 
@@ -587,7 +1128,7 @@
 
                                             <td>
 
-                                                <div class="fw-semibold">
+                                                <div class="assessment-name">
                                                     {{ $assessment->title ?? $assessment->name ?? 'Assessment' }}
                                                 </div>
 
@@ -596,27 +1137,29 @@
                                             <td>
 
                                                 @php
+
                                                     $status = strtolower(
                                                         $assessment->status ?? 'draft'
                                                     );
+
                                                 @endphp
 
 
                                                 @if($status === 'active')
 
-                                                    <span class="badge bg-success">
+                                                    <span class="status-badge active">
                                                         Aktif
                                                     </span>
 
                                                 @elseif($status === 'completed')
 
-                                                    <span class="badge bg-primary">
+                                                    <span class="status-badge completed">
                                                         Selesai
                                                     </span>
 
                                                 @else
 
-                                                    <span class="badge bg-secondary">
+                                                    <span class="status-badge draft">
                                                         Draft
                                                     </span>
 
@@ -626,15 +1169,19 @@
 
                                             <td>
 
-                                                @if($assessment->created_at)
+                                                <span class="assessment-date">
 
-                                                    {{ $assessment->created_at->format('d/m/Y') }}
+                                                    @if($assessment->created_at)
 
-                                                @else
+                                                        {{ $assessment->created_at->format('d M Y') }}
 
-                                                    -
+                                                    @else
 
-                                                @endif
+                                                        —
+
+                                                    @endif
+
+                                                </span>
 
                                             </td>
 
@@ -650,13 +1197,13 @@
 
                     @else
 
-                        <div class="text-center py-5">
+                        <div class="empty-state">
 
-                            <div class="fs-1">
-                                📝
+                            <div class="empty-icon">
+                                <i class="bi bi-clipboard"></i>
                             </div>
 
-                            <p class="text-muted mb-0">
+                            <p>
                                 Belum ada assessment.
                             </p>
 
@@ -671,106 +1218,136 @@
         </div>
 
 
-        {{-- =================================================
-             QUICK MENU
-        ================================================== --}}
+        {{-- QUICK MENU --}}
 
         <div class="col-lg-5">
 
-            <div class="card border-0 shadow-sm">
+            <div class="dashboard-card">
 
-                <div class="card-body">
+                <div class="dashboard-card-body">
 
-                    <h5 class="fw-bold mb-1">
-                        ⚡ Akses Cepat
-                    </h5>
+                    <div class="section-heading">
 
-                    <small class="text-muted">
-                        Kelola sistem assessment
-                    </small>
+                        <h5 class="section-title">
+
+                            <i class="bi bi-grid"></i>
+
+                            Akses Cepat
+
+                        </h5>
+
+                        <p class="section-description">
+                            Menu utama untuk mengelola assessment.
+                        </p>
+
+                    </div>
 
 
-                    <div class="row g-2 mt-3">
+                    <div class="quick-menu">
 
 
-                        <div class="col-6">
+                        {{-- ASSESSMENT --}}
 
-                            <a
-                                href="{{ route('owner.assessments.index') }}"
-                                class="btn btn-light border w-100 py-3"
-                            >
+                        <a
+                            href="{{ route('owner.assessments.index') }}"
+                            class="quick-item"
+                        >
 
-                                <div class="fs-4">
-                                    📝
-                                </div>
+                            <div class="quick-icon">
+                                <i class="bi bi-clipboard-check"></i>
+                            </div>
 
-                                <small>
+                            <div class="quick-text">
+
+                                <span class="quick-title">
                                     Assessment
-                                </small>
+                                </span>
 
-                            </a>
+                                <span class="quick-subtitle">
+                                    Kelola assessment
+                                </span>
 
-                        </div>
+                            </div>
+
+                        </a>
 
 
-                        <div class="col-6">
+                        {{-- QUESTIONS --}}
 
-                            <a
-                                href="{{ route('owner.questions.index') }}"
-                                class="btn btn-light border w-100 py-3"
-                            >
+                        <a
+                            href="{{ route('owner.questions.index') }}"
+                            class="quick-item"
+                        >
 
-                                <div class="fs-4">
-                                    📚
-                                </div>
+                            <div class="quick-icon">
+                                <i class="bi bi-journal-text"></i>
+                            </div>
 
-                                <small>
+                            <div class="quick-text">
+
+                                <span class="quick-title">
                                     Soal
-                                </small>
+                                </span>
 
-                            </a>
+                                <span class="quick-subtitle">
+                                    Kelola bank soal
+                                </span>
 
-                        </div>
+                            </div>
+
+                        </a>
 
 
-                        <div class="col-6">
+                        {{-- PARTICIPANTS --}}
 
-                            <a
-                                href="{{ route('owner.participants.index') }}"
-                                class="btn btn-light border w-100 py-3"
-                            >
+                        <a
+                            href="{{ route('owner.participants.index') }}"
+                            class="quick-item"
+                        >
 
-                                <div class="fs-4">
-                                    👥
-                                </div>
+                            <div class="quick-icon">
+                                <i class="bi bi-people"></i>
+                            </div>
 
-                                <small>
+                            <div class="quick-text">
+
+                                <span class="quick-title">
                                     Peserta
-                                </small>
+                                </span>
 
-                            </a>
+                                <span class="quick-subtitle">
+                                    Data peserta
+                                </span>
 
-                        </div>
+                            </div>
+
+                        </a>
 
 
-                        <div class="col-6">
+                        {{-- RESULTS --}}
 
-                            <a
-                                href="{{ route('owner.results.index') }}"
-                                class="btn btn-light border w-100 py-3"
-                            >
+                        <a
+                            href="{{ route('owner.results.index') }}"
+                            class="quick-item"
+                        >
 
-                                <div class="fs-4">
-                                    📊
-                                </div>
+                            <div class="quick-icon">
+                                <i class="bi bi-bar-chart"></i>
+                            </div>
 
-                                <small>
+                            <div class="quick-text">
+
+                                <span class="quick-title">
                                     Hasil
-                                </small>
+                                </span>
 
-                            </a>
+                                <span class="quick-subtitle">
+                                    Lihat hasil assessment
+                                </span>
 
-                        </div>
+                            </div>
+
+                        </a>
 
                     </div>
 
@@ -782,8 +1359,17 @@
 
     </div>
 
-
 </div>
+
+
+{{-- =====================================================
+     BOOTSTRAP ICONS
+====================================================== --}}
+
+<link
+    rel="stylesheet"
+    href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css"
+>
 
 
 {{-- =====================================================
@@ -797,78 +1383,126 @@
 
 document.addEventListener('DOMContentLoaded', function () {
 
-
-    // =====================================================
-    // PARTICIPANT CHART
-    // =====================================================
+    /*
+    |--------------------------------------------------------------------------
+    | PARTICIPANT CHART
+    |--------------------------------------------------------------------------
+    */
 
     const participantCanvas =
         document.getElementById('participantChart');
 
     if (participantCanvas) {
 
-        new Chart(
-            participantCanvas,
-            {
-                type: 'line',
+        new Chart(participantCanvas, {
 
-                data: {
+            type: 'line',
 
-                    labels: [
-                        'Jan',
-                        'Feb',
-                        'Mar',
-                        'Apr',
-                        'Mei',
-                        'Jun',
-                        'Jul',
-                        'Agu',
-                        'Sep',
-                        'Okt',
-                        'Nov',
-                        'Des'
-                    ],
+            data: {
 
-                    datasets: [
+                labels: [
+                    'Jan',
+                    'Feb',
+                    'Mar',
+                    'Apr',
+                    'Mei',
+                    'Jun',
+                    'Jul',
+                    'Agu',
+                    'Sep',
+                    'Okt',
+                    'Nov',
+                    'Des'
+                ],
 
-                        {
-                            label: 'Peserta',
+                datasets: [{
 
-                            data: @json($monthlyParticipants),
+                    label: 'Peserta',
 
-                            borderWidth: 2,
+                    data: @json($monthlyParticipants),
 
-                            tension: 0.35,
+                    borderWidth: 2,
 
-                            fill: false
-                        }
+                    tension: 0.4,
 
-                    ]
+                    fill: true,
+
+                    pointRadius: 3,
+
+                    pointHoverRadius: 5
+
+                }]
+
+            },
+
+            options: {
+
+                responsive: true,
+
+                maintainAspectRatio: false,
+
+                interaction: {
+                    intersect: false,
+                    mode: 'index'
+                },
+
+                plugins: {
+
+                    legend: {
+                        display: false
+                    },
+
+                    tooltip: {
+
+                        padding: 12,
+
+                        displayColors: false
+
+                    }
 
                 },
 
-                options: {
+                scales: {
 
-                    responsive: true,
+                    x: {
 
-                    maintainAspectRatio: false,
+                        grid: {
+                            display: false
+                        },
 
-                    plugins: {
+                        border: {
+                            display: false
+                        },
 
-                        legend: {
-                            display: true
+                        ticks: {
+                            color: '#9ca3af',
+                            font: {
+                                size: 11
+                            }
                         }
 
                     },
 
-                    scales: {
+                    y: {
 
-                        y: {
+                        beginAtZero: true,
 
-                            beginAtZero: true,
+                        border: {
+                            display: false
+                        },
 
-                            ticks: {
-                                precision: 0
+                        grid: {
+                            color: '#f1f5f9'
+                        },
+
+                        ticks: {
+
+                            precision: 0,
+
+                            color: '#9ca3af',
+
+                            font: {
+                                size: 11
                             }
 
                         }
@@ -878,71 +1512,97 @@ document.addEventListener('DOMContentLoaded', function () {
                 }
 
             }
-        );
+
+        });
 
     }
 
 
-    // =====================================================
-    // RESULT CHART
-    // =====================================================
+    /*
+    |--------------------------------------------------------------------------
+    | RESULT CHART
+    |--------------------------------------------------------------------------
+    */
 
     const resultCanvas =
         document.getElementById('resultChart');
 
     if (resultCanvas) {
 
-        new Chart(
-            resultCanvas,
-            {
-                type: 'doughnut',
+        new Chart(resultCanvas, {
 
-                data: {
+            type: 'doughnut',
 
-                    labels: [
-                        'Pengerjaan Bulan Ini',
-                        'Pengerjaan Hari Ini'
+            data: {
+
+                labels: [
+                    'Bulan Ini',
+                    'Hari Ini'
+                ],
+
+                datasets: [{
+
+                    data: [
+
+                        {{ $monthResults }},
+
+                        {{ $todayResults }}
+
                     ],
 
-                    datasets: [
+                    borderWidth: 0,
 
-                        {
-                            data: [
+                    spacing: 3,
 
-                                {{ $monthResults }},
+                    hoverOffset: 5
 
-                                {{ $todayResults }}
+                }]
 
-                            ],
+            },
 
-                            borderWidth: 1
+            options: {
+
+                responsive: true,
+
+                maintainAspectRatio: false,
+
+                cutout: '72%',
+
+                plugins: {
+
+                    legend: {
+
+                        position: 'bottom',
+
+                        labels: {
+
+                            usePointStyle: true,
+
+                            pointStyle: 'circle',
+
+                            padding: 18,
+
+                            color: '#6b7280',
+
+                            font: {
+                                size: 11
+                            }
 
                         }
 
-                    ]
+                    },
 
-                },
+                    tooltip: {
 
-                options: {
-
-                    responsive: true,
-
-                    maintainAspectRatio: false,
-
-                    plugins: {
-
-                        legend: {
-
-                            position: 'bottom'
-
-                        }
+                        padding: 12
 
                     }
 
                 }
 
             }
-        );
+
+        });
 
     }
 
