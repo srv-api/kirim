@@ -21,6 +21,8 @@ class DatabaseSeeder extends Seeder
             RolePermissionSeeder::class, // wajib ada ini
             RoleSeeder::class, // wajib ada ini
             UserSeeder::class, // wajib ada ini
+            SubscriptionPlanSeeder::class, // wajib ada ini
+
         ]);
     }
 }

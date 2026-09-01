@@ -406,12 +406,12 @@
 
     .payment-method:hover {
         border-color: #d1d5db;
-        background: #fafafa;
+        background: #fff;
     }
 
     .payment-method.active {
         border-color: #111827;
-        background: #f9fafb;
+        background: #fff;
     }
 
     .payment-method-icon {
@@ -906,14 +906,14 @@
 
                         <div class="payment-method-icon">
 
-                            <i class="bi bi-credit-card"></i>
+                            <i class="bi bi-qr-code-scan"></i>
 
                         </div>
 
                         <div>
 
                             <div class="payment-method-name">
-                                Payment Gateway
+                                QRIS
                             </div>
 
                             <div class="payment-method-text">

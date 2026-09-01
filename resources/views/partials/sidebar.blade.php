@@ -68,6 +68,47 @@
 
         </li>
 
+         {{-- =====================================================
+             PERMAINAN
+        ====================================================== --}}
+
+        <li class="menu-title">
+            <span>Permainan</span>
+        </li>
+
+<li class="{{ request()->routeIs('owner.tug-questions.*') ? 'active' : '' }}"> 
+        
+            <a href="{{ route('owner.tug-questions.index') }}">
+
+                <span class="menu-icon">
+                    <i class="bi bi-clipboard-check"></i>
+                </span>
+
+                <span class="menu-text">
+                    Tug Of War
+                </span>
+
+            </a>
+
+        </li>
+
+
+        <li class="{{ request()->routeIs('owner.questions.*') ? 'active' : '' }}">
+
+            <a href="{{ route('owner.questions.index') }}">
+
+                <span class="menu-icon">
+                    <i class="bi bi-journal-text"></i>
+                </span>
+
+                <span class="menu-text">
+                    Rank 1
+                </span>
+
+            </a>
+
+        </li>
+
 
         {{-- =====================================================
              PESERTA
