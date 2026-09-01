@@ -76,5 +76,14 @@ class SubscriptionController extends Controller
             ->route('subscription.checkout', $plan->slug)
             ->with('success', 'Subscription berhasil diproses.');
     }
+
+    public function payment($plan)
+{
+    $plan = SubscriptionPlan::where('slug', $plan)
+        ->where('is_active', true)
+        ->firstOrFail();
+
+    return view('subscription.payment', compact('plan'));
+}
 }
 

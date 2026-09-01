@@ -86,11 +86,6 @@
         overflow: hidden;
     }
 
-
-    /* =====================================================
-       CARD HEADER
-    ====================================================== */
-
     .checkout-card-header {
         display: flex;
         align-items: center;
@@ -134,11 +129,6 @@
         font-size: 11px;
     }
 
-
-    /* =====================================================
-       CARD BODY
-    ====================================================== */
-
     .checkout-card-body {
         padding: 24px 22px;
     }
@@ -170,7 +160,6 @@
         align-items: center;
 
         padding: 5px 9px;
-
         margin-bottom: 9px;
 
         border-radius: 6px;
@@ -341,108 +330,6 @@
 
         font-size: 10px;
         line-height: 1.5;
-    }
-
-
-    /* =====================================================
-       PAYMENT CARD
-    ====================================================== */
-
-    .payment-card {
-        background: #fff;
-
-        border: 1px solid var(--page-border);
-        border-radius: var(--page-radius);
-
-        overflow: hidden;
-    }
-
-    .payment-header {
-        padding: 20px 22px;
-
-        border-bottom: 1px solid var(--page-border);
-    }
-
-    .payment-title {
-        margin: 0;
-
-        color: #111827;
-
-        font-size: 14px;
-        font-weight: 700;
-    }
-
-    .payment-description {
-        margin: 4px 0 0;
-
-        color: #9ca3af;
-
-        font-size: 11px;
-    }
-
-    .payment-body {
-        padding: 22px;
-    }
-
-
-    /* =====================================================
-       PAYMENT METHOD
-    ====================================================== */
-
-    .payment-method {
-        display: flex;
-        align-items: center;
-        gap: 11px;
-
-        padding: 13px;
-
-        border: 1px solid #e5e7eb;
-        border-radius: 10px;
-
-        cursor: pointer;
-
-        transition: all .15s ease;
-    }
-
-    .payment-method:hover {
-        border-color: #d1d5db;
-        background: #fff;
-    }
-
-    .payment-method.active {
-        border-color: #111827;
-        background: #fff;
-    }
-
-    .payment-method-icon {
-        width: 35px;
-        height: 35px;
-
-        display: flex;
-        align-items: center;
-        justify-content: center;
-
-        border-radius: 9px;
-
-        background: #f3f4f6;
-        color: #374151;
-
-        font-size: 15px;
-    }
-
-    .payment-method-name {
-        color: #111827;
-
-        font-size: 11px;
-        font-weight: 700;
-    }
-
-    .payment-method-text {
-        margin-top: 2px;
-
-        color: #9ca3af;
-
-        font-size: 9px;
     }
 
 
@@ -626,7 +513,6 @@
         }
 
         .checkout-card-body,
-        .payment-body,
         .summary-body {
             padding: 20px 18px;
         }
@@ -647,426 +533,334 @@
 
 </style>
 
-
 <div class="container-fluid checkout-page">
 
 
-    {{-- =====================================================
-         HEADER
-    ====================================================== --}}
+{{-- HEADER --}}
 
-    <div class="checkout-header">
+<div class="checkout-header">
 
-        <div class="checkout-eyebrow">
-
-            <span></span>
-
-            Subscription
-
-        </div>
-
-        <h1 class="checkout-title">
-            Checkout
-        </h1>
-
-        <p class="checkout-description">
-            Pilih paket dan lanjutkan proses upgrade akun Anda.
-        </p>
-
+    <div class="checkout-eyebrow">
+        <span></span>
+        Subscription
     </div>
 
-
-    {{-- =====================================================
-         ALERT
-    ====================================================== --}}
-
-    @if(session('success'))
-
-        <div
-            class="alert alert-success mb-4"
-            role="alert"
-        >
-
-            <i class="bi bi-check-circle-fill me-2"></i>
-
-            {{ session('success') }}
-
-        </div>
-
-    @endif
-
-
-    @if($errors->any())
-
-        <div
-            class="alert alert-danger mb-4"
-            role="alert"
-        >
-
-            <i class="bi bi-exclamation-triangle-fill me-2"></i>
-
-            {{ $errors->first() }}
-
-        </div>
-
-    @endif
-
-
-    <div class="row g-4">
-
-
-        {{-- =================================================
-             LEFT
-        ================================================== --}}
-
-        <div class="col-lg-8">
-
-
-            {{-- PLAN --}}
-
-            <div class="checkout-card mb-4">
-
-                <div class="checkout-card-header">
-
-                    <div class="checkout-card-icon">
-
-                        <i class="bi bi-stars"></i>
-
-                    </div>
-
-                    <div>
-
-                        <h2 class="checkout-card-title">
-                            Paket Subscription
-                        </h2>
-
-                        <p class="checkout-card-description">
-                            Detail paket yang akan Anda gunakan.
-                        </p>
-
-                    </div>
-
-                </div>
-
-
-                <div class="checkout-card-body">
-
-                    <div class="plan-card">
-
-                        <div class="plan-header">
-
-                            <div>
-
-                                <div class="plan-badge">
-                                    PREMIUM
-                                </div>
-
-                                <h2 class="plan-name">
-                                    {{ $plan->name ?? 'Plus' }}
-                                </h2>
-
-                                <p class="plan-description">
-                                    {{ $plan->description ?? 'Dapatkan fitur assessment yang lebih lengkap.' }}
-                                </p>
-
-                            </div>
-
-
-                            <div class="plan-price">
-
-                                <span>IDR</span>
-
-                                {{ number_format($plan->price ?? 349000, 0, ',', '.') }}
-
-                                <small>
-                                    /bulan
-                                </small>
-
-                            </div>
-
-                        </div>
-
-
-                        <hr class="checkout-divider">
-
-
-                        {{-- FEATURES --}}
-
-                        <div class="features-title">
-                            Fitur yang Anda dapatkan
-                        </div>
-
-                        <div class="features-list">
-
-                            <div class="feature-item">
-
-                                <div class="feature-icon">
-                                    <i class="bi bi-check"></i>
-                                </div>
-
-                                <span>
-                                    Assessment lebih lengkap
-                                </span>
-
-                            </div>
-
-
-                            <div class="feature-item">
-
-                                <div class="feature-icon">
-                                    <i class="bi bi-check"></i>
-                                </div>
-
-                                <span>
-                                    Peserta lebih banyak
-                                </span>
-
-                            </div>
-
-
-                            <div class="feature-item">
-
-                                <div class="feature-icon">
-                                    <i class="bi bi-check"></i>
-                                </div>
-
-                                <span>
-                                    Analitik assessment
-                                </span>
-
-                            </div>
-
-
-                            <div class="feature-item">
-
-                                <div class="feature-icon">
-                                    <i class="bi bi-check"></i>
-                                </div>
-
-                                <span>
-                                    Ranking peserta
-                                </span>
-
-                            </div>
-
-                        </div>
-
-
-                        {{-- PROMOTION --}}
-
-                        <div class="promotion-box">
-
-                            <div class="promotion-icon">
-
-                                <i class="bi bi-stars"></i>
-
-                            </div>
-
-                            <div>
-
-                                <div class="promotion-title">
-                                    Promo tersedia
-                                </div>
-
-                                <div class="promotion-text">
-                                    Dapatkan harga khusus untuk bulan pertama subscription Anda.
-                                </div>
-
-                            </div>
-
-                        </div>
-
-                    </div>
-
-                </div>
-
-            </div>
-
-
-            {{-- PAYMENT --}}
-
-            <div class="payment-card">
-
-                <div class="payment-header">
-
-                    <h2 class="payment-title">
-                        Metode Pembayaran
-                    </h2>
-
-                    <p class="payment-description">
-                        Pilih metode pembayaran yang tersedia.
-                    </p>
-
-                </div>
-
-
-                <div class="payment-body">
-
-                    <div class="payment-method active">
-
-                        <div class="payment-method-icon">
-
-                            <i class="bi bi-qr-code-scan"></i>
-
-                        </div>
-
-                        <div>
-
-                            <div class="payment-method-name">
-                                QRIS
-                            </div>
-
-                            <div class="payment-method-text">
-                                Pembayaran aman dan terenkripsi.
-                            </div>
-
-                        </div>
-
-                    </div>
-
-                </div>
-
-            </div>
-
-        </div>
-
-
-        {{-- =================================================
-             RIGHT
-        ================================================== --}}
-
-        <div class="col-lg-4">
-
-
-            <div class="summary-card">
-
-                <div class="summary-header">
-
-                    <h2 class="summary-title">
-                        Ringkasan Pesanan
-                    </h2>
-
-                </div>
-
-
-                <div class="summary-body">
-
-                    <div class="summary-row">
-
-                        <span>
-                            {{ $plan->name ?? 'Plus' }}
-                        </span>
-
-                        <span class="summary-value">
-
-                            IDR
-                            {{ number_format($plan->price ?? 349000, 0, ',', '.') }}
-
-                        </span>
-
-                    </div>
-
-
-                    <div class="summary-row">
-
-                        <span>
-                            Promotion
-                        </span>
-
-                        <span class="summary-promotion">
-
-                            - IDR
-                            {{ number_format($plan->price ?? 349000, 0, ',', '.') }}
-
-                        </span>
-
-                    </div>
-
-
-                    <div class="summary-row">
-
-                        <span>
-                            VAT (11%)
-                        </span>
-
-                        <span class="summary-value">
-                            IDR 0
-                        </span>
-
-                    </div>
-
-
-                    <hr class="summary-divider">
-
-
-                    <div class="summary-total">
-
-                        <span class="summary-total-label">
-                            Due today
-                        </span>
-
-                        <span class="summary-total-value">
-                            IDR 0
-                        </span>
-
-                    </div>
-
-
-                    {{-- SUBSCRIBE --}}
-
-                    <div class="checkout-submit-wrapper">
-
-                        <form
-                            method="POST"
-                            action="{{ route('subscription.subscribe', $plan->slug ?? 'plus') }}"
-                        >
-
-                            @csrf
-
-                            <button
-                                type="submit"
-                                class="btn-checkout"
-                            >
-
-                                <span>
-                                    Subscribe
-                                </span>
-
-                                <i class="bi bi-arrow-right"></i>
-
-                            </button>
-
-                        </form>
-
-                    </div>
-
-
-                    <div class="checkout-terms">
-
-                        IDR 0 untuk bulan pertama, kemudian
-                        IDR {{ number_format(($plan->price ?? 349000) * 1.11, 0, ',', '.') }}/bulan.
-
-                        Berlangganan akan diperpanjang secara otomatis sampai dibatalkan.
-
-                    </div>
-
-                </div>
-
-            </div>
-
-
-        </div>
-
-
-    </div>
-
+    <h1 class="checkout-title">
+        Checkout
+    </h1>
+
+    <p class="checkout-description">
+        Pilih paket dan lanjutkan proses upgrade akun Anda.
+    </p>
 
 </div>
 
 
-{{-- =====================================================
-     BOOTSTRAP ICONS
-====================================================== --}}
+{{-- ALERT --}}
+
+@if(session('success'))
+
+    <div
+        class="alert alert-success mb-4"
+        role="alert"
+    >
+        <i class="bi bi-check-circle-fill me-2"></i>
+        {{ session('success') }}
+    </div>
+
+@endif
+
+
+@if($errors->any())
+
+    <div
+        class="alert alert-danger mb-4"
+        role="alert"
+    >
+        <i class="bi bi-exclamation-triangle-fill me-2"></i>
+        {{ $errors->first() }}
+    </div>
+
+@endif
+
+
+<div class="row g-4">
+
+    {{-- LEFT --}}
+
+    <div class="col-lg-8">
+
+        {{-- PLAN --}}
+
+        <div class="checkout-card mb-4">
+
+            <div class="checkout-card-header">
+
+                <div class="checkout-card-icon">
+                    <i class="bi bi-stars"></i>
+                </div>
+
+                <div>
+
+                    <h2 class="checkout-card-title">
+                        Paket Subscription
+                    </h2>
+
+                    <p class="checkout-card-description">
+                        Detail paket yang akan Anda gunakan.
+                    </p>
+
+                </div>
+
+            </div>
+
+
+            <div class="checkout-card-body">
+
+                <div class="plan-card">
+
+                    <div class="plan-header">
+
+                        <div>
+
+                            <div class="plan-badge">
+                                PREMIUM
+                            </div>
+
+                            <h2 class="plan-name">
+                                {{ $plan->name ?? 'Plus' }}
+                            </h2>
+
+                            <p class="plan-description">
+                                {{ $plan->description ?? 'Dapatkan fitur assessment yang lebih lengkap.' }}
+                            </p>
+
+                        </div>
+
+
+                        <div class="plan-price">
+
+                            <span>IDR</span>
+
+                            {{ number_format($plan->price ?? 349000, 0, ',', '.') }}
+
+                            <small>
+                                /bulan
+                            </small>
+
+                        </div>
+
+                    </div>
+
+
+                    <hr class="checkout-divider">
+
+
+                    {{-- FEATURES --}}
+
+                    <div class="features-title">
+                        Fitur yang Anda dapatkan
+                    </div>
+
+                    <div class="features-list">
+
+                        <div class="feature-item">
+
+                            <div class="feature-icon">
+                                <i class="bi bi-check"></i>
+                            </div>
+
+                            <span>
+                                Assessment lebih lengkap
+                            </span>
+
+                        </div>
+
+
+                        <div class="feature-item">
+
+                            <div class="feature-icon">
+                                <i class="bi bi-check"></i>
+                            </div>
+
+                            <span>
+                                Peserta lebih banyak
+                            </span>
+
+                        </div>
+
+
+                        <div class="feature-item">
+
+                            <div class="feature-icon">
+                                <i class="bi bi-check"></i>
+                            </div>
+
+                            <span>
+                                Analitik assessment
+                            </span>
+
+                        </div>
+
+
+                        <div class="feature-item">
+
+                            <div class="feature-icon">
+                                <i class="bi bi-check"></i>
+                            </div>
+
+                            <span>
+                                Ranking peserta
+                            </span>
+
+                        </div>
+
+                    </div>
+
+
+                    {{-- PROMOTION --}}
+
+                    <div class="promotion-box">
+
+                        <div class="promotion-icon">
+                            <i class="bi bi-stars"></i>
+                        </div>
+
+                        <div>
+
+                            <div class="promotion-title">
+                                Promo tersedia
+                            </div>
+
+                            <div class="promotion-text">
+                                Dapatkan harga khusus untuk bulan pertama subscription Anda.
+                            </div>
+
+                        </div>
+
+                    </div>
+
+                </div>
+
+            </div>
+
+        </div>
+
+    </div>
+
+
+    {{-- RIGHT --}}
+
+    <div class="col-lg-4">
+
+        <div class="summary-card">
+
+            <div class="summary-header">
+
+                <h2 class="summary-title">
+                    Ringkasan Pesanan
+                </h2>
+
+            </div>
+
+
+            <div class="summary-body">
+
+                <div class="summary-row">
+
+                    <span>
+                        {{ $plan->name ?? 'Plus' }}
+                    </span>
+
+                    <span class="summary-value">
+
+                        IDR
+                        {{ number_format($plan->price ?? 349000, 0, ',', '.') }}
+
+                    </span>
+
+                </div>
+
+
+                <div class="summary-row">
+
+                    <span>
+                        Promotion
+                    </span>
+
+                    <span class="summary-promotion">
+
+                        - IDR
+                        {{ number_format($plan->price ?? 349000, 0, ',', '.') }}
+
+                    </span>
+
+                </div>
+
+
+                <div class="summary-row">
+
+                    <span>
+                        VAT (11%)
+                    </span>
+
+                    <span class="summary-value">
+                        IDR 0
+                    </span>
+
+                </div>
+
+
+                <hr class="summary-divider">
+
+
+                <div class="summary-total">
+
+                    <span class="summary-total-label">
+                        Due today
+                    </span>
+
+                    <span class="summary-total-value">
+                        IDR 0
+                    </span>
+
+                </div>
+
+
+                {{-- SUBSCRIBE --}}
+
+                <div class="checkout-submit-wrapper">
+                <a
+                    href="{{ route('subscription.payment', $plan->slug ?? 'plus') }}"
+                    class="btn-checkout"
+                >
+                    <span>Subscribe</span>
+                    <i class="bi bi-arrow-right"></i>
+                </a>
+
+                </div>
+
+
+                <div class="checkout-terms">
+
+                    IDR 0 untuk bulan pertama, kemudian
+                    IDR {{ number_format(($plan->price ?? 349000) * 1.11, 0, ',', '.') }}/bulan.
+
+                    Berlangganan akan diperpanjang secara otomatis sampai dibatalkan.
+
+                </div>
+
+            </div>
+
+        </div>
+
+    </div>
+
+</div>
+
+</div>
+
+{{-- BOOTSTRAP ICONS --}}
 
 <link
     rel="stylesheet"

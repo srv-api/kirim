@@ -42,6 +42,12 @@ Route::post('/subscription/{slug}/subscribe', [SubscriptionController::class, 's
     ->middleware('auth')
     ->name('subscription.subscribe');
 
+Route::get('/subscription/{plan}/payment', [SubscriptionController::class, 'payment'])
+    ->name('subscription.payment');
+
+Route::post('/subscription/{plan}/subscribe', [SubscriptionController::class, 'subscribe'])
+    ->name('subscription.subscribe');
+
 /*
 |--------------------------------------------------------------------------
 | BLOG
@@ -239,3 +245,8 @@ Route::post('/tracking', [TrackingController::class, 'search'])
 
 Route::get('/tracking/{awb}', [TrackingController::class, 'show'])
     ->name('tracking.show');
+
+Route::post('/midtrans/notification', [
+    PaymentController::class,
+    'notification'
+])->name('midtrans.notification');
