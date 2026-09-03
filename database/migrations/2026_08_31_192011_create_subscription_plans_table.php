@@ -8,30 +8,22 @@ return new class extends Migration
 {
     public function up(): void
     {
-        Schema::create('subscription_plans', function (Blueprint $table) {
+    Schema::create('subscription_plans', function (Blueprint $table) {
+    $table->id();
 
-            $table->id();
+    $table->string('slug')->unique();
+    $table->string('name');
+    $table->text('description')->nullable();
 
-            $table->string('name');
+    $table->decimal('price', 15, 2)->default(0);
 
-            $table->string('slug')
-                ->unique();
+    $table->integer('duration_days')->default(30);
+    $table->integer('trial_days')->default(0);
 
-            $table->text('description')
-                ->nullable();
+    $table->boolean('is_active')->default(true);
 
-            $table->decimal('price', 15, 2)
-                ->default(0);
-
-            $table->integer('trial_days')
-                ->default(0);
-
-            $table->boolean('is_active')
-                ->default(true);
-
-            $table->timestamps();
-
-        });
+    $table->timestamps();
+});
     }
 
     public function down(): void

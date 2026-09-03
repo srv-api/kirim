@@ -35,18 +35,28 @@ Route::get('/', fn () => view('home'))->name('home');
 |--------------------------------------------------------------------------
 */
 
-Route::get('/subscription/{slug}/checkout', [SubscriptionController::class, 'checkout'])
-    ->name('subscription.checkout');
+Route::middleware('auth')->group(function () {
 
-Route::post('/subscription/{slug}/subscribe', [SubscriptionController::class, 'subscribe'])
-    ->middleware('auth')
-    ->name('subscription.subscribe');
+    Route::get(
+        '/subscription',
+        [SubscriptionController::class, 'index']
+    )->name('subscription.index');
 
-Route::get('/subscription/{plan}/payment', [SubscriptionController::class, 'payment'])
-    ->name('subscription.payment');
+    Route::get(
+        '/subscription/{slug}/checkout',
+        [SubscriptionController::class, 'checkout']
+    )->name('subscription.checkout');
 
-Route::post('/subscription/{plan}/subscribe', [SubscriptionController::class, 'subscribe'])
-    ->name('subscription.subscribe');
+    Route::post(
+        '/subscription/{slug}/subscribe',
+        [SubscriptionController::class, 'subscribe']
+    )->name('subscription.subscribe');
+
+    Route::get(
+        '/subscription/payment/qris/{transaction}',
+        [SubscriptionController::class, 'qris']
+    )->name('subscription.qris');
+});
 
 /*
 |--------------------------------------------------------------------------
