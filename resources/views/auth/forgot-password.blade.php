@@ -4,8 +4,14 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<link rel="icon" type="image/x-icon" href="{{ asset('logo.png') }}">
-    <title>Testhink - Daftar</title>
+
+    <link
+        rel="icon"
+        type="image/x-icon"
+        href="{{ asset('logo.png') }}"
+    >
+
+    <title>Testhink - Lupa Kata Sandi</title>
 
     <style>
         @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap');
@@ -33,10 +39,6 @@
             display: flex;
         }
 
-        /* =========================
-           KIRI
-        ========================= */
-
         .left {
             width: 50%;
             min-height: 100vh;
@@ -54,7 +56,7 @@
                 linear-gradient(
                     135deg,
                     rgba(0, 0, 0, .35),
-                    rgba(0, 0, 0, .78)
+                    rgba(0, 0, 0, .75)
                 ),
                 url('{{ asset('images/berandalogin.png') }}');
 
@@ -66,13 +68,8 @@
         .left-content {
             position: relative;
             z-index: 2;
-
             max-width: 500px;
         }
-
-        /* =========================
-           LOGO
-        ========================= */
 
         .brand {
             width: 48px;
@@ -90,19 +87,14 @@
             font-size: 22px;
             font-weight: 800;
 
-            line-height: 1;
-
             margin-bottom: 30px;
         }
 
         .left h1 {
             font-size: clamp(42px, 5vw, 64px);
             line-height: 1;
-
             font-weight: 600;
-
             letter-spacing: -3px;
-
             margin-bottom: 20px;
         }
 
@@ -115,10 +107,6 @@
             color: rgba(255, 255, 255, .72);
         }
 
-        /* =========================
-           KANAN
-        ========================= */
-
         .right {
             width: 50%;
             min-height: 100vh;
@@ -130,36 +118,30 @@
             padding: 40px;
         }
 
-        .register-card {
+        .card {
             width: 100%;
-            max-width: 520px;
+            max-width: 400px;
         }
 
-        .register-header {
-            margin-bottom: 30px;
+        .header {
+            margin-bottom: 35px;
         }
 
-        .register-header h2 {
+        .header h2 {
             font-size: 32px;
             font-weight: 600;
-
             letter-spacing: -1.5px;
-
             margin-bottom: 9px;
         }
 
-        .register-header p {
+        .header p {
             color: #777;
             font-size: 14px;
+            line-height: 1.7;
         }
-
-        /* =========================
-           ALERT
-        ========================= */
 
         .alert {
             padding: 13px 15px;
-
             margin-bottom: 22px;
 
             border-left: 3px solid #111;
@@ -173,24 +155,11 @@
             border-radius: 4px;
         }
 
-        /* =========================
-           FORM GRID
-        ========================= */
-
-        .register-form {
-            display: grid;
-
-            grid-template-columns: 1fr 1fr;
-
-            column-gap: 16px;
-            row-gap: 0;
-        }
-
         .form-group {
-            margin-bottom: 18px;
+            margin-bottom: 21px;
         }
 
-        .form-group label {
+        label {
             display: block;
 
             margin-bottom: 9px;
@@ -223,10 +192,6 @@
                 box-shadow .2s ease;
         }
 
-        .form-control::placeholder {
-            color: #aaa;
-        }
-
         .form-control:focus {
             border-color: #111;
 
@@ -234,25 +199,19 @@
                 0 0 0 3px rgba(0, 0, 0, .06);
         }
 
+        .form-control::placeholder {
+            color: #aaa;
+        }
+
         .field-error {
             margin-top: 7px;
-
             color: #c62828;
-
             font-size: 12px;
         }
 
-        /* =========================
-           BUTTON
-        ========================= */
-
-        .register-button {
-            grid-column: 1 / -1;
-
+        .button {
             width: 100%;
             height: 52px;
-
-            margin-top: 4px;
 
             border: none;
             border-radius: 8px;
@@ -271,48 +230,36 @@
                 transform .2s ease;
         }
 
-        .register-button:hover {
+        .button:hover {
             background: #292929;
-
             transform: translateY(-1px);
         }
 
-        .register-button:active {
+        .button:active {
             transform: translateY(0);
         }
 
-        /* =========================
-           LOGIN LINK
-        ========================= */
-
-        .login-link {
-            margin-top: 22px;
+        .back {
+            margin-top: 20px;
 
             text-align: center;
 
-            font-size: 12px;
-
+            font-size: 13px;
             color: #777;
         }
 
-        .login-link a {
-            color: #111;
-
+        .back a {
+            color: #000;
             font-weight: 600;
-
             text-decoration: none;
         }
 
-        .login-link a:hover {
+        .back a:hover {
             text-decoration: underline;
         }
 
-        /* =========================
-           FOOTER
-        ========================= */
-
-        .register-footer {
-            margin-top: 25px;
+        .footer {
+            margin-top: 30px;
 
             text-align: center;
 
@@ -320,21 +267,6 @@
 
             font-size: 11px;
         }
-
-        .optional {
-    color: #999;
-    font-size: 11px;
-    font-weight: 400;
-    margin-left: 4px;
-}
-
-.referral-group {
-    grid-column: 1 / -1;
-}
-
-        /* =========================
-           MOBILE
-        ========================= */
 
         @media (max-width: 800px) {
 
@@ -349,22 +281,6 @@
                 padding: 35px 28px;
             }
 
-            .left h1 {
-                font-size: 40px;
-                letter-spacing: -2px;
-            }
-
-            .left p {
-                font-size: 13px;
-            }
-
-            .brand {
-                width: 42px;
-                height: 42px;
-
-                margin-bottom: 22px;
-            }
-
             .right {
                 width: 100%;
                 min-height: auto;
@@ -372,19 +288,9 @@
                 padding: 45px 25px 35px;
             }
 
-            .register-card {
-                max-width: 520px;
-            }
-        }
-
-        @media (max-width: 600px) {
-
-            .register-form {
-                grid-template-columns: 1fr;
-            }
-
-            .register-button {
-                grid-column: auto;
+            .left h1 {
+                font-size: 40px;
+                letter-spacing: -2px;
             }
         }
 
@@ -392,7 +298,6 @@
 
             .left {
                 min-height: 250px;
-
                 padding: 28px 22px;
             }
 
@@ -404,7 +309,7 @@
                 padding: 38px 22px;
             }
 
-            .register-header h2 {
+            .header h2 {
                 font-size: 28px;
             }
         }
@@ -415,10 +320,6 @@
 <body>
 
 <div class="container">
-
-    {{-- =========================
-         BAGIAN KIRI
-    ========================== --}}
 
     <section class="left">
 
@@ -433,8 +334,9 @@
             </h1>
 
             <p>
-                Daftarkan akun Anda untuk mulai menggunakan
-                Testhink Dashboard dan mengelola semuanya dalam satu tempat.
+                Jangan khawatir. Masukkan email akun kamu
+                untuk mendapatkan tautan untuk mengatur ulang
+                kata sandi.
             </p>
 
         </div>
@@ -442,26 +344,33 @@
     </section>
 
 
-    {{-- =========================
-         BAGIAN KANAN
-    ========================== --}}
-
     <section class="right">
 
-        <div class="register-card">
+        <div class="card">
 
-            <div class="register-header">
+            <div class="header">
 
-                <h2>Daftar</h2>
+                <h2>
+                    Lupa kata sandi?
+                </h2>
 
                 <p>
-                    Buat akun baru untuk melanjutkan.
+                    Masukkan email yang terdaftar pada akun kamu.
+                    Kami akan mengirimkan link untuk membuat kata
+                    sandi baru.
                 </p>
 
             </div>
 
 
-            {{-- ERROR --}}
+            @if(session('status'))
+
+                <div class="alert">
+                    {{ session('status') }}
+                </div>
+
+            @endif
+
 
             @if($errors->any())
 
@@ -472,48 +381,12 @@
             @endif
 
 
-            {{-- FORM DAFTAR --}}
-
             <form
                 method="POST"
-                action="{{ route('register.store') }}"
-                class="register-form"
+                action="{{ route('password.email') }}"
             >
 
                 @csrf
-
-
-                {{-- NAMA LENGKAP --}}
-
-                <div class="form-group">
-
-                    <label for="name">
-                        Nama Lengkap
-                    </label>
-
-                    <input
-                        type="text"
-                        id="name"
-                        name="name"
-                        class="form-control"
-                        value="{{ old('name') }}"
-                        placeholder="Nama lengkap"
-                        autocomplete="name"
-                        required
-                    >
-
-                    @error('name')
-
-                        <div class="field-error">
-                            {{ $message }}
-                        </div>
-
-                    @enderror
-
-                </div>
-
-
-                {{-- EMAIL --}}
 
                 <div class="form-group">
 
@@ -529,6 +402,7 @@
                         value="{{ old('email') }}"
                         placeholder="nama@email.com"
                         autocomplete="email"
+                        autofocus
                         required
                     >
 
@@ -543,120 +417,26 @@
                 </div>
 
 
-                {{-- NO WHATSAPP --}}
-
-                <div class="form-group">
-
-                    <label for="whatsapp">
-                        No. WhatsApp
-                    </label>
-
-                    <input
-                        type="tel"
-                        id="whatsapp"
-                        name="whatsapp"
-                        class="form-control"
-                        value="{{ old('whatsapp') }}"
-                        placeholder="08xxxxxxxxxx"
-                        autocomplete="tel"
-                        required
-                    >
-
-                    @error('whatsapp')
-
-                        <div class="field-error">
-                            {{ $message }}
-                        </div>
-
-                    @enderror
-
-                </div>
-
-
-                {{-- PASSWORD --}}
-
-                <div class="form-group">
-
-                    <label for="password">
-                        Kata Sandi
-                    </label>
-
-                    <input
-                        type="password"
-                        id="password"
-                        name="password"
-                        class="form-control"
-                        placeholder="Masukkan kata sandi"
-                        autocomplete="new-password"
-                        required
-                    >
-
-                    @error('password')
-
-                        <div class="field-error">
-                            {{ $message }}
-                        </div>
-
-                    @enderror
-
-                </div>
-
-                {{-- KODE REFERRAL --}}
-
-<div class="form-group referral-group">
-
-    <label for="referral_code">
-        Kode Referral
-        <span class="optional">(Opsional)</span>
-    </label>
-
-    <input
-        type="text"
-        id="referral_code"
-        name="referral_code"
-        class="form-control"
-        value="{{ old('referral_code', request('ref')) }}"
-        placeholder="Masukkan kode referral"
-        autocomplete="off"
-    >
-
-    @error('referral_code')
-
-        <div class="field-error">
-            {{ $message }}
-        </div>
-
-    @enderror
-
-</div>
-
-
-                {{-- BUTTON --}}
-
                 <button
                     type="submit"
-                    class="register-button"
+                    class="button"
                 >
-                    Daftar
+                    Kirim Link Reset
                 </button>
 
             </form>
 
 
-            {{-- LOGIN --}}
-
-            <div class="login-link">
-
-                Sudah memiliki akun?
+            <div class="back">
 
                 <a href="{{ route('login') }}">
-                    Masuk
+                    Kembali ke halaman masuk
                 </a>
 
             </div>
 
 
-            <div class="register-footer">
+            <div class="footer">
                 © {{ date('Y') }} Hak cipta dilindungi.
             </div>
 

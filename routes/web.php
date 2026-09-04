@@ -21,6 +21,9 @@ use App\Http\Controllers\Owner\Panel\ProfileController;
 use App\Http\Controllers\AssessmentParticipantController;
 use App\Http\Controllers\SubscriptionController;
 use App\Http\Controllers\Owner\Panel\TugQuestionController;
+use App\Http\Controllers\ForgotPasswordController;
+use App\Http\Controllers\ResetPasswordController;
+
 /*
 |--------------------------------------------------------------------------
 | HOME
@@ -92,6 +95,18 @@ Route::post('/logout', [AuthController::class, 'logout'])
 
 Route::get('/register', [RegisterController::class, 'create'])->name('register');
 Route::post('/register', [RegisterController::class, 'store'])->name('register.store');
+
+Route::get('/lupa-password', [ForgotPasswordController::class, 'showLinkRequestForm'])
+    ->name('password.request');
+
+Route::post('/lupa-password', [ForgotPasswordController::class, 'sendResetLinkEmail'])
+    ->name('password.email');
+
+Route::get('/reset-password/{token}', [ResetPasswordController::class, 'showResetForm'])
+    ->name('password.reset');
+
+Route::post('/reset-password', [ResetPasswordController::class, 'reset'])
+    ->name('password.update');
 
 /*
 |--------------------------------------------------------------------------

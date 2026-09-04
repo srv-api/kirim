@@ -6,7 +6,7 @@
     <meta charset="UTF-8">
     <link rel="icon" type="image/x-icon" href="{{ asset('logo.png') }}">
 
-    <title>Dashboard</title>
+    <title>Testhink - Dashboard</title>
 <link
     rel="icon"
     type="image/x-icon"
